@@ -1,0 +1,42 @@
+Hi Justin,
+I propose the following rating algorithm to start with:
+There are five types of commits:
+
+   1. Changed files are equal to the queried files.  The rating will be 1.
+   2. Changed files don't contain any of the queried files.  The rating
+      will be 0.
+   3. Changed files are a pure subset of the queried files.  The rating
+      will be: changed files / queried files.
+   4. Changed files are an impure subset of the queried files (for
+      example, if the queried files are 5 yet the commit contains only 3
+      files out of those 5 files in addition to some irrelevant files). 
+      The rating will be: changed relevant files / (queried files +
+      irrelevant files / changed files).
+   5. Changed files are an impure superset of the queried files (for
+      example, the commit contains all the queried files in addition to
+      other irrelevant files).  The rating will be: changed files /
+      queried files (same as case 3).
+
+Now we know that we have four cases of interest (neglecting case 2), we 
+will prioritize the cases in descending importance:
+
+   1. Case 1.
+   2. Case 5. (elements in this set should be ordered in ascending order
+      of rating)
+   3. Case 3. (elements in this set should be ordered in descending
+      order of rating)
+   4. Case 4. (elements in this set should be ordered in descending
+      order of rating)
+
+You can store commits in four separate lists and then merge them based 
+on the previous order in one list to be shown to the user.
+Should you have any questions or concerns, feel free to discuss them...
+
+
+
+CASE 1: good
+CASE 2: good
+CASE 3: good
+CASE 4: good
+CASE 5: good
+
