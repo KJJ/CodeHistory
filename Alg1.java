@@ -141,12 +141,20 @@ public class Alg1 {
 			 System.out.println("Number of files: " + n + "\n");
 	}
 	
+	public static String path(Process exec) throws IOException{
+		BufferedReader  stdInput=  new  BufferedReader(new
+	              InputStreamReader(exec.getInputStream()));
+	         
+	         return stdInput.readLine();
+	}
+	
 	public static void main(String args[]){
 		try {
 			Process exec;
-			//exec = Runtime.getRuntime().exec("svn status -v /Users/justin/Documents/log4j");
-			//howMany(exec);
-			exec = Runtime.getRuntime().exec("svn log -q -v /Users/justin/Documents/log4j");
+			exec = Runtime.getRuntime().exec("pwd");
+			String p = path(exec);
+			System.out.println(p);
+			exec = Runtime.getRuntime().exec("svn log -q -v "+p+"/log4j");
 			printIt(exec, args);
 		}
 		
