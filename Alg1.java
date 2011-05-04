@@ -55,7 +55,10 @@ public class Alg1 {
 					int i = 0;
 					String[] splitting = s.split(" "); //separate to get the file name
 					while (i < arg.length) {
-						if (splitting[4].startsWith("/logging/log4j/trunk/") && splitting[4].endsWith(arg[i])) { // compare to all queried files
+						if (!arg[i].startsWith("/")) {
+							arg[i] = "/" + arg[i];
+						}
+						if (splitting[4].contains("/logging/log4j/trunk" + arg[i]) && splitting[4].endsWith(arg[i])) { // compare to all queried files
 							i = arg.length+77;							
 						}
 						else {
