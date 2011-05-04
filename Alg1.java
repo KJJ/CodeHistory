@@ -15,8 +15,8 @@ public class Alg1 {
 		BufferedReader  stdInput=  new  BufferedReader(new
 	              InputStreamReader(exec.getInputStream()));
 
-	        System.out.println("Revision \t\t Date \t\t\t Rating \t\t\t\t Case");
-			System.out.println("----------|-------------------------------|-------------------------------|--------------------------------------------------|");
+	        System.out.println(" Revision \t\t Date \t\t\t Rating \t\t\t\t Case");
+			System.out.println("|---------|-------------------------------|-------------------------------|--------------------------------------------------|");
 	        String s;
 	        char c = ' ';
 			String ss = "";
@@ -48,8 +48,8 @@ public class Alg1 {
 							else if (rat.length() <= 8){
 								spaces = "\t" + spaces;
 							}
-							System.out.println(revisionList.getLast()+ "\t  | \t" +dateList.getLast() + "\t  | \t" + ratingList.getLast() + spaces + caseList.getLast()+"   |");
-							System.out.println("----------|-------------------------------|-------------------------------|--------------------------------------------------|");
+							System.out.println("|"+revisionList.getLast()+ "\t  | \t" +dateList.getLast() + "\t  | \t" + ratingList.getLast() + spaces + caseList.getLast()+"   |");
+							System.out.println("|---------|-------------------------------|-------------------------------|--------------------------------------------------|");
 						}
 						//reset fields
 						ss = "";
