@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 
+//Source of IO reading code: stackOverflow.com
+
 public class Alg1 {
 
 	/*
