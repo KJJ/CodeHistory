@@ -48,7 +48,7 @@ public class Alg1 {
 							else if (rat.length() <= 8){
 								spaces = "\t" + spaces;
 							}
-							System.out.println("|"+revisionList.getLast()+ "\t  | \t" +dateList.getLast() + "\t  | \t" + ratingList.getLast() + spaces + caseList.getLast()+"   |");
+							System.out.println("| "+revisionList.getLast()+ "  | \t" +dateList.getLast() + "\t  | \t" + ratingList.getLast() + spaces + caseList.getLast()+"   |");
 							System.out.println("|---------|-------------------------------|-------------------------------|--------------------------------------------------|");
 						}
 						//reset fields
