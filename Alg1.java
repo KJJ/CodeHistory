@@ -15,31 +15,44 @@ public class Alg1 {
 		BufferedReader  stdInput=  new  BufferedReader(new
 	              InputStreamReader(exec.getInputStream()));
 
-	        System.out.println("Revision \t\t\t rating \t\t\t case \n");
+	        System.out.println("Revision \t\t Date \t\t\t Rating \t\t\t\t Case");
+			System.out.println("----------|-------------------------------|-------------------------------|--------------------------------------------------|");
 	        String s;
 	        char c = ' ';
-			String ss = "r";
+			String ss = "";
+			String date = "Never";
 			int totalChanged = 0;
 			int relevant = 0;
 			int irrelevant = 0;
-			double rating = 0;
+			Double rating = 0.0;
 			String theCase = "";
 			LinkedList<Double> ratingList = new LinkedList<Double>();
 			LinkedList<String> revisionList = new LinkedList<String>();
 			LinkedList<String> caseList = new LinkedList<String>();
+			LinkedList<String> dateList = new LinkedList<String>();
 			while  ((s=  stdInput.readLine())  !=  null)  {
 				if (s.startsWith("r")) { //indicates a new revision
-					if (ss != "r") { //will only be this if it is the very first iteration
+					if (ss != "") { //will only be this if it is the very first iteration
 						theCase = cases(relevant, irrelevant, totalChanged, arg.length); //analyze the current case
 						rating = calcRating(relevant, irrelevant, totalChanged, arg.length); //calculate the current rating
 						if (rating > 0) { // if relevant, store it
 							ratingList.addLast(rating);
 							revisionList.addLast(ss);
 							caseList.addLast(theCase);
-							System.out.println(revisionList.getLast() + "\t\t\t" + ratingList.getLast() + "\t\t\t" + caseList.getLast());
+							dateList.addLast(date);	
+							String rat = rating.toString();
+							String spaces = "\t  | \t";
+							if (rat.length() <= 4){
+								spaces = "\t\t" + spaces;
+							}
+							else if (rat.length() <= 8){
+								spaces = "\t" + spaces;
+							}
+							System.out.println(revisionList.getLast()+ "\t  | \t" +dateList.getLast() + "\t  | \t" + ratingList.getLast() + spaces + caseList.getLast()+"   |");
+							System.out.println("----------|-------------------------------|-------------------------------|--------------------------------------------------|");
 						}
 						//reset fields
-						ss = "r";
+						ss = "";
 						relevant = 0;
 						irrelevant = 0;
 						totalChanged = 0;
@@ -49,7 +62,8 @@ public class Alg1 {
 					while (s.charAt(i) != c) { 
 						ss += s.charAt(i);
 						i++;
-					}					
+					}
+					date = s.substring(s.indexOf('('), s.indexOf('(')+18);
 				}
 				// if it is not a revision, it is either a file or junk, discard junk and process the file names
 				else if (s.startsWith("   M") || s.startsWith("   D") || s.startsWith("   A")){
@@ -110,19 +124,19 @@ public class Alg1 {
 	 */
 	private static String cases(int relevant, int irrelevant, int totalChanged, int nRel) {
 		if (relevant == 0) {
-			return "CASE 2";
+			return "Irrelevant";
 		}
 		else if (relevant == totalChanged && relevant == nRel){
-			return "CASE 1";
+			return "Very Relevant, contains only queried files";
 		}
 		else if (relevant == totalChanged && relevant < nRel) {
-			return "CASE 3";
+			return "A Pure Subset of some of the queried files";
 		}
 		else if (relevant == nRel && relevant != totalChanged){
-			return "CASE 5";
+			return "Impure Superset of the queried files found";
 		}
 		
-		else return "CASE 4";
+		else return "Subset of Relevants mixed with Irrelevants";
 	}
 	
 	/*
@@ -153,7 +167,7 @@ public class Alg1 {
 			Process exec;
 			exec = Runtime.getRuntime().exec("pwd");
 			String p = path(exec);
-			System.out.println(p);
+			System.out.println(p + "\n");
 			exec = Runtime.getRuntime().exec("svn log -q -v "+p+"/log4j");
 			printIt(exec, args);
 		}
