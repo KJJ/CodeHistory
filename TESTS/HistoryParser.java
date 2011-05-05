@@ -3,10 +3,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.ResourceBundle;
 
 //Source of IO reading code: stackOverflow.com
 
 public class HistoryParser {
+	
+	private ResourceBundle bundle = ResourceBundle.getBundle("Configurations");
+
 	
 	private String[] args;
 	LinkedList<Double> ratingList = new LinkedList<Double>();
@@ -70,7 +74,7 @@ public class HistoryParser {
 					if (!arg[i].startsWith("/")) {
 						arg[i] = "/" + arg[i];
 					}
-					if (splitting[4].contains("/logging/log4j/trunk" + arg[i]) && splitting[4].endsWith(arg[i])) { // compare to all queried files
+					if (splitting[4].contains(bundle.getString("mainBranch") + arg[i]) && splitting[4].endsWith(arg[i])) { // compare to all queried files
 						i = arg.length+77;							
 					}
 					else {
@@ -135,37 +139,12 @@ public class HistoryParser {
 		else return "Subset of Relevants mixed with Irrelevants";
 	}
 	
-	/*
-	 * uses the status of the directory to find how many files are in the directory
-	 */
-	public void fileNumberDetermine(Process exec) throws IOException{
-		BufferedReader  stdInput=  new  BufferedReader(new
-	              InputStreamReader(exec.getInputStream()));
-	         
-	         int n = 0;
-	         @SuppressWarnings("unused")
-			String s;
-			 while  ((s = stdInput.readLine())  !=  null)  {
-		         n++;
-		     }
-			 System.out.println("Number of files: " + n + "\n");
-	}
-	
-	public String pathDetermine(Process exec) throws IOException{
-		BufferedReader  stdInput=  new  BufferedReader(new
-	              InputStreamReader(exec.getInputStream()));
-	         
-	         return stdInput.readLine();
-	}
-	
 	@SuppressWarnings("rawtypes")
 	public LinkedList<LinkedList> enableProcess(){
 		try {
 			Process exec;
-			exec = Runtime.getRuntime().exec("pwd");
-			String p = pathDetermine(exec);
-			System.out.println(p + "\n");
-			exec = Runtime.getRuntime().exec("svn log -q -v "+p+"/log4j");
+			String p = bundle.getString("repo");
+			exec = Runtime.getRuntime().exec("svn log -q -v "+p);
 			printRelevancy(exec, args);
 
 			LinkedList<LinkedList> listOfLists = new LinkedList<LinkedList>();
