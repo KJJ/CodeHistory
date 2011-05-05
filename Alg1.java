@@ -26,6 +26,7 @@ public class Alg1 {
 			int irrelevant = 0;
 			Double rating = 0.0;
 			String theCase = "";
+			String spaces = "\t  | \t";
 			LinkedList<Double> ratingList = new LinkedList<Double>();
 			LinkedList<String> revisionList = new LinkedList<String>();
 			LinkedList<String> caseList = new LinkedList<String>();
@@ -41,7 +42,7 @@ public class Alg1 {
 							caseList.addLast(theCase);
 							dateList.addLast(date);	
 							String rat = rating.toString();
-							String spaces = "\t  | \t";
+							spaces = "\t  | \t";
 							if (rat.length() <= 4){
 								spaces = "\t\t" + spaces;
 							}
@@ -96,6 +97,14 @@ public class Alg1 {
 				revisionList.addLast(ss);
 				caseList.addLast(theCase);
 				dateList.addLast(date);
+				String rat = rating.toString();
+				spaces = "\t  | \t";
+				if (rat.length() <= 4){
+					spaces = "\t\t" + spaces;
+				}
+				else if (rat.length() <= 8){
+					spaces = "\t" + spaces;
+				}
 				System.out.println("| "+revisionList.getLast()+ "  | \t" +dateList.getLast() + "\t  | \t" + ratingList.getLast() + spaces + caseList.getLast()+"   |");
 				System.out.println("|---------|-------------------------------|-------------------------------|--------------------------------------------------|");
 			}
