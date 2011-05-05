@@ -1,0 +1,7 @@
+This is the repository for the code understanding through history project.
+
+Contained here are the major current files and a quick summary:
+
+Alg1.java: java file. Analyzes the svn repository log4j for specified file relations. Under development still
+
+algorthm 1 (USRA): details the initial algorithm used in Alg1.java. Details what each case is and how it is treated.
