@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 
 public class HistoryParser {
 	
-	private ResourceBundle bundle = ResourceBundle.getBundle("Configurations");
+	private ResourceBundle bundle = ResourceBundle.getBundle("config");
 
 	
 	private String[] args;
