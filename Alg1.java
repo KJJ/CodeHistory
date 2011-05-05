@@ -95,7 +95,9 @@ public class Alg1 {
 				ratingList.addLast(rating);
 				revisionList.addLast(ss);
 				caseList.addLast(theCase);
-				System.out.println(revisionList.getLast() + "\t" + ratingList.getLast() + "\t" + caseList.getLast());
+				dateList.addLast(date);
+				System.out.println("| "+revisionList.getLast()+ "  | \t" +dateList.getLast() + "\t  | \t" + ratingList.getLast() + spaces + caseList.getLast()+"   |");
+				System.out.println("|---------|-------------------------------|-------------------------------|--------------------------------------------------|");
 			}
 	}
 	
