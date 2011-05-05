@@ -63,7 +63,7 @@ public class Alg1 {
 						ss += s.charAt(i);
 						i++;
 					}
-					date = s.substring(s.indexOf('('), s.indexOf('(')+18);
+					date = s.substring(s.lastIndexOf('|') +2, s.lastIndexOf('|')+21);
 				}
 				// if it is not a revision, it is either a file or junk, discard junk and process the file names
 				else if (s.startsWith("   M") || s.startsWith("   D") || s.startsWith("   A")){
