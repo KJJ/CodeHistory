@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 public class HistoryParser {
 	
 	private ResourceBundle bundle = ResourceBundle.getBundle("config");
+	String dash = "-";
 
 	
 	private String[] args;
@@ -185,8 +186,11 @@ public class HistoryParser {
 			else if (rat.length() <= 8){
 				spaces = "\t" + spaces;
 			}
-			
-			System.out.println("| "+a.next()+ "  | \t" + b.next() + "\t  | \t" + rat + spaces + d.next()+"   |");
+			String revision = (String)a.next();
+			if (revision.length() <=5){
+				revision+="\t";
+			}
+			System.out.println("| "+revision+ "  | \t" + b.next() + "\t  | \t" + rat + spaces + d.next()+"   |");
 			System.out.println("|---------|-------------------------------|-------------------------------|--------------------------------------------------|");
 
 		}
