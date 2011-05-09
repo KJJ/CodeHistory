@@ -1,23 +1,19 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.ListIterator;
-import java.util.ResourceBundle;
+import java.io.*;
+import java.util.*;
 
-//Source of IO reading code: stackOverflow.com
+//Source of IO reading code: stackoverflow.com
 
 public class HistoryParser {
 	
 	private ResourceBundle bundle = ResourceBundle.getBundle("config");
-	String dash = "-";
-
 	
 	private String[] args;
 	LinkedList<Double> ratingList = new LinkedList<Double>();
 	LinkedList<String> revisionList = new LinkedList<String>();
 	LinkedList<String> caseList = new LinkedList<String>();
 	LinkedList<String> dateList = new LinkedList<String>();
+	LinkedList<String> specialList = new LinkedList<String>();
+
 	
 	public HistoryParser(String[] arg) {
 		args = arg;
@@ -40,6 +36,7 @@ public class HistoryParser {
 		int irrelevant = 0;
 		Double rating = 0.0;
 		String theCase = "";
+		String change = "";
 			
 		while  ((s=  stdInput.readLine())  !=  null)  {
 			if (s.startsWith("r")) { //indicates a new revision
@@ -50,13 +47,15 @@ public class HistoryParser {
 						ratingList.addLast(rating);
 						revisionList.addLast(ss);
 						caseList.addLast(theCase);
-						dateList.addLast(date);	
+						dateList.addLast(date);
+						specialList.addLast(change);
 					}
 					//reset fields
 					ss = "";
 					relevant = 0;
 					irrelevant = 0;
 					totalChanged = 0;
+					change = "";
 				}
 				// get the next revision number
 				int i = 1;
@@ -67,7 +66,8 @@ public class HistoryParser {
 				date = s.substring(s.lastIndexOf('|') +2, s.lastIndexOf('|')+21);
 			}
 			// if it is not a revision, it is either a file or junk, discard junk and process the file names
-			else if (s.startsWith("   M") || s.startsWith("   D") || s.startsWith("   A")){
+			else if (s.startsWith("   M") || s.startsWith("   D") || s.startsWith("   A") || s.startsWith("   R")){
+				
 				totalChanged++; // how many files were changed in the revision 
 				int i = 0;
 				String[] splitting = s.split(" "); //separate to get the file name
@@ -76,10 +76,26 @@ public class HistoryParser {
 						arg[i] = "/" + arg[i];
 					}
 					if (splitting[4].contains(bundle.getString("mainBranch") + arg[i]) && splitting[4].endsWith(arg[i])) { // compare to all queried files
-						i = arg.length+77;							
+						
+						if (splitting[3].contains("A")){
+							change += " "+arg[i].substring(arg[i].lastIndexOf('/')+1)+": Added  |";
+						}
+						else if (splitting[3].contains("D")){
+							change += " "+arg[i].substring(arg[i].lastIndexOf('/')+1)+": Deleted  |";
+						}
+						else if (splitting[3].contains("M")){
+							change += " "+arg[i].substring(arg[i].lastIndexOf('/')+1)+": Modified  |";
+						}
+						else if (splitting[3].contains("R")){
+							change += " "+arg[i].substring(arg[i].lastIndexOf('/')+1)+": Replaced  |";
+						}
+						
+						i = arg.length+77;
+						
 					}
 					else {
 						i++;
+						
 					}
 				}
 				if (i == arg.length+77){ //indicates presence of relevant file
@@ -153,6 +169,7 @@ public class HistoryParser {
 			listOfLists.add(dateList);
 			listOfLists.add(ratingList);
 			listOfLists.add(caseList);
+			listOfLists.add(specialList);
 			
 			return listOfLists;
 		}
@@ -163,24 +180,95 @@ public class HistoryParser {
 		}
 	}
 	
-	@SuppressWarnings("rawtypes")
-	public void printHistoryInformation(){
+	public LinkedList<String>[] collectTargetData(Process exec) throws IOException{
+		BufferedReader  stdInput=  new  BufferedReader(new
+	              InputStreamReader(exec.getInputStream()));
 		
-		LinkedList<LinkedList> historicResults = enableProcess();
+		BufferedReader  stdError=  new  BufferedReader(new
+	              InputStreamReader(exec.getErrorStream()));
+		
+		@SuppressWarnings("unchecked")
+		LinkedList<String>[] data = new LinkedList[2];
+		String s;
+		String[] ss;
+		LinkedList<String> rev = new LinkedList<String>();
+		LinkedList<String> date = new LinkedList<String>();
+		
+		while  ((s=  stdError.readLine())  !=  null)  {
+            System.out.println(s);
+        }
+		
+		while  ((s=  stdInput.readLine())  !=  null)  {
+			ss = s.split(" ");
+			rev.addLast(ss[0]);
+			date.addLast(ss[4]+" "+ss[5]);
+		}
+		
+		data[0] = rev;
+		data[1] = date;
+		return data;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public LinkedList<LinkedList> getHistoricalRelevancy(LinkedList<LinkedList<String>> RevisionList){
+		int i, j;
+		int presentAtRevision;
+		LinkedList<String> revision = new LinkedList<String>();
+		LinkedList<Integer> relevantN = new LinkedList<Integer>();
+		String tar;
+		String com;
+		for (i = 0; i < RevisionList.size(); i++) {
+			presentAtRevision = 1;
+			LinkedList<String> target = RevisionList.get(i);
+			Iterator<String> targetIterator = target.iterator();
+			while (targetIterator.hasNext()) {
+				tar = targetIterator.next();
+				if (!revision.contains(tar)) {
+					revision.addLast(tar);
+					for (j = 0; j<RevisionList.size(); j++) {
+						if (j == i) {
+							continue;
+						}
+						LinkedList<String> toCompare = RevisionList.get(j);
+						Iterator<String> comparing = toCompare.iterator();
+						while (comparing.hasNext()) {
+							com = comparing.next();
+							if (tar.equals(com)) {
+								presentAtRevision++;
+								break;
+							}
+						}
+					}
+					relevantN.addLast(presentAtRevision);
+					presentAtRevision = 1;
+				}
+			}
+		}
+		LinkedList<LinkedList> resultList = new LinkedList<LinkedList>();
+		resultList.addLast(revision);
+		resultList.addLast(relevantN);
+		return resultList;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public void printHistoryInformation() throws IOException{
+		
+		/*LinkedList<LinkedList> historicResults = enableProcess();
 		ListIterator a = historicResults.get(0).listIterator();
 		ListIterator b = historicResults.get(1).listIterator();
 		ListIterator c = historicResults.get(2).listIterator();
 		ListIterator d = historicResults.get(3).listIterator();
+		ListIterator e = historicResults.get(4).listIterator();
 
         System.out.println(" Revision \t\t Date \t\t\t Rating \t\t\t\t Case");
-		System.out.println("|---------|-------------------------------|-------------------------------|--------------------------------------------------|");
+		System.out.println("|---------|-------------------------------|-------------------------------|--------------------------------------------------|----------------------------------------------------------------------------------------------------------------|");
 		
 		while(a.hasNext()){
 			
 			String rat = c.next().toString();
 			String spaces = "\t  | \t";
 			
-			if (rat.length() <= 5){
+			if (rat.length() <= 8){
 				spaces = "\t\t" + spaces;
 			}
 			else if (rat.length() <= 8){
@@ -190,9 +278,41 @@ public class HistoryParser {
 			if (revision.length() <=5){
 				revision+="\t";
 			}
-			System.out.println("| "+revision+ "  | \t" + b.next() + "\t  | \t" + rat + spaces + d.next()+"   |");
-			System.out.println("|---------|-------------------------------|-------------------------------|--------------------------------------------------|");
+			System.out.println("| "+revision+ "  | \t" + b.next() + "\t  | \t" + rat + spaces + d.next()+"   |"+ e.next());
+			System.out.println("|---------|-------------------------------|-------------------------------|--------------------------------------------------|----------------------------------------------------------------------------------------------------------------|");
+		}*/
+		
+		int i;
+		LinkedList<LinkedList<String>> dataRepoRevision = new LinkedList<LinkedList<String>>();
+		LinkedList<LinkedList<String>> dataRepoDate = new LinkedList<LinkedList<String>>();
 
+		System.out.println("\nQueried Files:");
+		String p = bundle.getString("repo");
+		
+		for (i = 0; i < args.length; i++){
+			System.out.println("\n"+args[i]);
+			String n = p+args[i];
+			//shell wrapping technique found at http://stackoverflow.com/questions/3776195/problem-using-java-processbuilder-to-execute-a-piped-command
+			ProcessBuilder ex =  new ProcessBuilder("/bin/sh", "-c", "svn log -v "+n+" -q | grep ,");
+			Process exec = ex.start();
+			LinkedList<String>[] info = collectTargetData(exec);
+			dataRepoRevision.addLast(info[0]);
+			dataRepoDate.addLast(info[1]);
+			Iterator rev = info[0].iterator();
+			Iterator date = info[1].iterator();
+			while(rev.hasNext()){
+				System.out.println(rev.next() + "\t" + date.next());
+			}
+		}
+		System.out.println();
+		LinkedList<LinkedList> ratings = getHistoricalRelevancy(dataRepoRevision);
+		System.out.println(ratings.get(0).size());
+		System.out.println(ratings.get(1).size());
+		System.out.println();
+		Iterator revision = ratings.get(0).iterator();
+		Iterator numbers = ratings.get(1).iterator();
+		while (numbers.hasNext()){
+			System.out.println(revision.next() + "\t" + numbers.next() +"/"+args.length+" files found");
 		}
 	}
 
