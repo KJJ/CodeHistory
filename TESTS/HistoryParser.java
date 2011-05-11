@@ -203,17 +203,23 @@ public class HistoryParser {
 		for (j = 0; j < 40; j++) { //create a line break to separate the query print out from the data table
 			System.out.print("=========="); //indicates the end of the list of queried files
 		}
-		System.out.print("\n"); //provide spacing between output
+		System.out.print("\n\n"); //provide spacing between output
 
+		System.out.println("commit \t date \t\t\t relevants \t      changed \t rating \t\t rating comment \t\t\t\t actual relevant files");
+		for (j = 0; j < 40; j++) { //used to separate the rows of data and improve appearance and ease of use
+			System.out.print("----------"); //the lines used to separate the information rows
+		}
+
+		
 		LinkedList<RevisionNode> history = getHistoricalRelevancy(dataRepoRevision, dataRepoDate, dataRepoNumberOfFiles); //fully process the collected data from each file's log
 		System.out.println(); //further increase spacing between line break and table
 		for (i = 0; i < history.size(); i++){ //iterates through the entire RevisionNode list to print out its collected data
 			RevisionNode current = history.get(i); //takes the next node to be printed
 			System.out.println(current.toString()); //prints the String representation of all the nodes data
 			for (j = 0; j < 40; j++) { //used to separate the rows of data and improve appearance and ease of use
-				System.out.print("----------"); //the lines used to separate the inforation rows
+				System.out.print("----------"); //the lines used to separate the information rows
 			}
-			System.out.print("\n"); //newline to skip down to the next rows position
+			System.out.print("\n"); //newline to skip down to the next row's position
 		}
 	}
 
