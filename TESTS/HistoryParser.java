@@ -5,7 +5,7 @@ import java.util.*;
 
 public class HistoryParser {
 	
-	//bundle gets the root name of our repository address frim the config file
+	//bundle gets the root name of our repository address from the config.properties file
 	private ResourceBundle bundle = ResourceBundle.getBundle("config");
 	
 	// args holds the string array of passed parameters from the command line
@@ -51,7 +51,7 @@ public class HistoryParser {
 			
 			if (s.startsWith("r")) {  //a line starting with a lower case r implies that we are at a new revision
 				if (count != 0) {  // check to see whether or not this is the first iteration
-					nChanged.addLast(Integer.toString(count));  //add the previous revision's file count to the chnaged list
+					nChanged.addLast(Integer.toString(count));  //add the previous revision's file count to the changed list
 					count = 0;  //reset the counter
 				}
 				ss = s.split(" "); //split the string along white spaces
@@ -187,7 +187,7 @@ public class HistoryParser {
 		
 		for (i = 0; i < args.length; i++){  //loops for every specified file
 			System.out.println("\n"+args[i]); //prints the files name and path from the start of the working copy
-			if (!args[i].startsWith("/")){ //all command line arguments must start with a / so it is checked if tht is the case
+			if (!args[i].startsWith("/")){ //all command line arguments must start with a / so it is checked if that is the case
 				args[i] = "/"+args[i]; //if not then the / is added to the argument at runtime
 			}
 			String n = p+args[i]; //get the path to the file in question
@@ -210,17 +210,41 @@ public class HistoryParser {
 			System.out.print("----------"); //the lines used to separate the information rows
 		}
 
-		
+		int[] statArray = new int[10];
 		LinkedList<RevisionNode> history = getHistoricalRelevancy(dataRepoRevision, dataRepoDate, dataRepoNumberOfFiles); //fully process the collected data from each file's log
 		System.out.println(); //further increase spacing between line break and table
 		for (i = 0; i < history.size(); i++){ //iterates through the entire RevisionNode list to print out its collected data
 			RevisionNode current = history.get(i); //takes the next node to be printed
+			fillArray(statArray, current.getRating());
 			System.out.println(current.toString()); //prints the String representation of all the nodes data
 			for (j = 0; j < 40; j++) { //used to separate the rows of data and improve appearance and ease of use
 				System.out.print("----------"); //the lines used to separate the information rows
 			}
 			System.out.print("\n"); //newline to skip down to the next row's position
 		}
+		System.out.println("\n");
+		for (i = 1; i <= statArray.length; i++){
+			System.out.print((double)(i-1)/10+"-"+(double)i/10+"  ");
+			for (j = 0; j < statArray[i-1]; j++){
+				System.out.print("|");
+			}
+			System.out.print("  ("+statArray[i-1]+")");
+			System.out.println();
+			for (j = 0; j < 10; j++) { //create a line break to separate the query print out from the data table
+				System.out.print("=========="); //indicates the end of the list of queried files
+			}
+			System.out.println();
+		}
 	}
 
+	public void fillArray(int[] array, double rating){
+		int i = 0;
+		while (i <= array.length){
+			if (rating <= (double)i/10){
+				array[i-1] = array[i-1]+1;
+				break;
+			}
+			i++;
+		}
+	}
 }
