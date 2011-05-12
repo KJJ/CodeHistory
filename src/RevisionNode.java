@@ -159,11 +159,11 @@ public class RevisionNode {
 		while(listIt.hasNext()){
 			files += listIt.next()+"\t";
 		}
-		String rat = Double.toString(this.getRating());
-		if (rat.length() <= 8){
-			rat = rat+"\t\t";
-		}
-		out = revision+"\t"+date+"\t"+Integer.toString(numberOfRelevants)+"/"+Integer.toString(totalQuery)+" relevant files\t"+Integer.toString(totalChanges)+"\t"+rat+"\t"+ratingComment+"\t"+files;
+		//information for this rounding found on http://www.java-forums.org/advanced-java/4130-rounding-double-two-decimal-places.html
+		double rat = this.getRating()*100000;
+		rat = Math.round(rat);
+		rat /= 100000;
+		out = revision+"\t"+date+"\t"+Integer.toString(numberOfRelevants)+"/"+Integer.toString(totalQuery)+" relevant files\t"+Integer.toString(totalChanges)+"\t"+rat+"\t\t"+ratingComment+"\t"+files;
 		return out;
 	}
 	
