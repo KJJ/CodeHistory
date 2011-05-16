@@ -35,11 +35,11 @@ public class NodeStatistics {
 			next = runThrough.next();
 			
 			if (highestRating == -1){
-				now = next.getDate();
+				now = "Revision "+next.getRevision()+" at ("+next.getDate()+")";
 			}
 			
 			relevantPresent[next.getNumberOfRelevants()-1] += 1;
-			if (next.getTotalChanges()-next.getNumberOfRelevants() < 70) {
+			if ((next.getTotalChanges()-next.getNumberOfRelevants()) < (10*next.getNumberOfRelevants())) {
 				irrelevantPresent[next.getNumberOfRelevants()-1] += 1;
 			}
 			
@@ -64,7 +64,7 @@ public class NodeStatistics {
 			}
 			
 		}
-		then = next.getDate();
+		then = "Revision "+next.getRevision()+" at ("+next.getDate()+")";
 		ratingAverage = (ratingAverage/revisionTotal)*100000;
 		ratingAverage = Math.round(ratingAverage);
 		ratingAverage /= 100000;
@@ -77,7 +77,7 @@ public class NodeStatistics {
 		
 		System.out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
 		
-		System.out.println("Period of Revision History: ("+then+") to ("+now+") \n");
+		System.out.println("Relevant Segment of Revision History: "+then+" to "+now+" \n");
 		
 		System.out.println("Total Number of Relevant Revisions: " + revisionTotal);
 		int i;

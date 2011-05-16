@@ -43,7 +43,7 @@ public class RevisionNode {
 			ratingComment = "Indeterminate, cannot find clear data here";
 		}
 		else if (relevant == totalChanged && relevant == amountOfRelevantFiles){
-			ratingComment = "Very Relevant, contains only queried files";
+			ratingComment = "Absolutely relevant, pure set of the query";
 		}
 		else if (relevant == totalChanged && relevant < amountOfRelevantFiles) {
 			ratingComment = "A Pure Subset of some of the queried files";
