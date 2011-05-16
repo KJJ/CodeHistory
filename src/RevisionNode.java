@@ -173,7 +173,12 @@ public class RevisionNode {
 		while(listIt.hasNext()){
 			String nextFile = listIt.next();
 			nextFile = nextFile.substring(nextFile.lastIndexOf('/'));
-			files += nextFile+"\t";
+			if (listIt.hasNext()){
+				files += nextFile+", ";
+			}
+			else {
+				files += nextFile;
+			}
 		}
 		String use = user;
 		if (use.length() < 8){

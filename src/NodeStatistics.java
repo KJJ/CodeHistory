@@ -93,8 +93,8 @@ public class NodeStatistics {
 		System.out.println("\t Highest Rating: " + highestRating + "\n");
 		
 		System.out.println("Average Number of Changed files: "+ nFilesAverage);
-		System.out.println("\t Lowest Rating: " + lowestFileNumber);
-		System.out.println("\t Highest Rating: " + highestFileNumber + "\n");
+		System.out.println("\t Lowest Number of Changed Files: " + lowestFileNumber);
+		System.out.println("\t Highest Number of Changed Files: " + highestFileNumber + "\n");
 		
 		System.out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
 
