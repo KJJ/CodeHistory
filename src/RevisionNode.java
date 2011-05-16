@@ -172,7 +172,7 @@ public class RevisionNode {
 		Iterator<String> listIt = this.getRelevantFiles().iterator();
 		while(listIt.hasNext()){
 			String nextFile = listIt.next();
-			nextFile = nextFile.substring(nextFile.lastIndexOf('/'));
+			nextFile = nextFile.substring(nextFile.lastIndexOf('/')+1);
 			if (listIt.hasNext()){
 				files += nextFile+", ";
 			}
