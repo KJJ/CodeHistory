@@ -4,16 +4,32 @@ import java.util.LinkedList;
 
 public class NodeStatistics {
 	
+	//toAnalyze is the linked list holding the raw revision data
 	private LinkedList<RevisionNode> toAnalyze;
+	//Total number of revisions being analyzed
 	private int revisionTotal;
+	//values used to reference the rating statistics
 	private double ratingAverage, highestRating, lowestRating;
+	//values for file statistics
 	private int nFilesAverage, highestFileNumber, lowestFileNumber;
+	//holds the information for the first and last revisions of the list to put the information in a time-based context
 	private String then, now;
+	//holds the names of the queried files that helped create the list being analyzed
 	private String[] args;
+	//how many relevant files are present at any one time
 	private int[] relevantPresent;
+	//how many files are not relevant based on filtering
 	private int[] irrelevantPresent;
+	//holds the revision numbers for the bounds in the numerical statistics sections
 	private String[] revisionReference = new String[4];
 	
+	private int relevantAverage;
+	
+	/**
+	 * Constructor: initializes all fields to prepare for analysis
+	 * @param list the list of RevisionNode's to be analyzed for patterns and statistics
+	 * @param arg the queried files paired with the linked list
+	 */
 	public NodeStatistics(LinkedList<RevisionNode> list, String[] arg){
 		toAnalyze = list;
 		revisionTotal = list.size();
@@ -26,6 +42,7 @@ public class NodeStatistics {
 		args = arg;
 		relevantPresent = new int[arg.length];
 		irrelevantPresent = new int[arg.length];
+		relevantAverage = 0;
 	}
 	
 	public void analyze(){
@@ -44,6 +61,7 @@ public class NodeStatistics {
 				irrelevantPresent[next.getNumberOfRelevants()-1] += 1;
 			}
 			
+			relevantAverage += next.getNumberOfRelevants();
 			ratingAverage += next.getRating();
 			nFilesAverage += next.getTotalChanges();
 			if (next.getRating() > highestRating){
@@ -75,6 +93,7 @@ public class NodeStatistics {
 			ratingAverage = Math.round(ratingAverage);
 			ratingAverage /= 100000;
 			nFilesAverage = nFilesAverage/revisionTotal;
+			relevantAverage = relevantAverage/revisionTotal;
 		}
 		
 	}
@@ -92,6 +111,7 @@ public class NodeStatistics {
 			System.out.println("Relevant Segment of Revision History: "+then+" to "+now+" \n");
 		
 			System.out.println("Total Number of Relevant Revisions: " + revisionTotal);
+			System.out.println("\t Average Number of relevant files per revision: "+ relevantAverage + "\n");
 			int i;
 			for (i = 0; i < args.length; i++) {
 				System.out.println("\t Number of Revisions Changing "+(i+1)+" of the Relevant Files: " + relevantPresent[i]);
