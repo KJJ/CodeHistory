@@ -231,13 +231,13 @@ public class HistoryParser {
 		}
 		
 		System.out.println("\n");
-		NodeStatistics stats = new NodeStatistics(history);
+		NodeStatistics stats = new NodeStatistics(history, args);
 		stats.statsOut();
 		
 		System.out.println("\n");
 		System.out.println("Rating Graph: looking for grouping\n");
 		for (i = 1; i <= statArray.length; i++){
-			System.out.print((double)(i-1)/10+"-"+(double)i/10+"  ");
+			System.out.print((double)(i-1)/10+"-"+(double)i/10+":  ");
 			for (j = 0; j < statArray[i-1]; j++){
 				System.out.print("|");
 			}
