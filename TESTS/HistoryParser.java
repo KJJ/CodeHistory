@@ -32,11 +32,12 @@ public class HistoryParser {
 		
 		@SuppressWarnings("unchecked")
 		//holds the data on the targeted file log
-		LinkedList<String>[] data = new LinkedList[3];
+		LinkedList<String>[] data = new LinkedList[4];
 		//holds the current line of input in String form
 		String s;
 		//holds the split string
 		String[] ss;
+		LinkedList<String> userList = new LinkedList<String>();
 		//revision list
 		LinkedList<String> rev = new LinkedList<String>();
 		//list of revision dates
@@ -57,6 +58,7 @@ public class HistoryParser {
 				ss = s.split(" "); //split the string along white spaces
 				rev.addLast(ss[0].substring(1)); //gets the revision number at the very beginning of s, removing the r to just get the number
 				date.addLast(ss[4]+" "+ss[5]);  // gets both the date and time of the revision
+				userList.addLast(ss[2]);
 			}
 			/* 
 			 * other lines fall into two categories, those pertaining to file history and those that are
@@ -73,6 +75,7 @@ public class HistoryParser {
 		data[0] = rev; //store the revision list
 		data[1] = date; //store the date list
 		data[2] = nChanged; //store the number of files changed list
+		data[3] = userList;
 		return data; //return the array as output
 	}
 	
@@ -84,7 +87,7 @@ public class HistoryParser {
 	 * @param fileList String list of the number of files changed
 	 * @return the RevisionNode list holding all of the gathered/processed log data
 	 */
-	public LinkedList<RevisionNode> getHistoricalRelevancy(LinkedList<LinkedList<String>> RevisionList, LinkedList<LinkedList<String>> DateList, LinkedList<LinkedList<String>> fileList){
+	public LinkedList<RevisionNode> getHistoricalRelevancy(LinkedList<LinkedList<String>> UserList, LinkedList<LinkedList<String>> RevisionList, LinkedList<LinkedList<String>> DateList, LinkedList<LinkedList<String>> fileList){
 		int i, j; //loop counters
 		LinkedList<RevisionNode> results = new LinkedList<RevisionNode>(); //holds the results of processing the data
 		LinkedList<String> revision = new LinkedList<String>(); //stores the revisions encountered in order to check whether or not another file shares that revision
@@ -101,12 +104,14 @@ public class HistoryParser {
 			LinkedList<String> target = RevisionList.get(i);  //the list of revisions collected earlier
 			Iterator<String> targetIterator = target.iterator(); //iterator for the list of revisions		
 			Iterator<String> dateIterator = DateList.get(i).iterator(); //iterator for the list of dates	
-			Iterator<String> changeIterator = fileList.get(i).iterator(); //iterator for the list of files	
+			Iterator<String> changeIterator = fileList.get(i).iterator(); //iterator for the list of files
+			Iterator<String> userIterator = UserList.get(i).iterator();
 			while (targetIterator.hasNext()) { //uses the equality of list lengths to avoid bounds exceptions
 				currentRev = targetIterator.next(); //gets the next revision number to process
 				
 				//instantiates the new node with the revision, date, total changed files and the number of changed queried files 
-				node = new RevisionNode(dateIterator.next(), currentRev, Integer.parseInt(changeIterator.next()), args.length); 
+				node = new RevisionNode(dateIterator.next(), currentRev, args.length, userIterator.next());
+				node.setTotalChanges(Integer.parseInt(changeIterator.next()));
 				node.newRelevantFile(args[i]); //add the current file to the revision list (NOTE: this makes use of how the file data is collected)
 				if (!revision.contains(currentRev)) { //if the revision has not been previously encountered
 					revision.addLast(currentRev); //add it to the revision tracking list
@@ -181,9 +186,10 @@ public class HistoryParser {
 		LinkedList<LinkedList<String>> dataRepoRevision = new LinkedList<LinkedList<String>>(); //list that holds the revision number lists
 		LinkedList<LinkedList<String>> dataRepoDate = new LinkedList<LinkedList<String>>(); //list that holds the date of revision lists
 		LinkedList<LinkedList<String>> dataRepoNumberOfFiles = new LinkedList<LinkedList<String>>(); //list that holds list of the number of files changed in a revision
-
+		LinkedList<LinkedList<String>> dataRepoUser = new LinkedList<LinkedList<String>>();
+		
 		System.out.println("Queried Files:"); //indicates the next lines show what was entered on the command line
-		String p = bundle.getString("repo"); //uses the config.properties file to get the path to the svn working copy being used
+		String p = bundle.getString(bundle.getString("repo")); //uses the config.properties file to get the path to the svn working copy being used
 		
 		for (i = 0; i < args.length; i++){  //loops for every specified file
 			System.out.println("\n"+args[i]); //prints the files name and path from the start of the working copy
@@ -196,33 +202,40 @@ public class HistoryParser {
 			dataRepoRevision.addLast(info[0]); //the revision list is added to the main list for later processing
 			dataRepoDate.addLast(info[1]); //the date list is added to the main list for later processing
 			dataRepoNumberOfFiles.addLast(info[2]); //the amount of files changed list is added to the main list for later processing
+			dataRepoUser.addLast(info[3]);
 		}
 		int j; //loop counter
 		
 		System.out.print("\n");
-		for (j = 0; j < 40; j++) { //create a line break to separate the query print out from the data table
+		for (j = 0; j < 25; j++) { //create a line break to separate the query print out from the data table
 			System.out.print("=========="); //indicates the end of the list of queried files
 		}
 		System.out.print("\n\n"); //provide spacing between output
 
-		System.out.println("commit \t date \t\t\t relevants \t      changed \t rating \t\t rating comment \t\t\t\t actual relevant files");
-		for (j = 0; j < 40; j++) { //used to separate the rows of data and improve appearance and ease of use
+		System.out.println("commit \t user \t\t date \t\t\t relevants \t      changed \t rating \t\t rating comment \t\t\t\t actual relevant files");
+		for (j = 0; j < 25; j++) { //used to separate the rows of data and improve appearance and ease of use
 			System.out.print("----------"); //the lines used to separate the information rows
 		}
 
 		int[] statArray = new int[10];
-		LinkedList<RevisionNode> history = getHistoricalRelevancy(dataRepoRevision, dataRepoDate, dataRepoNumberOfFiles); //fully process the collected data from each file's log
+		LinkedList<RevisionNode> history = getHistoricalRelevancy(dataRepoUser, dataRepoRevision, dataRepoDate, dataRepoNumberOfFiles); //fully process the collected data from each file's log
 		System.out.println(); //further increase spacing between line break and table
 		for (i = 0; i < history.size(); i++){ //iterates through the entire RevisionNode list to print out its collected data
 			RevisionNode current = history.get(i); //takes the next node to be printed
 			fillArray(statArray, current.getRating());
 			System.out.println(current.toString()); //prints the String representation of all the nodes data
-			for (j = 0; j < 40; j++) { //used to separate the rows of data and improve appearance and ease of use
+			for (j = 0; j < 25; j++) { //used to separate the rows of data and improve appearance and ease of use
 				System.out.print("----------"); //the lines used to separate the information rows
 			}
 			System.out.print("\n"); //newline to skip down to the next row's position
 		}
+		
 		System.out.println("\n");
+		NodeStatistics stats = new NodeStatistics(history);
+		stats.statsOut();
+		
+		System.out.println("\n");
+		System.out.println("Rating Graph: looking for grouping\n");
 		for (i = 1; i <= statArray.length; i++){
 			System.out.print((double)(i-1)/10+"-"+(double)i/10+"  ");
 			for (j = 0; j < statArray[i-1]; j++){
@@ -234,7 +247,9 @@ public class HistoryParser {
 				System.out.print("=========="); //indicates the end of the list of queried files
 			}
 			System.out.println();
+
 		}
+		
 	}
 
 	public void fillArray(int[] array, double rating){

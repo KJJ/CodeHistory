@@ -12,6 +12,7 @@ public class RevisionNode {
 	private int totalQuery;						//total number of queried files
 	private int totalChanges;					//total number of files affected by the this revision
 	private String ratingComment;				//the comment attached to the rating, based on various factors
+	private String user;						//user who added the revision
 	
 	/**
 	 * Constructor. Allows the user to also enter the date and number of relevant files 
@@ -20,13 +21,14 @@ public class RevisionNode {
 	 * @param total how many changed files there are
 	 * @param query how many files were entered on the command line
 	 */
-	public RevisionNode(String dat, String rev, int total, int query) {
+	public RevisionNode(String dat, String rev, int query, String User) {
 		date = dat;
 		revision = rev;
-		totalChanges = total;
+		totalChanges = 0;
 		rating = 0;
 		relevantFiles = new LinkedList<String>();
 		totalQuery = query;
+		user = User;
 	}
 
 	/**
@@ -38,7 +40,7 @@ public class RevisionNode {
 	 */
 	private void setRatingComment(int relevant, int irrelevant, int totalChanged, int amountOfRelevantFiles) {
 		if (relevant == 0) {
-			ratingComment = "Irrelevant";
+			ratingComment = "Indeterminate, cannot find clear data here";
 		}
 		else if (relevant == totalChanged && relevant == amountOfRelevantFiles){
 			ratingComment = "Very Relevant, contains only queried files";
@@ -51,6 +53,10 @@ public class RevisionNode {
 		}
 		
 		else ratingComment = "Subset of Relevants mixed with Irrelevants";
+	}
+	
+	public void setNumberOfRelevants(int rel){
+		numberOfRelevants = rel; 
 	}
 
 	/**
@@ -116,6 +122,14 @@ public class RevisionNode {
 	}
 	
 	/**
+	 * gets the user who applied this revision
+	 * @return the user
+	 */
+	public String getUser() {
+		return user;
+	}
+	
+	/**
 	 * gets the rating comment related to the relevance rating, showing some of the logic behind
 	 * the rating system.
 	 * @return the rating comment of this revision
@@ -157,13 +171,19 @@ public class RevisionNode {
 		String files = "";
 		Iterator<String> listIt = this.getRelevantFiles().iterator();
 		while(listIt.hasNext()){
-			files += listIt.next()+"\t";
+			String nextFile = listIt.next();
+			nextFile = nextFile.substring(nextFile.lastIndexOf('/'));
+			files += nextFile+"\t";
+		}
+		String use = user;
+		if (use.length() < 8){
+			use += "\t";
 		}
 		//information for this rounding found on http://www.java-forums.org/advanced-java/4130-rounding-double-two-decimal-places.html
 		double rat = this.getRating()*100000;
 		rat = Math.round(rat);
 		rat /= 100000;
-		out = revision+"\t"+date+"\t"+Integer.toString(numberOfRelevants)+"/"+Integer.toString(totalQuery)+" relevant files\t"+Integer.toString(totalChanges)+"\t"+rat+"\t\t"+ratingComment+"\t"+files;
+		out = revision+"\t"+use+"\t"+date+"\t"+Integer.toString(numberOfRelevants)+"/"+Integer.toString(totalQuery)+" relevant files\t"+Integer.toString(totalChanges)+"\t"+rat+"\t\t"+ratingComment+"\t"+files;
 		return out;
 	}
 	
@@ -196,8 +216,22 @@ public class RevisionNode {
 	 * @param file the queried file found to be in this revision
 	 */
 	public void newRelevantFile(String file){
-		relevantFiles.addLast(file);
-		numberOfRelevants++;
+		Iterator<String> listCheck = relevantFiles.iterator();
+		int n = 1;
+		while (listCheck.hasNext()) {
+			String current = listCheck.next();
+			if (!current.split(" ")[0].equals((file.split(" ")[0]))) {
+				n = 1;
+			}
+			else {
+				n = 0;
+				break;
+			}
+		}
+		if (n == 1){
+			relevantFiles.addLast(file);
+			numberOfRelevants++;
+		}
 	}
 
 }

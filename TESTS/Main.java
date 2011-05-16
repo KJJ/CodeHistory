@@ -4,12 +4,13 @@ public class Main {
 	 * @param args command line arguments supplied by the user
 	 */
 	public static void main(String[] args){
+		long start = System.currentTimeMillis();
 		try {
 			int i,j; //loops counters
 			/*
 			 * these two for loops look to see whether the user accidently used the same file twice
 			 * when specifying their parameters. If this did occur, an exception is thrown and the user
-			 * notified about what happened.
+			 * is notified about what happened.
 			 */
 			for (i=0; i < args.length; i++){
 				for(j = i+1; j < args.length; j++){
@@ -27,6 +28,8 @@ public class Main {
 		catch (Exception e) {
 			e.printStackTrace(); //prints out the issue caught
 		}
+		long end = System.currentTimeMillis();
+		System.out.println("\n"+(end-start)/1000.00+" seconds for completion");
 	}
 
 }
