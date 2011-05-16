@@ -243,7 +243,7 @@ public class HistoryParser {
 			}
 			System.out.print("  ("+statArray[i-1]+")");
 			System.out.println();
-			for (j = 0; j < 10; j++) { //create a line break to separate the query print out from the data table
+			for (j = 0; j < 25; j++) { //create a line break to separate the query print out from the data table
 				System.out.print("=========="); //indicates the end of the list of queried files
 			}
 			System.out.println();

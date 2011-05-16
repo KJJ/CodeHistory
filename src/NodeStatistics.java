@@ -12,6 +12,7 @@ public class NodeStatistics {
 	private String[] args;
 	private int[] relevantPresent;
 	private int[] irrelevantPresent;
+	private String[] revisionReference = new String[4];
 	
 	public NodeStatistics(LinkedList<RevisionNode> list, String[] arg){
 		toAnalyze = list;
@@ -49,18 +50,22 @@ public class NodeStatistics {
 				highestRating = next.getRating() *100000;
 				highestRating = Math.round(highestRating);
 				highestRating /= 100000;
+				revisionReference[0] = next.getRevision();
 			}
 			if (next.getRating() < lowestRating){
 				lowestRating = next.getRating() *100000;
 				lowestRating = Math.round(lowestRating);
 				lowestRating /= 100000;
+				revisionReference[1] = next.getRevision();
 			}
 			
 			if (next.getTotalChanges() > highestFileNumber){
 				highestFileNumber = next.getTotalChanges();
+				revisionReference[2] = next.getRevision();
 			}
 			if (next.getTotalChanges() < lowestFileNumber){
 				lowestFileNumber = next.getTotalChanges();
+				revisionReference[3] = next.getRevision();
 			}
 			
 		}
@@ -90,18 +95,18 @@ public class NodeStatistics {
 			int i;
 			for (i = 0; i < args.length; i++) {
 				System.out.println("\t Number of Revisions Changing "+(i+1)+" of the Relevant Files: " + relevantPresent[i]);
-				System.out.println("\t\t Number of these revisions with under "+(10*(i+1))+" irrelevants extra files: " + irrelevantPresent[i] + "\n");
+				System.out.println("\t\t Number of these revisions with under "+(10*(i+1))+" irrelevant extra files: " + irrelevantPresent[i] + "\n");
 			}
 		
 			System.out.println();
 		
 			System.out.println("Average Rating: "+ ratingAverage);
-			System.out.println("\t Lowest Rating: " + lowestRating);
-			System.out.println("\t Highest Rating: " + highestRating + "\n");
+			System.out.println("\t Lowest Rating: " + lowestRating+" for Revision "+revisionReference[1]);
+			System.out.println("\t Highest Rating: " + highestRating +" for Revision "+revisionReference[0]+ "\n");
 		
 			System.out.println("Average Number of Changed files: "+ nFilesAverage);
-			System.out.println("\t Lowest Number of Changed Files: " + lowestFileNumber);
-			System.out.println("\t Highest Number of Changed Files: " + highestFileNumber + "\n");
+			System.out.println("\t Lowest Number of Changed Files: " + lowestFileNumber+" changed at Revision "+revisionReference[3]);
+			System.out.println("\t Highest Number of Changed Files: " + highestFileNumber+" changed at Revision "+revisionReference[2] + "\n");
 		}
 		
 		System.out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
