@@ -29,7 +29,7 @@ public class Main {
 			e.printStackTrace(); //prints out the issue caught
 		}
 		long end = System.currentTimeMillis();
-		System.out.println("\n"+(end-start)/1000.00+" seconds for completion");
+		System.out.println("\n("+(end-start)/1000.00+" seconds for completion)");
 	}
 
 }
