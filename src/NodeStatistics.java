@@ -63,21 +63,19 @@ public class NodeStatistics {
 				irrelevantPresent[next.getNumberOfRelevants()-1] += 1;
 			}
 			
-			if (next.getRelevantFiles().size() > 1) {
-				String files = "\t";
-				Iterator<String> listIt = next.getRelevantFiles().iterator();
-				while (listIt.hasNext()){
-					String nextFile = listIt.next();
-					nextFile = nextFile.substring(nextFile.lastIndexOf('/')+1);
-					if (listIt.hasNext()){
-						files += nextFile+", ";
-					}
-					else {
-						files += "& "+nextFile;
-					}
+			String files = "";
+			Iterator<String> listIt = next.getRelevantFiles().iterator();
+			while (listIt.hasNext()){
+				String nextFile = listIt.next();
+				nextFile = nextFile.substring(nextFile.lastIndexOf('/')+1);
+				if (listIt.hasNext()){
+					files += nextFile+", ";
 				}
-				grouping.newInput(files);
+				else {
+					files += nextFile;
+				}
 			}
+				grouping.newInput(files);
 			
 			relevantAverage += next.getNumberOfRelevants();
 			ratingAverage += next.getRating();
