@@ -50,9 +50,9 @@ public class GroupingList {
 		
 		while (lIterator.hasNext()){
 			GroupingNode next = lIterator.next();
-			System.out.println("\t The group "+next.getGroup()+" occurs "+next.getOccurences()+" time(s). \n");
+			System.out.println("\t The group ["+next.getGroup()+"] occurs "+next.getOccurences()+" time(s). \n");
 		}
-		System.out.println();
+	//	System.out.println();
 	}
 
 }

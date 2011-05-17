@@ -147,9 +147,42 @@ public class NodeStatistics {
 			System.out.println("\t Highest Number of Changed Files: " + highestFileNumber+" changed at Revision "+revisionReference[2] + "\n");
 			
 			grouping.currentOutput();
+			if (args.length > 1) {
+				percentages(args);
+			}
 		}
 		
 		System.out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
 
+	}
+	
+	public void percentages(String[] files) {
+		int i, j;
+		int[] infoArray;
+		LinkedList<RevisionNode> theList = toAnalyze;
+		
+		for (i=0; i < files.length; i++) {
+			infoArray = new int[files.length];
+			Iterator<RevisionNode> lIterator = theList.iterator();
+			while (lIterator.hasNext()) {
+				RevisionNode next = lIterator.next();
+				if (next.getRelevantFiles().contains(files[i])) {
+					for (j = 0; j < files.length; j++) {
+						if (next.getRelevantFiles().contains(files[j])) {
+							infoArray[j] += 1;
+						}
+					}
+				}
+			}
+			System.out.println();
+			System.out.println("For the file "+files[i].substring(files[i].lastIndexOf("/")+1)+":");
+			for (j = 0; j < files.length; j++) {
+				if (j != i) {
+					int percent = (int) Math.round((infoArray[j]/(double)infoArray[i])*100);
+					System.out.println("\t When changed, " + files[j].substring(files[j].lastIndexOf("/")+1) +" is changed "+percent+"% of the time.");
+				}
+			}
+		}
+		System.out.println();
 	}
 }

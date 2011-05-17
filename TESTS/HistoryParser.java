@@ -17,6 +17,12 @@ public class HistoryParser {
 	 */
 	public HistoryParser(String[] arg) {
 		args = arg;
+		int i;
+		for (i = 0; i < args.length; i++) {
+			if (args[i].endsWith("/")) {
+				args[i] = args[i].substring(0, args[i].lastIndexOf('/'));
+			}
+		}
 	}
 	
 	/**
