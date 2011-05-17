@@ -23,6 +23,8 @@ public class NodeStatistics {
 	//holds the revision numbers for the bounds in the numerical statistics sections
 	private String[] revisionReference = new String[4];
 	
+	private GroupingList grouping = new GroupingList(); 
+	
 	private int relevantAverage;
 	
 	/**
@@ -61,16 +63,34 @@ public class NodeStatistics {
 				irrelevantPresent[next.getNumberOfRelevants()-1] += 1;
 			}
 			
+			if (next.getRelevantFiles().size() > 1) {
+				String files = "\t";
+				Iterator<String> listIt = next.getRelevantFiles().iterator();
+				while (listIt.hasNext()){
+					String nextFile = listIt.next();
+					nextFile = nextFile.substring(nextFile.lastIndexOf('/')+1);
+					if (listIt.hasNext()){
+						files += nextFile+", ";
+					}
+					else {
+						files += "& "+nextFile;
+					}
+				}
+				grouping.newInput(files);
+			}
+			
 			relevantAverage += next.getNumberOfRelevants();
 			ratingAverage += next.getRating();
 			nFilesAverage += next.getTotalChanges();
 			if (next.getRating() > highestRating){
+				//information for this rounding found on http://www.java-forums.org/advanced-java/4130-rounding-double-two-decimal-places.html
 				highestRating = next.getRating() *100000;
 				highestRating = Math.round(highestRating);
 				highestRating /= 100000;
 				revisionReference[0] = next.getRevision();
 			}
 			if (next.getRating() < lowestRating){
+				//information for this rounding found on http://www.java-forums.org/advanced-java/4130-rounding-double-two-decimal-places.html
 				lowestRating = next.getRating() *100000;
 				lowestRating = Math.round(lowestRating);
 				lowestRating /= 100000;
@@ -127,6 +147,8 @@ public class NodeStatistics {
 			System.out.println("Average Number of Changed files: "+ nFilesAverage);
 			System.out.println("\t Lowest Number of Changed Files: " + lowestFileNumber+" changed at Revision "+revisionReference[3]);
 			System.out.println("\t Highest Number of Changed Files: " + highestFileNumber+" changed at Revision "+revisionReference[2] + "\n");
+			
+			grouping.currentOutput();
 		}
 		
 		System.out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
