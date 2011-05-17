@@ -22,9 +22,9 @@ public class NodeStatistics {
 	private int[] irrelevantPresent;
 	//holds the revision numbers for the bounds in the numerical statistics sections
 	private String[] revisionReference = new String[4];
-	
+	//the list of file groupings found in this instance of the Subversion log
 	private GroupingList grouping = new GroupingList(); 
-	
+	//average number of relevant files per revision
 	private int relevantAverage;
 	
 	/**
@@ -47,39 +47,47 @@ public class NodeStatistics {
 		relevantAverage = 0;
 	}
 	
+	/**
+	 * analyze, as its name suggests, analyzes a RevisionNode list and finds helpful data on the revisions as a whole
+	 * data found includes:
+	 *  max/min/average relevance rating
+	 *  max/min/average number of files changed i a revision
+	 *  average number of relevant files
+	 *  file groupings
+	 */
 	public void analyze(){
-		Iterator<RevisionNode> runThrough = toAnalyze.iterator(); 
-		RevisionNode next = null;
-		while (runThrough.hasNext()){
+		Iterator<RevisionNode> runThrough = toAnalyze.iterator(); //preparing to go through every relevant revision's data
+		RevisionNode next = null; //null to determine later whether or not the list is empty or not
+		while (runThrough.hasNext()){ 
 			
-			next = runThrough.next();
+			next = runThrough.next(); //the next revision's data node
 			
-			if (highestRating == -1){
-				now = "Revision "+next.getRevision()+" at ("+next.getDate()+")";
+			if (highestRating == -1){ //implies this is the first iteration
+				now = "Revision "+next.getRevision()+" at ("+next.getDate()+")"; //the latest revision's date and number
 			}
 			
-			relevantPresent[next.getNumberOfRelevants()-1] += 1;
+			relevantPresent[next.getNumberOfRelevants()-1] += 1; //how many relevant files there are here
 			if ((next.getTotalChanges()-next.getNumberOfRelevants()) < (10*next.getNumberOfRelevants())) {
-				irrelevantPresent[next.getNumberOfRelevants()-1] += 1;
+				irrelevantPresent[next.getNumberOfRelevants()-1] += 1; //having the acceptable number of irrelevant files
 			}
 			
 			String files = "";
 			Iterator<String> listIt = next.getRelevantFiles().iterator();
 			while (listIt.hasNext()){
 				String nextFile = listIt.next();
-				nextFile = nextFile.substring(nextFile.lastIndexOf('/')+1);
+				nextFile = nextFile.substring(nextFile.lastIndexOf('/')+1); //only take the file's name, not its path
 				if (listIt.hasNext()){
-					files += nextFile+", ";
+					files += nextFile+", "; //if this is not the last file, put in a comma
 				}
 				else {
-					files += nextFile;
+					files += nextFile; //else, just enter the file name
 				}
 			}
-				grouping.newInput(files);
+				grouping.newInput(files); //send the group of files for file-group processing
 			
-			relevantAverage += next.getNumberOfRelevants();
-			ratingAverage += next.getRating();
-			nFilesAverage += next.getTotalChanges();
+			relevantAverage += next.getNumberOfRelevants(); //aggregation period of average calculation
+			ratingAverage += next.getRating(); //aggregation period of average calculation
+			nFilesAverage += next.getTotalChanges(); //aggregation period of average calculation
 			if (next.getRating() > highestRating){
 				//information for this rounding found on http://www.java-forums.org/advanced-java/4130-rounding-double-two-decimal-places.html
 				highestRating = next.getRating() *100000;
@@ -95,33 +103,37 @@ public class NodeStatistics {
 				revisionReference[1] = next.getRevision();
 			}
 			
-			if (next.getTotalChanges() > highestFileNumber){
-				highestFileNumber = next.getTotalChanges();
-				revisionReference[2] = next.getRevision();
+			if (next.getTotalChanges() > highestFileNumber){ //is the current file count higher than the current maximum?
+				highestFileNumber = next.getTotalChanges(); //changes the value to the new maximum
+				revisionReference[2] = next.getRevision(); //gets what revision this was found at for later reference
 			}
-			if (next.getTotalChanges() < lowestFileNumber){
-				lowestFileNumber = next.getTotalChanges();
-				revisionReference[3] = next.getRevision();
+			if (next.getTotalChanges() < lowestFileNumber){ //is the current file count lower than the current minimum?
+				lowestFileNumber = next.getTotalChanges(); //changes the value to the new minimum
+				revisionReference[3] = next.getRevision(); //gets what revision this was found at for later reference
 			}
 			
 		}
-		if (next != null) {
-			then = "Revision "+next.getRevision()+" at ("+next.getDate()+")";
-			ratingAverage = (ratingAverage/revisionTotal)*100000;
+		if (next != null) { //if the list was not empty
+			then = "Revision "+next.getRevision()+" at ("+next.getDate()+")"; //the last relevant revision and date of the log
+			//information for this rounding found on http://www.java-forums.org/advanced-java/4130-rounding-double-two-decimal-places.html
+			ratingAverage = (ratingAverage/revisionTotal)*100000; 
 			ratingAverage = Math.round(ratingAverage);
 			ratingAverage /= 100000;
-			nFilesAverage = nFilesAverage/revisionTotal;
-			relevantAverage = relevantAverage/revisionTotal;
+			nFilesAverage = nFilesAverage/revisionTotal; //rounding not used since it is an integer
+			relevantAverage = relevantAverage/revisionTotal; //rounding not used since it is an integer
 		}
 		
 	}
 	
+	/**
+	 * prints out all of the statistics that have been gathered from the log analysis and grouping code
+	 */
 	public void statsOut() {
 		analyze();
 		
 		System.out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
 		
-		if (lowestRating == 2) {
+		if (lowestRating == 2) { //implies no data was ever given since no rating will ever be above 1, let alone at 2
 			System.out.println("Nothing here to give statistics on \n");
 		}
 		
@@ -156,33 +168,40 @@ public class NodeStatistics {
 
 	}
 	
+	/**
+	 * percentages, using the user-defined parameters coupled with the parsed log information it determines
+	 * the percentage of the occurrences of one file's changes in relation to the presence of another at that revision
+	 * for all files in the parameters
+	 * @param files relevant files, as determined by the user in the command-line parameters
+	 */
 	public void percentages(String[] files) {
-		int i, j;
-		int[] infoArray;
-		LinkedList<RevisionNode> theList = toAnalyze;
+		int i, j; //loop counters
+		int[] infoArray; //array that holds the counters for each file-to-file comparison 
+		LinkedList<RevisionNode> theList = toAnalyze; // takes a copy of the RevisionNode list of data parsed from the log
 		
-		for (i=0; i < files.length; i++) {
-			infoArray = new int[files.length];
-			Iterator<RevisionNode> lIterator = theList.iterator();
-			while (lIterator.hasNext()) {
-				RevisionNode next = lIterator.next();
-				if (next.getRelevantFiles().contains(files[i])) {
-					for (j = 0; j < files.length; j++) {
-						if (next.getRelevantFiles().contains(files[j])) {
-							infoArray[j] += 1;
+		for (i=0; i < files.length; i++) { //for the every element in the parameter array
+			infoArray = new int[files.length]; //set the array length to reflect how many elements there are
+			Iterator<RevisionNode> lIterator = theList.iterator(); //iterate through the list, for every node
+			while (lIterator.hasNext()) { //for every node in the RevisionNode list
+				RevisionNode next = lIterator.next(); //take the next node in the list
+				if (next.getRelevantFiles().contains(files[i])) { //if the current revision involved the current file, else skip this
+					for (j = 0; j < files.length; j++) { //checks for the presence of every other file
+						if (next.getRelevantFiles().contains(files[j])) { //if another is present
+							infoArray[j] += 1; //increment its respective counter, also counts occurrences of the current file as well
 						}
 					}
 				}
 			}
-			System.out.println();
-			System.out.println("For the file "+files[i].substring(files[i].lastIndexOf("/")+1)+":");
-			for (j = 0; j < files.length; j++) {
-				if (j != i) {
-					int percent = (int) Math.round((infoArray[j]/(double)infoArray[i])*100);
+			System.out.println(); //spacing
+			System.out.println("For the file "+files[i].substring(files[i].lastIndexOf("/")+1)+":"); //indicates what file we are talking about
+			for (j = 0; j < files.length; j++) { //for the length of our data array
+				if (j != i) { //ignoring the current files slot since it would be 100% no matte what
+					int percent = (int) Math.round((infoArray[j]/(double)infoArray[i])*100); //round to the nearest percent
+					//indicates that when file i is changed in a revision, file j is also changed at the same revision percent% of the time
 					System.out.println("\t When changed, " + files[j].substring(files[j].lastIndexOf("/")+1) +" is changed "+percent+"% of the time.");
 				}
 			}
 		}
-		System.out.println();
+		System.out.println(); //spacing
 	}
 }

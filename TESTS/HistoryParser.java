@@ -16,10 +16,10 @@ public class HistoryParser {
 	 * @param arg file names to be looked for in the code
 	 */
 	public HistoryParser(String[] arg) {
-		args = arg;
-		int i;
+		args = arg;  // gets the user-requested files
+		int i; //loop counter
 		for (i = 0; i < args.length; i++) {
-			if (args[i].endsWith("/")) {
+			if (args[i].endsWith("/")) { //removes a a end slash to avoid confusion in the later statistics and output
 				args[i] = args[i].substring(0, args[i].lastIndexOf('/'));
 			}
 		}
@@ -237,17 +237,17 @@ public class HistoryParser {
 		}
 		
 		System.out.println("\n");
-		NodeStatistics stats = new NodeStatistics(history, args);
-		stats.statsOut();
+		NodeStatistics stats = new NodeStatistics(history, args); // prepares to process data held in the RevisionNode list
+		stats.statsOut(); //output the statistics to the screen
 		
 		System.out.println("\n");
 		System.out.println("Rating Graph: looking for grouping\n");
 		for (i = 1; i <= statArray.length; i++){
-			System.out.print((double)(i-1)/10+"-"+(double)i/10+":  ");
-			for (j = 0; j < statArray[i-1]; j++){
-				System.out.print("|");
+			System.out.print("["+(double)(i-1)/10+", "+(double)i/10+"]:  "); //current range interval
+			for (j = 0; j < statArray[i-1]; j++){ //loop through the entire range of rating intervals
+				System.out.print("|"); // one '|' = one rating in this range
 			}
-			System.out.print("  ("+statArray[i-1]+")");
+			System.out.print("  ("+statArray[i-1]+")"); //print out the numerical representation of that interval for easier use
 			System.out.println();
 			for (j = 0; j < 25; j++) { //create a line break to separate the query print out from the data table
 				System.out.print("=========="); //indicates the end of the list of queried files
@@ -258,12 +258,18 @@ public class HistoryParser {
 		
 	}
 
-	public void fillArray(int[] array, double rating){
-		int i = 0;
-		while (i <= array.length){
-			if (rating <= (double)i/10){
-				array[i-1] = array[i-1]+1;
-				break;
+	/**
+	 * Takes the rating of a particular revision and uses it to place in an array
+	 * designed to store the rating ranges
+	 * @param array the array that stores how mny ratings fall in specific value ranges
+	 * @param rating the current rating reached in  the code
+	 */
+	public void fillArray(int[] array, double rating){ 
+		int i = 0; // loop counter
+		while (i <= array.length){ //while in the bounds of the array...
+			if (rating <= (double)i/10){ // checks if this is the interval that the rating falls in
+				array[i-1] = array[i-1]+1; //if so the that interval section is incremented to indicate that change of the data
+				break; //end the loop since 1 rating is only in one interval
 			}
 			i++;
 		}
