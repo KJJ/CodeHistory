@@ -35,7 +35,7 @@ public class NodeStatistics {
 	private long timeDiffAverage;
 	private long timeDiffHigh;
 	private long timeDiffLow;
-	private long[] flowOfTime;
+	private String[] flowOfTime;
 	private String[] revisionsToo;
 	private ResourceBundle bundle = ResourceBundle.getBundle("config");
 	
@@ -61,8 +61,10 @@ public class NodeStatistics {
 		relevantAverage = 0;
 		timeDiffHigh = Long.MIN_VALUE;
 		timeDiffLow = Long.MAX_VALUE;
-		flowOfTime = new long[list.size()-1];
-		revisionsToo = new String[list.size()-1];
+		flowOfTime = new String[list.size()];
+		revisionsToo = new String[list.size()];
+		flowOfTime[list.size()-1] = "Time Between Revisions";
+		revisionsToo[list.size()-1] = "Revision Pair";
 	}
 	
 	/**
@@ -91,7 +93,7 @@ public class NodeStatistics {
 			
 			else {
 				long timeDiff = lastTime.getTimeInMillis()-thisTime.getTimeInMillis();
-				flowOfTime[toAnalyze.indexOf(next)-1] = timeDiff/1000/60/60;
+				flowOfTime[toAnalyze.indexOf(next)-1] = Long.toString(timeDiff/1000/60/60);
 				revisionsToo[toAnalyze.indexOf(next)-1] = next.getRevision()+"-"+previousRev;
 				
 				if (timeDiff > timeDiffHigh){
@@ -258,31 +260,24 @@ public class NodeStatistics {
 			}
 		}
 		System.out.println(); //spacing
-		CSVWork(flowOfTime, revisionsToo);
-	}
-	
-	//IO code from http://javacodeonline.blogspot.com/2009/09/java-code-to-write-to-csv-file.html
-	public void CSVWork(long[] time, String[] rev) throws IOException {
-		int i;
 		FileWriter f = new FileWriter(bundle.getString("csv"));
 		PrintWriter p = new PrintWriter(f);
-		p.print("Revision pair,");
-		p.print("time between pair,");
-		p.print(",");
-		p.print("TODO,");
-		p.println("TODO");
-		String separation = "";
-		for (i = time.length-1; i >= 0; i--){
-			p.print(rev[i]+",");
-			p.print(time[i]);
-			p.print(",,");
-			p.print("TODO,");
-			p.println("TODO");
-		}
-		System.out.println(separation);
-		p.print(separation);
+		Object[][] input = {revisionsToo, flowOfTime};
+		CSVWork(input, p, f);
 		p.flush();
 		p.close();
 		f.close();
+	}
+	
+	//IO code from http://javacodeonline.blogspot.com/2009/09/java-code-to-write-to-csv-file.html
+	public void CSVWork(Object[][] arrayIn, PrintWriter p, FileWriter f) throws IOException {
+		int i, j;
+
+		for (i = arrayIn[0].length-1; i >= 0; i--){
+			for (j = 0; j < arrayIn.length; j++) {
+				p.print(arrayIn[j][i]+",");
+			}
+			p.println();
+		}
 	}
 }
