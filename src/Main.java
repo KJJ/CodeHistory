@@ -1,3 +1,4 @@
+
 public class Main {
 	/**
 	 * main method of the history system

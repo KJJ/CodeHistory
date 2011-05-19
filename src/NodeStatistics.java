@@ -1,3 +1,5 @@
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -21,11 +23,17 @@ public class NodeStatistics {
 	//how many files are not relevant based on filtering
 	private int[] irrelevantPresent;
 	//holds the revision numbers for the bounds in the numerical statistics sections
-	private String[] revisionReference = new String[4];
+	private String[] revisionReference = new String[6];
 	//the list of file groupings found in this instance of the Subversion log
 	private GroupingList grouping = new GroupingList(); 
 	//average number of relevant files per revision
-	private int relevantAverage;
+	private double relevantAverage;
+	private long timeDiffAverage;
+	private long timeDiffHigh;
+	private long timeDiffLow;
+	private long[] flowOfTime;
+	
+	private Calendar lastTime;
 	
 	/**
 	 * Constructor: initializes all fields to prepare for analysis
@@ -45,6 +53,9 @@ public class NodeStatistics {
 		relevantPresent = new int[arg.length];
 		irrelevantPresent = new int[arg.length];
 		relevantAverage = 0;
+		timeDiffHigh = Long.MIN_VALUE;
+		timeDiffLow = Long.MAX_VALUE;
+		flowOfTime = new long[list.size()-1];
 	}
 	
 	/**
@@ -56,15 +67,38 @@ public class NodeStatistics {
 	 *  file groupings
 	 */
 	public void analyze(){
+		String previousRev = "";
 		Iterator<RevisionNode> runThrough = toAnalyze.iterator(); //preparing to go through every relevant revision's data
 		RevisionNode next = null; //null to determine later whether or not the list is empty or not
 		while (runThrough.hasNext()){ 
 			
 			next = runThrough.next(); //the next revision's data node
 			
+			Calendar thisTime = new GregorianCalendar(Integer.parseInt(next.getDate().split(" ")[0].split("-")[0]), Integer.parseInt(next.getDate().split(" ")[0].split("-")[1])-1, Integer.parseInt(next.getDate().split(" ")[0].split("-")[2]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[0]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[1]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[2]));
+		
 			if (highestRating == -1){ //implies this is the first iteration
+				lastTime = new GregorianCalendar(Integer.parseInt(next.getDate().split(" ")[0].split("-")[0]), Integer.parseInt(next.getDate().split(" ")[0].split("-")[1])-1, Integer.parseInt(next.getDate().split(" ")[0].split("-")[2]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[0]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[1]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[2]));
 				now = "Revision "+next.getRevision()+" at ("+next.getDate()+")"; //the latest revision's date and number
+				previousRev = next.getRevision();
 			}
+			
+			else {
+				long timeDiff = lastTime.getTimeInMillis()-thisTime.getTimeInMillis();
+				flowOfTime[toAnalyze.indexOf(next)-1] = timeDiff/1000/60/60;
+				
+				if (timeDiff > timeDiffHigh){
+					timeDiffHigh = timeDiff;
+					revisionReference[4] = next.getRevision() + " & " + previousRev;
+				}
+				if (timeDiff < timeDiffLow){
+					timeDiffLow = timeDiff;
+					revisionReference[5] = next.getRevision() + " & " + previousRev;
+				}
+				
+				timeDiffAverage += timeDiff;
+				lastTime = thisTime;
+			}
+			
 			
 			relevantPresent[next.getNumberOfRelevants()-1] += 1; //how many relevant files there are here
 			if ((next.getTotalChanges()-next.getNumberOfRelevants()) < (10*next.getNumberOfRelevants())) {
@@ -112,6 +146,7 @@ public class NodeStatistics {
 				revisionReference[3] = next.getRevision(); //gets what revision this was found at for later reference
 			}
 			
+			previousRev = next.getRevision();
 		}
 		if (next != null) { //if the list was not empty
 			then = "Revision "+next.getRevision()+" at ("+next.getDate()+")"; //the last relevant revision and date of the log
@@ -121,6 +156,7 @@ public class NodeStatistics {
 			ratingAverage /= 100000;
 			nFilesAverage = nFilesAverage/revisionTotal; //rounding not used since it is an integer
 			relevantAverage = relevantAverage/revisionTotal; //rounding not used since it is an integer
+			timeDiffAverage = (((timeDiffAverage/(revisionTotal-1))/1000)/60)/60;
 		}
 		
 	}
@@ -141,7 +177,7 @@ public class NodeStatistics {
 			System.out.println("Relevant Segment of Revision History: "+then+" to "+now+" \n");
 		
 			System.out.println("Total Number of Relevant Revisions: " + revisionTotal);
-			System.out.println("\t Average Number of relevant files per revision: "+ relevantAverage + "\n");
+			System.out.println("\t Average Number of relevant files per revision: "+ Math.round(relevantAverage) + "\n");
 			int i;
 			for (i = 0; i < args.length; i++) {
 				System.out.println("\t Number of Revisions Changing "+(i+1)+" of the Relevant Files: " + relevantPresent[i]);
@@ -149,6 +185,15 @@ public class NodeStatistics {
 			}
 		
 			System.out.println();
+			
+			System.out.println("Average Time Between Revisions: " + timeDiffAverage + " hours");
+			if (timeDiffLow/1000/60/60 < 1){
+				System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow/1000/60 +" minutes between Revisions "+revisionReference[5]);
+			}
+			else {
+				System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow/1000/60/60 +" hours between Revisions "+revisionReference[5]);
+			}
+			System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh/1000/60/60 +" hours between Revisions "+revisionReference[4]+ "\n");
 		
 			System.out.println("Average Rating: "+ ratingAverage);
 			System.out.println("\t Lowest Rating: " + lowestRating+" for Revision "+revisionReference[1]);
@@ -202,6 +247,7 @@ public class NodeStatistics {
 				}
 			}
 		}
+		
 		System.out.println(); //spacing
 	}
 }

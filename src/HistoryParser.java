@@ -243,7 +243,7 @@ public class HistoryParser {
 		System.out.println("\n");
 		System.out.println("Rating Graph: looking for grouping\n");
 		for (i = 1; i <= statArray.length; i++){
-			System.out.print("["+(double)(i-1)/10+", "+(double)i/10+"]:  "); //current range interval
+			System.out.print("("+(double)(i-1)/10+", "+(double)i/10+"]:  "); //current range interval
 			for (j = 0; j < statArray[i-1]; j++){ //loop through the entire range of rating intervals
 				System.out.print("|"); // one '|' = one rating in this range
 			}
@@ -261,7 +261,7 @@ public class HistoryParser {
 	/**
 	 * Takes the rating of a particular revision and uses it to place in an array
 	 * designed to store the rating ranges
-	 * @param array the array that stores how mny ratings fall in specific value ranges
+	 * @param array the array that stores how many ratings fall in specific value ranges
 	 * @param rating the current rating reached in  the code
 	 */
 	public void fillArray(int[] array, double rating){ 
