@@ -38,6 +38,10 @@ public class NodeStatistics {
 	private String[] flowOfTime;
 	private String[] revisionsToo;
 	private ResourceBundle bundle = ResourceBundle.getBundle("config");
+	private String revisions[];
+	private String irrelevants[];
+	private String relevants[];
+	private String ratings[];
 	
 	private Calendar lastTime;
 	
@@ -65,6 +69,14 @@ public class NodeStatistics {
 		revisionsToo = new String[list.size()];
 		flowOfTime[list.size()-1] = "Time Between Revisions";
 		revisionsToo[list.size()-1] = "Revision Pair";
+		revisions = new String[list.size()+1];
+		relevants = new String[list.size()+1];
+		irrelevants = new String[list.size()+1];
+		ratings = new String[list.size()+1];
+		revisions[list.size()] = "Revision";
+		relevants[list.size()] = "Relevants Present";
+		irrelevants[list.size()]= "Irrelevants Present";
+		ratings[list.size()] = "Rating of Relevance";
 	}
 	
 	/**
@@ -82,6 +94,11 @@ public class NodeStatistics {
 		while (runThrough.hasNext()){ 
 			
 			next = runThrough.next(); //the next revision's data node
+			
+			revisions[toAnalyze.indexOf(next)] = "r"+next.getRevision();
+			relevants[toAnalyze.indexOf(next)] = Integer.toString(next.getNumberOfRelevants());
+			irrelevants[toAnalyze.indexOf(next)]= Integer.toString(next.getTotalChanges()-next.getNumberOfRelevants());
+			ratings[toAnalyze.indexOf(next)] = Double.toString(next.getRating());
 			
 			Calendar thisTime = new GregorianCalendar(Integer.parseInt(next.getDate().split(" ")[0].split("-")[0]), Integer.parseInt(next.getDate().split(" ")[0].split("-")[1])-1, Integer.parseInt(next.getDate().split(" ")[0].split("-")[2]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[0]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[1]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[2]));
 		
@@ -264,6 +281,12 @@ public class NodeStatistics {
 		PrintWriter p = new PrintWriter(f);
 		Object[][] input = {revisionsToo, flowOfTime};
 		CSVWork(input, p, f);
+		Object[][] nextInput = {revisions, ratings};
+		CSVWork(nextInput, p, f);
+		nextInput[1] = irrelevants;
+		CSVWork(nextInput, p, f);
+		nextInput[1] = relevants;
+		CSVWork(nextInput, p, f);
 		p.flush();
 		p.close();
 		f.close();
@@ -279,5 +302,6 @@ public class NodeStatistics {
 			}
 			p.println();
 		}
+		p.println();
 	}
 }
