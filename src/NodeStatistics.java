@@ -1,7 +1,11 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.ResourceBundle;
 
 
 public class NodeStatistics {
@@ -32,6 +36,8 @@ public class NodeStatistics {
 	private long timeDiffHigh;
 	private long timeDiffLow;
 	private long[] flowOfTime;
+	private String[] revisionsToo;
+	private ResourceBundle bundle = ResourceBundle.getBundle("config");
 	
 	private Calendar lastTime;
 	
@@ -56,6 +62,7 @@ public class NodeStatistics {
 		timeDiffHigh = Long.MIN_VALUE;
 		timeDiffLow = Long.MAX_VALUE;
 		flowOfTime = new long[list.size()-1];
+		revisionsToo = new String[list.size()-1];
 	}
 	
 	/**
@@ -85,6 +92,7 @@ public class NodeStatistics {
 			else {
 				long timeDiff = lastTime.getTimeInMillis()-thisTime.getTimeInMillis();
 				flowOfTime[toAnalyze.indexOf(next)-1] = timeDiff/1000/60/60;
+				revisionsToo[toAnalyze.indexOf(next)-1] = next.getRevision()+"-"+previousRev;
 				
 				if (timeDiff > timeDiffHigh){
 					timeDiffHigh = timeDiff;
@@ -163,8 +171,9 @@ public class NodeStatistics {
 	
 	/**
 	 * prints out all of the statistics that have been gathered from the log analysis and grouping code
+	 * @throws IOException 
 	 */
-	public void statsOut() {
+	public void statsOut() throws IOException {
 		analyze();
 		
 		System.out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
@@ -218,8 +227,9 @@ public class NodeStatistics {
 	 * the percentage of the occurrences of one file's changes in relation to the presence of another at that revision
 	 * for all files in the parameters
 	 * @param files relevant files, as determined by the user in the command-line parameters
+	 * @throws IOException 
 	 */
-	public void percentages(String[] files) {
+	public void percentages(String[] files) throws IOException {
 		int i, j; //loop counters
 		int[] infoArray; //array that holds the counters for each file-to-file comparison 
 		LinkedList<RevisionNode> theList = toAnalyze; // takes a copy of the RevisionNode list of data parsed from the log
@@ -240,14 +250,39 @@ public class NodeStatistics {
 			System.out.println(); //spacing
 			System.out.println("For the file "+files[i].substring(files[i].lastIndexOf("/")+1)+":"); //indicates what file we are talking about
 			for (j = 0; j < files.length; j++) { //for the length of our data array
-				if (j != i) { //ignoring the current files slot since it would be 100% no matte what
+				if (j != i) { //ignoring the current files slot since it would be 100% no matter what
 					int percent = (int) Math.round((infoArray[j]/(double)infoArray[i])*100); //round to the nearest percent
 					//indicates that when file i is changed in a revision, file j is also changed at the same revision percent% of the time
 					System.out.println("\t When changed, " + files[j].substring(files[j].lastIndexOf("/")+1) +" is changed "+percent+"% of the time.");
 				}
 			}
 		}
-		
 		System.out.println(); //spacing
+		CSVWork(flowOfTime, revisionsToo);
+	}
+	
+	//IO code from http://javacodeonline.blogspot.com/2009/09/java-code-to-write-to-csv-file.html
+	public void CSVWork(long[] time, String[] rev) throws IOException {
+		int i;
+		FileWriter f = new FileWriter(bundle.getString("csv"));
+		PrintWriter p = new PrintWriter(f);
+		p.print("Revision pair,");
+		p.print("time between pair,");
+		p.print(",");
+		p.print("TODO,");
+		p.println("TODO");
+		String separation = "";
+		for (i = time.length-1; i >= 0; i--){
+			p.print(rev[i]+",");
+			p.print(time[i]);
+			p.print(",,");
+			p.print("TODO,");
+			p.println("TODO");
+		}
+		System.out.println(separation);
+		p.print(separation);
+		p.flush();
+		p.close();
+		f.close();
 	}
 }
