@@ -224,14 +224,14 @@ public class HistoryParser {
 		}
 
 		int[] statArray = new int[10];
-		long interval = 0;
+		double interval = 0;
 		LinkedList<RevisionNode> history = getHistoricalRelevancy(dataRepoUser, dataRepoRevision, dataRepoDate, dataRepoNumberOfFiles); //fully process the collected data from each file's log
 		System.out.println(); //further increase spacing between line break and table
 		for (i = 0; i < history.size(); i++){ //iterates through the entire RevisionNode list to print out its collected data
 			RevisionNode current = history.get(i); //takes the next node to be printed
 			fillArray(statArray, current.getRating());
 			if (i < history.size()-1) {
-				interval += current.getTimeSpace(history.get(i+1).getThisTime())/1000/60/60;
+				interval += (double)current.getTimeSpace(history.get(i+1).getThisTime())/1000/60/60.0;
 			}
 			else {
 				interval = Long.MAX_VALUE;
