@@ -220,7 +220,7 @@ public class HistoryParser {
 
 		System.out.println("commit \t date \t\t\t relevants \t     changed \t rating \t\t rating comment \t\t\t\t actual relevant files");
 		for (j = 0; j < 25; j++) { //used to separate the rows of data and improve appearance and ease of use
-			System.out.print("~~~~~~~~~~"); //the lines used to separate the information rows
+			System.out.print("##########"); //the lines used to separate the information rows
 		}
 
 		int[] statArray = new int[10];
@@ -242,7 +242,7 @@ public class HistoryParser {
 					System.out.print("----------"); //the lines used to separate the information rows
 				}
 				else {
-					System.out.print("~~~~~~~~~~");
+					System.out.print("##########");
 				}
 			}
 			if (interval > Long.parseLong(bundle.getString("interval"))) {
