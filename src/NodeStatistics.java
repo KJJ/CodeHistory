@@ -67,8 +67,10 @@ public class NodeStatistics {
 		timeDiffLow = Long.MAX_VALUE;
 		flowOfTime = new String[list.size()];
 		revisionsToo = new String[list.size()];
-		flowOfTime[list.size()-1] = "Time Between Revisions";
-		revisionsToo[list.size()-1] = "Revision Pair";
+		if (list.size() != 0) {
+			flowOfTime[list.size()-1] = "Time Between Revisions";
+			revisionsToo[list.size()-1] = "Revision Pair";
+		}
 		revisions = new String[list.size()+1];
 		relevants = new String[list.size()+1];
 		irrelevants = new String[list.size()+1];
