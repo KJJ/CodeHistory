@@ -220,18 +220,33 @@ public class HistoryParser {
 
 		System.out.println("commit \t user \t\t date \t\t\t relevants \t      changed \t rating \t\t rating comment \t\t\t\t actual relevant files");
 		for (j = 0; j < 25; j++) { //used to separate the rows of data and improve appearance and ease of use
-			System.out.print("----------"); //the lines used to separate the information rows
+			System.out.print("~~~~~~~~~~"); //the lines used to separate the information rows
 		}
 
 		int[] statArray = new int[10];
+		long interval = 0;
 		LinkedList<RevisionNode> history = getHistoricalRelevancy(dataRepoUser, dataRepoRevision, dataRepoDate, dataRepoNumberOfFiles); //fully process the collected data from each file's log
 		System.out.println(); //further increase spacing between line break and table
 		for (i = 0; i < history.size(); i++){ //iterates through the entire RevisionNode list to print out its collected data
 			RevisionNode current = history.get(i); //takes the next node to be printed
 			fillArray(statArray, current.getRating());
+			if (i < history.size()-1) {
+				interval += current.getTimeSpace(history.get(i+1).getThisTime())/1000/60/60;
+			}
+			else {
+				interval = Long.MAX_VALUE;
+			}
 			System.out.println(current.toString()); //prints the String representation of all the nodes data
 			for (j = 0; j < 25; j++) { //used to separate the rows of data and improve appearance and ease of use
-				System.out.print("----------"); //the lines used to separate the information rows
+				if (interval <= Long.parseLong(bundle.getString("interval"))) {
+					System.out.print("----------"); //the lines used to separate the information rows
+				}
+				else {
+					System.out.print("~~~~~~~~~~");
+				}
+			}
+			if (interval > Long.parseLong(bundle.getString("interval"))) {
+				interval = 0;
 			}
 			System.out.print("\n"); //newline to skip down to the next row's position
 		}

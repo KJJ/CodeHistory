@@ -1,3 +1,5 @@
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -13,6 +15,8 @@ public class RevisionNode {
 	private int totalChanges;					//total number of files affected by the this revision
 	private String ratingComment;				//the comment attached to the rating, based on various factors
 	private String user;						//user who added the revision
+	private long timeRelativeTo;
+	private Calendar thisTime;
 	
 	/**
 	 * Constructor. Allows the user to also enter the date and number of relevant files 
@@ -29,6 +33,20 @@ public class RevisionNode {
 		relevantFiles = new LinkedList<String>();
 		totalQuery = query;
 		user = User;
+		thisTime = new GregorianCalendar(Integer.parseInt(date.split(" ")[0].split("-")[0]), Integer.parseInt(date.split(" ")[0].split("-")[1])-1, Integer.parseInt(date.split(" ")[0].split("-")[2]), Integer.parseInt(date.split(" ")[1].split(":")[0]), Integer.parseInt(date.split(" ")[1].split(":")[1]), Integer.parseInt(date.split(" ")[1].split(":")[2]));
+	}
+	
+	public void setTimeSpace(Calendar previousTime) {
+		timeRelativeTo = thisTime.getTimeInMillis() - previousTime.getTimeInMillis();
+	}
+	
+	public long getTimeSpace(Calendar previousTime) {
+		setTimeSpace(previousTime);
+		return timeRelativeTo;
+	}
+	
+	public Calendar getThisTime() {
+		return thisTime;
 	}
 
 	/**
