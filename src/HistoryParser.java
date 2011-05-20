@@ -218,7 +218,7 @@ public class HistoryParser {
 		}
 		System.out.print("\n\n"); //provide spacing between output
 
-		System.out.println("commit \t user \t\t date \t\t\t relevants \t      changed \t rating \t\t rating comment \t\t\t\t actual relevant files");
+		System.out.println("commit \t date \t\t\t relevants \t     changed \t rating \t\t rating comment \t\t\t\t actual relevant files");
 		for (j = 0; j < 25; j++) { //used to separate the rows of data and improve appearance and ease of use
 			System.out.print("~~~~~~~~~~"); //the lines used to separate the information rows
 		}
