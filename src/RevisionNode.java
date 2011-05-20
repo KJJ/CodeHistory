@@ -206,7 +206,7 @@ public class RevisionNode {
 		double rat = this.getRating()*100000;
 		rat = Math.round(rat);
 		rat /= 100000;
-		out = revision+"\t"+use+"\t"+date+"\t"+Integer.toString(numberOfRelevants)+"/"+Integer.toString(totalQuery)+" relevant files\t"+Integer.toString(totalChanges)+"\t"+rat+"\t\t"+ratingComment+"\t"+files;
+		out = revision+"\t"+date+"\t"+Integer.toString(numberOfRelevants)+"/"+Integer.toString(totalQuery)+" relevant files\t"+Integer.toString(totalChanges)+"\t"+rat+"\t\t"+ratingComment+"\t"+files;
 		return out;
 	}
 	
