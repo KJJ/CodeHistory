@@ -7,6 +7,9 @@ public class Main {
 	public static void main(String[] args){
 		long start = System.currentTimeMillis();
 		try {
+			if (args.length == 0) {
+				throw new Exception("No Files");
+			}
 			int i,j; //loops counters
 			/*
 			 * these two for loops look to see whether the user accidently used the same file twice
