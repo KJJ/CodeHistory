@@ -22,6 +22,9 @@ public class HistoryParser {
 			if (args[i].endsWith("/")) { //removes a a end slash to avoid confusion in the later statistics and output
 				args[i] = args[i].substring(0, args[i].lastIndexOf('/'));
 			}
+			if (args[i].startsWith("/")) { //removes a a end slash to avoid confusion in the later statistics and output
+				args[i] = args[i].substring(args[i].indexOf('/')+1);
+			}
 		}
 	}
 	

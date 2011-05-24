@@ -254,6 +254,36 @@ public class NodeStatistics {
 			if (args.length > 1) {
 				percentages(args);
 			}
+			
+			System.out.println(); //spacing
+			FileWriter f = new FileWriter(bundle.getString("csv"));
+			PrintWriter p = new PrintWriter(f);
+			Object[][] input = {revisionsToo, flowOfTime};
+			CSVWork(input, p, f);
+			Object[][] nextInput = {revisions, ratings};
+			CSVWork(nextInput, p, f);
+			nextInput[1] = irrelevants;
+			CSVWork(nextInput, p, f);
+			nextInput[1] = relevants;
+			CSVWork(nextInput, p, f);
+			nextInput[0] = intervals;
+			nextInput[1] = commits;
+			CSVWork(nextInput, p, f);
+			p.flush();
+			p.close();
+			f.close();
+			int j;
+			DiffParser dp = new DiffParser();
+			String path = bundle.getString(bundle.getString("repo"));
+			for (j = 0; j < args.length; j++) {
+				System.out.println("for file " + args[j]);
+				for (i = 0; i < revisionsToo.length-1; i++) {
+					System.out.print("Revisions " + revisionsToo[i] + ":\t");
+					Process exec = Runtime.getRuntime().exec("svn diff -r "+ revisionsToo[i].split("-")[0] +":"+ revisionsToo[i].split("-")[1] +" "+ path+args[j]);
+					dp.diffOut(exec);
+				}
+			}
+
 		}
 		
 		System.out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
@@ -295,23 +325,6 @@ public class NodeStatistics {
 				}
 			}
 		}
-		System.out.println(); //spacing
-		FileWriter f = new FileWriter(bundle.getString("csv"));
-		PrintWriter p = new PrintWriter(f);
-		Object[][] input = {revisionsToo, flowOfTime};
-		CSVWork(input, p, f);
-		Object[][] nextInput = {revisions, ratings};
-		CSVWork(nextInput, p, f);
-		nextInput[1] = irrelevants;
-		CSVWork(nextInput, p, f);
-		nextInput[1] = relevants;
-		CSVWork(nextInput, p, f);
-		nextInput[0] = intervals;
-		nextInput[1] = commits;
-		CSVWork(nextInput, p, f);
-		p.flush();
-		p.close();
-		f.close();
 	}
 	
 	//IO code from http://javacodeonline.blogspot.com/2009/09/java-code-to-write-to-csv-file.html
