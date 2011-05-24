@@ -42,7 +42,8 @@ public class NodeStatistics {
 	private String irrelevants[];
 	private String relevants[];
 	private String ratings[];
-	
+	private String[] commits;
+	private String[] intervals;
 	private Calendar lastTime;
 	
 	/**
@@ -50,7 +51,7 @@ public class NodeStatistics {
 	 * @param list the list of RevisionNode's to be analyzed for patterns and statistics
 	 * @param arg the queried files paired with the linked list
 	 */
-	public NodeStatistics(LinkedList<RevisionNode> list, String[] arg){
+	public NodeStatistics(LinkedList<RevisionNode> list, String[] arg, LinkedList<Integer> intervalList){
 		toAnalyze = list;
 		revisionTotal = list.size();
 		ratingAverage = 0;
@@ -67,9 +68,20 @@ public class NodeStatistics {
 		timeDiffLow = Long.MAX_VALUE;
 		flowOfTime = new String[list.size()];
 		revisionsToo = new String[list.size()];
+		commits = new String[intervalList.size()+1];
+		intervals = new String[intervalList.size()+1];
+		Iterator<Integer> i = intervalList.iterator();
+		int j = 0;
+		while (i.hasNext()) {
+			commits[j] = Integer.toString(i.next());
+			intervals[j] = "i"+(j+1);
+			j++;
+		}
 		if (list.size() != 0) {
 			flowOfTime[list.size()-1] = "Time Between Revisions";
 			revisionsToo[list.size()-1] = "Revision Pair";
+			commits[commits.length-1] = "commits per";
+			intervals[intervals.length-1] = "interval";
 		}
 		revisions = new String[list.size()+1];
 		relevants = new String[list.size()+1];
@@ -288,6 +300,9 @@ public class NodeStatistics {
 		nextInput[1] = irrelevants;
 		CSVWork(nextInput, p, f);
 		nextInput[1] = relevants;
+		CSVWork(nextInput, p, f);
+		nextInput[0] = intervals;
+		nextInput[1] = commits;
 		CSVWork(nextInput, p, f);
 		p.flush();
 		p.close();

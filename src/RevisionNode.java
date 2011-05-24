@@ -103,6 +103,9 @@ public class RevisionNode {
 			i = 0;
 		}
 		rating = calculateRating(numberOfRelevants,i,totalChanges,totalQuery);
+		if (rating > 1) {
+			rating = 1;
+		}
 		setRatingComment(numberOfRelevants,i,totalChanges,totalQuery);
 	}
 	

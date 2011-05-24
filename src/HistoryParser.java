@@ -225,6 +225,8 @@ public class HistoryParser {
 
 		int[] statArray = new int[10];
 		double interval = 0;
+		int n = 0;
+		LinkedList<Integer> allN = new LinkedList<Integer>();
 		LinkedList<RevisionNode> history = getHistoricalRelevancy(dataRepoUser, dataRepoRevision, dataRepoDate, dataRepoNumberOfFiles); //fully process the collected data from each file's log
 		System.out.println(); //further increase spacing between line break and table
 		for (i = 0; i < history.size(); i++){ //iterates through the entire RevisionNode list to print out its collected data
@@ -245,14 +247,20 @@ public class HistoryParser {
 					System.out.print("##########");
 				}
 			}
-			if (interval > Long.parseLong(bundle.getString("interval"))) {
+			if (interval <= Long.parseLong(bundle.getString("interval"))) {
+				n++;
+			}
+			else if (interval > Long.parseLong(bundle.getString("interval"))) {
+				n++;
+				allN.addFirst(n);
+				n = 0;
 				interval = 0;
 			}
 			System.out.print("\n"); //newline to skip down to the next row's position
 		}
 		
 		System.out.println("\n");
-		NodeStatistics stats = new NodeStatistics(history, args); // prepares to process data held in the RevisionNode list
+		NodeStatistics stats = new NodeStatistics(history, args, allN); // prepares to process data held in the RevisionNode list
 		stats.statsOut(); //output the statistics to the screen
 		
 		System.out.println("\n");
