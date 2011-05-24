@@ -111,7 +111,12 @@ public class NodeStatistics {
 			
 			revisions[toAnalyze.indexOf(next)] = "r"+next.getRevision();
 			relevants[toAnalyze.indexOf(next)] = Integer.toString(next.getNumberOfRelevants());
-			irrelevants[toAnalyze.indexOf(next)]= Integer.toString(next.getTotalChanges()-next.getNumberOfRelevants());
+			if (next.getTotalChanges()-next.getNumberOfRelevants() >= 0) {
+				irrelevants[toAnalyze.indexOf(next)]= Integer.toString(next.getTotalChanges()-next.getNumberOfRelevants());
+			}
+			else {
+				irrelevants[toAnalyze.indexOf(next)]= "0";
+			}
 			ratings[toAnalyze.indexOf(next)] = Double.toString(next.getRating());
 			
 			Calendar thisTime = new GregorianCalendar(Integer.parseInt(next.getDate().split(" ")[0].split("-")[0]), Integer.parseInt(next.getDate().split(" ")[0].split("-")[1])-1, Integer.parseInt(next.getDate().split(" ")[0].split("-")[2]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[0]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[1]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[2]));
