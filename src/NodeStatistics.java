@@ -6,8 +6,6 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
-import java.util.Scanner;
-
 
 public class NodeStatistics {
 	
@@ -46,8 +44,7 @@ public class NodeStatistics {
 	private String[] commits;
 	private String[] intervals;
 	private Calendar lastTime;
-	private Scanner scanner;
-	
+
 	/**
 	 * Constructor: initializes all fields to prepare for analysis
 	 * @param list the list of RevisionNode's to be analyzed for patterns and statistics
@@ -215,7 +212,7 @@ public class NodeStatistics {
 	 */
 	public void statsOut() throws IOException {
 		analyze();
-		
+		int i;
 		System.out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
 		
 		if (lowestRating == 2) { //implies no data was ever given since no rating will ever be above 1, let alone at 2
@@ -223,63 +220,65 @@ public class NodeStatistics {
 		}
 		
 		else {
-			System.out.println("Relevant Segment of Revision History: "+then+" to "+now+" \n");
+			if (bundle.getString("otherStats?").equals("YES")) {
+				System.out.println("Relevant Segment of Revision History: "+then+" to "+now+" \n");
+				System.out.println("Total Number of Relevant Revisions: " + revisionTotal);
+				System.out.println("\t Average Number of relevant files per revision: "+ Math.round(relevantAverage) + "\n");
+				for (i = 0; i < args.length; i++) {
+					System.out.println("\t Number of Revisions Changing "+(i+1)+" of the Relevant Files: " + relevantPresent[i]);
+					System.out.println("\t\t Number of these revisions with under "+(10*(i+1))+" irrelevant extra files: " + irrelevantPresent[i] + "\n");
+				}
 		
-			System.out.println("Total Number of Relevant Revisions: " + revisionTotal);
-			System.out.println("\t Average Number of relevant files per revision: "+ Math.round(relevantAverage) + "\n");
-			int i;
-			for (i = 0; i < args.length; i++) {
-				System.out.println("\t Number of Revisions Changing "+(i+1)+" of the Relevant Files: " + relevantPresent[i]);
-				System.out.println("\t\t Number of these revisions with under "+(10*(i+1))+" irrelevant extra files: " + irrelevantPresent[i] + "\n");
-			}
-		
-			System.out.println();
+				System.out.println();
 			
-			System.out.println("Average Time Between Revisions: " + timeDiffAverage + " hours");
-			if (timeDiffLow/1000/60/60 < 1){
-				System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow/1000/60 +" minutes between Revisions "+revisionReference[5]);
-			}
-			else {
-				System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow/1000/60/60 +" hours between Revisions "+revisionReference[5]);
-			}
-			System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh/1000/60/60 +" hours between Revisions "+revisionReference[4]+ "\n");
+				System.out.println("Average Time Between Revisions: " + timeDiffAverage + " hours");
+				if (timeDiffLow/1000/60/60 < 1){
+					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow/1000/60 +" minutes between Revisions "+revisionReference[5]);
+				}
+				else {
+					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow/1000/60/60 +" hours between Revisions "+revisionReference[5]);
+				}
+				System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh/1000/60/60 +" hours between Revisions "+revisionReference[4]+ "\n");
 		
-			System.out.println("Average Rating: "+ ratingAverage);
-			System.out.println("\t Lowest Rating: " + lowestRating+" for Revision "+revisionReference[1]);
-			System.out.println("\t Highest Rating: " + highestRating +" for Revision "+revisionReference[0]+ "\n");
+				System.out.println("Average Rating: "+ ratingAverage);
+				System.out.println("\t Lowest Rating: " + lowestRating+" for Revision "+revisionReference[1]);
+				System.out.println("\t Highest Rating: " + highestRating +" for Revision "+revisionReference[0]+ "\n");
 		
-			System.out.println("Average Number of Changed files: "+ nFilesAverage);
-			System.out.println("\t Lowest Number of Changed Files: " + lowestFileNumber+" changed at Revision "+revisionReference[3]);
-			System.out.println("\t Highest Number of Changed Files: " + highestFileNumber+" changed at Revision "+revisionReference[2] + "\n");
-			
-			grouping.currentOutput();
+				System.out.println("Average Number of Changed files: "+ nFilesAverage);
+				System.out.println("\t Lowest Number of Changed Files: " + lowestFileNumber+" changed at Revision "+revisionReference[3]);
+				System.out.println("\t Highest Number of Changed Files: " + highestFileNumber+" changed at Revision "+revisionReference[2] + "\n");
+				}
+			if (bundle.getString("groups?").equals("YES")) {
+				grouping.currentOutput();
+			}
 			if (args.length > 1) {
-				percentages(args);
+				if (bundle.getString("percent?").equals("YES")) {
+					percentages(args);
+				}
 			}
 			
-			System.out.println(); //spacing
-			FileWriter f = new FileWriter(bundle.getString("csv"));
-			PrintWriter p = new PrintWriter(f);
-			Object[][] input = {revisionsToo, flowOfTime};
-			CSVWork(input, p, f);
-			Object[][] nextInput = {revisions, ratings};
-			CSVWork(nextInput, p, f);
-			nextInput[1] = irrelevants;
-			CSVWork(nextInput, p, f);
-			nextInput[1] = relevants;
-			CSVWork(nextInput, p, f);
-			nextInput[0] = intervals;
-			nextInput[1] = commits;
-			CSVWork(nextInput, p, f);
-			p.flush();
-			p.close();
-			f.close();
+			if (bundle.getString("CSV?").equals("YES")) {
+				
+				System.out.println(); //spacing
+				FileWriter f = new FileWriter(bundle.getString("csv"));
+				PrintWriter p = new PrintWriter(f);
+				Object[][] input = {revisionsToo, flowOfTime};
+				CSVWork(input, p, f);
+				Object[][] nextInput = {revisions, ratings};
+				CSVWork(nextInput, p, f);
+				nextInput[1] = irrelevants;
+				CSVWork(nextInput, p, f);
+				nextInput[1] = relevants;
+				CSVWork(nextInput, p, f);
+				nextInput[0] = intervals;
+				nextInput[1] = commits;
+				CSVWork(nextInput, p, f);
+				p.flush();
+				p.close();
+				f.close();
+			}
 			
-			System.out.println("Show Diff info? (y for yes, anything else for no and press enter)");
-			scanner = new Scanner(System.in);
-			String answer = scanner.next();
-			
-			if (answer.equals("y") || answer.equals("Y")) {		
+			if (bundle.getString("diffOrNot?").equals("YES")) {		
 				
 				int j;
 				String pathFull = "";

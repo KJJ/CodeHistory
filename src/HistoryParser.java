@@ -22,9 +22,6 @@ public class HistoryParser {
 			if (args[i].endsWith("/")) { //removes a a end slash to avoid confusion in the later statistics and output
 				args[i] = args[i].substring(0, args[i].lastIndexOf('/'));
 			}
-			if (args[i].startsWith("/")) { //removes a a end slash to avoid confusion in the later statistics and output
-				args[i] = args[i].substring(args[i].indexOf('/')+1);
-			}
 		}
 	}
 	
@@ -241,15 +238,19 @@ public class HistoryParser {
 			else {
 				interval = Long.MAX_VALUE;
 			}
-			System.out.println(current.toString()); //prints the String representation of all the nodes data
-			for (j = 0; j < 25; j++) { //used to separate the rows of data and improve appearance and ease of use
-				if (interval <= Long.parseLong(bundle.getString("interval"))) {
-					System.out.print("----------"); //the lines used to separate the information rows
-				}
-				else {
-					System.out.print("##########");
+			
+			if (bundle.getString("table?").equals("YES")) {
+				System.out.println(current.toString()); //prints the String representation of all the nodes data
+				for (j = 0; j < 25; j++) { //used to separate the rows of data and improve appearance and ease of use
+					if (interval <= Long.parseLong(bundle.getString("interval"))) {
+						System.out.print("----------"); //the lines used to separate the information rows
+					}
+					else {
+						System.out.print("##########");
+					}
 				}
 			}
+			
 			if (interval <= Long.parseLong(bundle.getString("interval"))) {
 				n++;
 			}
@@ -267,19 +268,21 @@ public class HistoryParser {
 		stats.statsOut(); //output the statistics to the screen
 		
 		System.out.println("\n");
-		System.out.println("Rating Graph: looking for grouping\n");
-		for (i = 1; i <= statArray.length; i++){
-			System.out.print("("+(double)(i-1)/10+", "+(double)i/10+"]:  "); //current range interval
-			for (j = 0; j < statArray[i-1]; j++){ //loop through the entire range of rating intervals
-				System.out.print("|"); // one '|' = one rating in this range
-			}
-			System.out.print("  ("+statArray[i-1]+")"); //print out the numerical representation of that interval for easier use
-			System.out.println();
-			for (j = 0; j < 25; j++) { //create a line break to separate the query print out from the data table
-				System.out.print("=========="); //indicates the end of the list of queried files
-			}
-			System.out.println();
+		if (bundle.getString("ratings?").equals("YES")) {
+			System.out.println("Rating Graph: looking for grouping\n");
+			for (i = 1; i <= statArray.length; i++){
+				System.out.print("("+(double)(i-1)/10+", "+(double)i/10+"]:  "); //current range interval
+				for (j = 0; j < statArray[i-1]; j++){ //loop through the entire range of rating intervals
+					System.out.print("|"); // one '|' = one rating in this range
+				}
+				System.out.print("  ("+statArray[i-1]+")"); //print out the numerical representation of that interval for easier use
+				System.out.println();
+				for (j = 0; j < 25; j++) { //create a line break to separate the query print out from the data table
+					System.out.print("=========="); //indicates the end of the list of queried files
+				}
+				System.out.println();
 
+			}
 		}
 		
 	}
