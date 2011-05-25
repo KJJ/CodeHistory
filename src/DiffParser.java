@@ -20,7 +20,7 @@ public class DiffParser {
 		String s;
 
 		while  ((s=  stdInput.readLine())  !=  null)  {
-			if (s.startsWith("+ ") && !s.startsWith("++")) {
+			if (s.startsWith("+") && !s.startsWith("++")) {
 				ins++;
 			}
 			else if (s.startsWith("-") && !s.startsWith("--")) {
