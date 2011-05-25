@@ -273,16 +273,24 @@ public class NodeStatistics {
 			p.close();
 			f.close();
 			int j;
-			DiffParser dp = new DiffParser();
+			String pathFull = "";
+			DiffParser dp = new DiffParser(args);
 			String path = bundle.getString(bundle.getString("repo"));
-			for (j = 0; j < args.length; j++) {
-				System.out.println("for file " + args[j]);
+			System.out.print("\t");
+			for (i = 0; i < args.length; i++) {
+				System.out.print("\t\t "+args[i].substring(args[i].lastIndexOf('/')));
+			}
+			System.out.println("\n");
 				for (i = 0; i < revisionsToo.length-1; i++) {
 					System.out.print("Revisions " + revisionsToo[i] + ":\t");
-					Process exec = Runtime.getRuntime().exec("svn diff -r "+ revisionsToo[i].split("-")[0] +":"+ revisionsToo[i].split("-")[1] +" "+ path+args[j]);
-					dp.diffOut(exec);
+					for (j = 0; j < args.length; j++) {
+						pathFull = path+args[j]+" ";
+						Process exec = Runtime.getRuntime().exec("svn diff -r "+ revisionsToo[i].split("-")[0] +":"+ revisionsToo[i].split("-")[1] +" "+ pathFull);
+						dp.diffOut(exec);
+					}
+					System.out.println("\n");
 				}
-			}
+		//	}
 
 		}
 		
