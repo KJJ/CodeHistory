@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 
 public class NodeStatistics {
@@ -45,6 +46,7 @@ public class NodeStatistics {
 	private String[] commits;
 	private String[] intervals;
 	private Calendar lastTime;
+	private Scanner scanner;
 	
 	/**
 	 * Constructor: initializes all fields to prepare for analysis
@@ -272,25 +274,37 @@ public class NodeStatistics {
 			p.flush();
 			p.close();
 			f.close();
-			int j;
-			String pathFull = "";
-			DiffParser dp = new DiffParser(args);
-			String path = bundle.getString(bundle.getString("repo"));
-			System.out.print("\t");
-			for (i = 0; i < args.length; i++) {
-				System.out.print("\t\t "+args[i].substring(args[i].lastIndexOf('/')));
-			}
-			System.out.println("\n");
-				for (i = 0; i < revisionsToo.length-1; i++) {
-					System.out.print("Revisions " + revisionsToo[i] + ":\t");
-					for (j = 0; j < args.length; j++) {
-						pathFull = path+args[j]+" ";
-						Process exec = Runtime.getRuntime().exec("svn diff -r "+ revisionsToo[i].split("-")[0] +":"+ revisionsToo[i].split("-")[1] +" "+ pathFull);
-						dp.diffOut(exec);
-					}
-					System.out.println("\n");
+			
+			System.out.println("Show Diff info? (y for yes, anything else for no and press enter)");
+			scanner = new Scanner(System.in);
+			String answer = scanner.next();
+			
+			if (answer.equals("y") || answer.equals("Y")) {		
+				
+				int j;
+				String pathFull = "";
+				DiffParser dp = new DiffParser(args);
+				String path = bundle.getString(bundle.getString("repo"));
+				System.out.print("\t");
+				
+				for (i = 0; i < args.length; i++) {
+					System.out.print("\t\t "+args[i].substring(args[i].lastIndexOf('/')));
 				}
-		//	}
+				
+				System.out.println("\n");
+				
+					for (i = 0; i < revisionsToo.length-1; i++) {
+						System.out.print("Revisions " + revisionsToo[i] + ":\t");
+						
+						for (j = 0; j < args.length; j++) {
+							pathFull = path+args[j]+" ";
+							Process exec = Runtime.getRuntime().exec("svn diff -r "+ revisionsToo[i].split("-")[0] +":"+ revisionsToo[i].split("-")[1] +" "+ pathFull);
+							dp.diffOut(exec);
+						}
+						
+						System.out.println("\n");
+					}
+			}
 
 		}
 		

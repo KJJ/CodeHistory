@@ -18,7 +18,7 @@ public class DiffParser {
 	              InputStreamReader(exec.getInputStream()));
 		
 		String s;
-
+		
 		while  ((s=  stdInput.readLine())  !=  null)  {
 			if (s.startsWith("+") && !s.startsWith("++")) {
 				ins++;
@@ -26,6 +26,7 @@ public class DiffParser {
 			else if (s.startsWith("-") && !s.startsWith("--")) {
 				del++;
 			}
+
 		}
 	}
 	
