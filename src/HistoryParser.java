@@ -198,7 +198,9 @@ public class HistoryParser {
 		String p = bundle.getString(bundle.getString("repo")); //uses the config.properties file to get the path to the svn working copy being used
 		
 		for (i = 0; i < args.length; i++){  //loops for every specified file
-			System.out.println("\n"+args[i]); //prints the files name and path from the start of the working copy
+			if (bundle.getString("query?").equals("YES")) {
+				System.out.println("\n"+args[i]); //prints the files name and path from the start of the working copy
+			}
 			if (!args[i].startsWith("/")){ //all command line arguments must start with a / so it is checked if that is the case
 				args[i] = "/"+args[i]; //if not then the / is added to the argument at runtime
 			}

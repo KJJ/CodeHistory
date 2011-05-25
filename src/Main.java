@@ -1,11 +1,17 @@
+import java.util.ResourceBundle;
+
 
 public class Main {
+	
 	/**
 	 * main method of the history system
 	 * @param args command line arguments supplied by the user
 	 */
 	public static void main(String[] args){
 		long start = System.currentTimeMillis();
+		
+		ResourceBundle bundle = ResourceBundle.getBundle("config");
+		
 		try {
 			if (args.length == 0) {
 				throw new Exception("No Files");
@@ -33,7 +39,9 @@ public class Main {
 			e.printStackTrace(); //prints out the issue caught
 		}
 		long end = System.currentTimeMillis();
-		System.out.println("\n("+(end-start)/1000.00+" seconds for completion)");
+		if (bundle.getString("time?").equals("YES")) {
+			System.out.println("\n("+(end-start)/1000.00+" seconds for completion)");
+		}
 	}
 
 }
