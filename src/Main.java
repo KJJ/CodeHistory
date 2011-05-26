@@ -31,8 +31,7 @@ public class Main {
 			}
 			//information is parsed and printed here using a HistoryParser instance
 		    HistoryParser history = new HistoryParser(args);
-		    history.printHistoryInformation();
-	
+		    history.printHistoryInformation();  
 		}
 		//catches any exception thrown
 		catch (Exception e) {
