@@ -194,7 +194,9 @@ public class HistoryParser {
 		LinkedList<LinkedList<String>> dataRepoNumberOfFiles = new LinkedList<LinkedList<String>>(); //list that holds list of the number of files changed in a revision
 		LinkedList<LinkedList<String>> dataRepoUser = new LinkedList<LinkedList<String>>();
 		
-		System.out.println("Queried Files:"); //indicates the next lines show what was entered on the command line
+		if (bundle.getString("query?").equals("YES")) {
+			System.out.println("Queried Files:"); //indicates the next lines show what was entered on the command line
+		}
 		String p = bundle.getString(bundle.getString("repo")); //uses the config.properties file to get the path to the svn working copy being used
 		
 		for (i = 0; i < args.length; i++){  //loops for every specified file
@@ -213,16 +215,17 @@ public class HistoryParser {
 			dataRepoUser.addLast(info[3]);
 		}
 		int j; //loop counter
-		
-		System.out.print("\n");
-		for (j = 0; j < 25; j++) { //create a line break to separate the query print out from the data table
-			System.out.print("=========="); //indicates the end of the list of queried files
-		}
-		System.out.print("\n\n"); //provide spacing between output
+		if (bundle.getString("table?").equals("YES")) {
+			System.out.print("\n");
+			for (j = 0; j < 25; j++) { //create a line break to separate the query print out from the data table
+				System.out.print("=========="); //indicates the end of the list of queried files
+			}
+			System.out.print("\n\n"); //provide spacing between output
 
-		System.out.println("commit \t date \t\t\t relevants \t     changed \t rating \t\t rating comment \t\t\t\t actual relevant files");
-		for (j = 0; j < 25; j++) { //used to separate the rows of data and improve appearance and ease of use
-			System.out.print("##########"); //the lines used to separate the information rows
+			System.out.println("commit \t date \t\t\t relevants \t     changed \t rating \t\t rating comment \t\t\t\t actual relevant files");
+			for (j = 0; j < 25; j++) { //used to separate the rows of data and improve appearance and ease of use
+				System.out.print("##########"); //the lines used to separate the information rows
+			}
 		}
 
 		int[] statArray = new int[10];
@@ -262,7 +265,9 @@ public class HistoryParser {
 				n = 0;
 				interval = 0;
 			}
-			System.out.print("\n"); //newline to skip down to the next row's position
+			if (bundle.getString("table?").equals("YES")) {
+				System.out.print("\n"); //newline to skip down to the next row's position
+			}
 		}
 		
 		System.out.println("\n");
