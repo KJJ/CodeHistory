@@ -11,6 +11,7 @@ public class HistoryParser {
 	// args holds the string array of passed parameters from the command line
 	private String[] args;
 	
+	private LinkedList<RevisionNode> outOfRange = new LinkedList<RevisionNode>();
 	/**
 	 * Constructor: allows for access in the main code
 	 * @param arg file names to be looked for in the code
@@ -175,6 +176,9 @@ public class HistoryParser {
 				if (RNC.compare(list.get(i), node) > 0) { 
 					i++; //if this is the case, then prepare to check the next node in the list
 				}
+				else if (RNC.compare(list.get(i), node) == 0){
+					return;
+				}
 				else {
 					break; //if the nodes revision is greater, then it should be placed at index i, so the loop ends early
 				}
@@ -266,8 +270,9 @@ public class HistoryParser {
 				interval = Long.MAX_VALUE;
 			}
 			if (bundle.getString("revisionOverall?").equals("YES")) {
-				if (newSpace > (double)standard+Integer.parseInt(bundle.getString("range")) ||  newSpace < (double)standard-Integer.parseInt(bundle.getString("range"))) {
+				if (newSpace > (double)standard+Integer.parseInt(bundle.getString("range"))*standard/100 ||  newSpace < (double)standard-Integer.parseInt(bundle.getString("range"))*standard/100) {
 					inRange = false;
+					//sortedInsert(outOfRange, current);
 				}
 				else {
 					inRange = true;
@@ -327,6 +332,10 @@ public class HistoryParser {
 
 			}
 		}
+		
+		if (bundle.getString("revisionOverall?").equals("YES")) {
+			//tableBonus(standard);
+		}
 	}
 	
 	public long fullTimeAverage() throws IOException {
@@ -363,6 +372,106 @@ public class HistoryParser {
 			}
 		}
 		return (((totalTime/rev)/1000)/60)/60;
+	}
+	
+	public void tableBonus(long average) throws IOException {
+		String p = bundle.getString(bundle.getString("repo"));
+		String s;
+		String[] ss;
+		String previous = "";
+		String current = "";
+		Process exec = Runtime.getRuntime().exec("svn log "+p+" -q");
+		BufferedReader  stdInput=  new  BufferedReader(new
+	              InputStreamReader(exec.getInputStream()));
+		RevisionNode nodeA = null;
+		RevisionNode nodeB = null;
+		String revision, user;
+		
+		while  ((s=  stdInput.readLine())  !=  null)  {
+			if (s.startsWith("r")) {  //a line starting with a lower case r implies that we are at a new revision
+				
+				ss = s.split(" "); //split the string along white spaces
+				
+				revision = ss[0].substring(1);
+				
+				user = ss[2];
+				if (!ss[3].equals("|")) {
+					user += ss[3];
+				}
+				
+				if (ss[4].equals("|")){
+					current = (ss[5]+" "+ss[6]); 
+				}
+				else {
+					current = (ss[4]+" "+ss[5]);  // gets both the date and time of the revision
+				}
+				nodeA = new RevisionNode(current, revision,  0, user);
+				Calendar thisTime = new GregorianCalendar(Integer.parseInt(current.split(" ")[0].split("-")[0]), Integer.parseInt(current.split(" ")[0].split("-")[1])-1, Integer.parseInt(current.split(" ")[0].split("-")[2]), Integer.parseInt(current.split(" ")[1].split(":")[0]), Integer.parseInt(current.split(" ")[1].split(":")[1]), Integer.parseInt(current.split(" ")[1].split(":")[2]));
+				if (!previous.equals("") && nodeB != null){ //implies this is not the first iteration
+					Calendar lastTime = new GregorianCalendar(Integer.parseInt(previous.split(" ")[0].split("-")[0]), Integer.parseInt(previous.split(" ")[0].split("-")[1])-1, Integer.parseInt(previous.split(" ")[0].split("-")[2]), Integer.parseInt(previous.split(" ")[1].split(":")[0]), Integer.parseInt(previous.split(" ")[1].split(":")[1]), Integer.parseInt(previous.split(" ")[1].split(":")[2]));
+					long timeDiff = lastTime.getTimeInMillis()-thisTime.getTimeInMillis();
+					if ((timeDiff > (double)average+Double.parseDouble(bundle.getString("range"))*average/100 ||  timeDiff < (double)average-Double.parseDouble(bundle.getString("range"))*average/100)) {
+						sortedInsert(outOfRange, nodeA);
+						sortedInsert(outOfRange, nodeB); 
+					}
+					else {
+						continue;
+					}
+				}
+				nodeB = nodeA;
+				previous = current;
+			}
+		}
+	
+		int j; //loop counter
+		
+		System.out.print("\n");
+		for (j = 0; j < 25; j++) { //create a line break to separate the query print out from the data table
+			System.out.print("=========="); //indicates the end of the list of queried files
+		}
+		System.out.print("\n"); //provide spacing between output
+		System.out.println("Legend: ");
+		System.out.println("\t¥: \t\tindicates the time between this revision and the one before it is not \n\t\t\tin the selected range from the overall average\n");
+		System.out.println("\tA Line Of #: \tthe revisions between two of these are within the user selected \n\t\t\t interval range\n");
+		System.out.println("\tA Line Of -: \tthe revisions separated by these are within the user selected \n\t\t\t interval range\n");
+		System.out.print("\n"); //provide spacing between output
+		System.out.println("commit \t date \t\t\t relevants \t     changed \t rating \t\t rating comment \t\t\t\t actual relevant files");		for (j = 0; j < 25; j++) { //used to separate the rows of data and improve appearance and ease of use
+		System.out.print("##########"); //the lines used to separate the information rows
+		}
+		
+
+		double interval = 0;
+		int i;
+		System.out.println(); //further increase spacing between line break and table
+		for (i = 0; i < outOfRange.size(); i++){ //iterates through the entire RevisionNode list to print out its collected data
+			RevisionNode currentNode = outOfRange.get(i); //takes the next node to be printed
+			double newSpace;
+			if (i < outOfRange.size()-1) {
+				newSpace = (double)currentNode.getTimeSpace(outOfRange.get(i+1).getThisTime())/1000/60/60.0;
+				interval += newSpace;
+			}
+			else {
+				newSpace = 0;
+				interval = Long.MAX_VALUE;
+			}
+				
+			System.out.println(currentNode.toString()); //prints the String representation of all the nodes data
+			for (j = 0; j < 25; j++) { //used to separate the rows of data and improve appearance and ease of use
+				if (interval <= Long.parseLong(bundle.getString("interval"))) {
+					System.out.print("----------"); //the lines used to separate the information rows
+				}
+				else {
+					System.out.print("##########");
+				}
+			}
+			
+			if (interval > Long.parseLong(bundle.getString("interval"))) {
+				interval = 0;
+			}
+			if (bundle.getString("table?").equals("YES")) {
+				System.out.print("\n"); //newline to skip down to the next row's position
+			}
+		}
 	}
 
 	/**

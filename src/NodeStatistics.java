@@ -213,7 +213,10 @@ public class NodeStatistics {
 	public void statsOut() throws IOException {
 		analyze();
 		int i;
-		System.out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
+		
+		if (bundle.getString("otherStats?").equals("YES") || bundle.getString("groups?").equals("YES") || bundle.getString("percent?").equals("YES") | bundle.getString("diffOrNot?").equals("YES")) {
+			System.out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
+		}
 		
 		if (lowestRating == 2) { //implies no data was ever given since no rating will ever be above 1, let alone at 2
 			System.out.println("Nothing here to give statistics on \n");
@@ -307,7 +310,9 @@ public class NodeStatistics {
 
 		}
 		
-		System.out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
+		if (bundle.getString("otherStats?").equals("YES") || bundle.getString("groups?").equals("YES") || bundle.getString("percent?").equals("YES") | bundle.getString("diffOrNot?").equals("YES")) {
+			System.out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
+		}
 
 	}
 	
