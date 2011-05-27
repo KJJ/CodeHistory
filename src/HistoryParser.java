@@ -198,10 +198,13 @@ public class HistoryParser {
 		LinkedList<LinkedList<String>> dataRepoDate = new LinkedList<LinkedList<String>>(); //list that holds the date of revision lists
 		LinkedList<LinkedList<String>> dataRepoNumberOfFiles = new LinkedList<LinkedList<String>>(); //list that holds list of the number of files changed in a revision
 		LinkedList<LinkedList<String>> dataRepoUser = new LinkedList<LinkedList<String>>();
+		long standard;
+		boolean inRange;
 		
 		if (bundle.getString("query?").equals("YES")) {
 			System.out.println("Queried Files:"); //indicates the next lines show what was entered on the command line
 		}
+		
 		String p = bundle.getString(bundle.getString("repo")); //uses the config.properties file to get the path to the svn working copy being used
 		
 		for (i = 0; i < args.length; i++){  //loops for every specified file
@@ -219,14 +222,25 @@ public class HistoryParser {
 			dataRepoNumberOfFiles.addLast(info[2]); //the amount of files changed list is added to the main list for later processing
 			dataRepoUser.addLast(info[3]);
 		}
+		if (bundle.getString("revisionOverall?").equals("YES")) {
+			standard = fullTimeAverage();
+			System.out.println("\n Average Time Period Between ALL Revisions: "+standard+" hours");
+		}
+		else {
+			standard = Long.MAX_VALUE-(long)Integer.parseInt(bundle.getString("range"));
+		}
 		int j; //loop counter
 		if (bundle.getString("table?").equals("YES")) {
 			System.out.print("\n");
 			for (j = 0; j < 25; j++) { //create a line break to separate the query print out from the data table
 				System.out.print("=========="); //indicates the end of the list of queried files
 			}
-			System.out.print("\n\n"); //provide spacing between output
-
+			System.out.print("\n"); //provide spacing between output
+			System.out.println("Legend: ");
+			System.out.println("\t¥: \t\tindicates the time between this revision and the one before it is not \n\t\t\tin the selected range from the overall average\n");
+			System.out.println("\tA Line Of #: \tthe revisions between two of these are within the user selected \n\t\t\t interval range\n");
+			System.out.println("\tA Line Of -: \tthe revisions separated by these are within the user selected \n\t\t\t interval range\n");
+			System.out.print("\n"); //provide spacing between output
 			System.out.println("commit \t date \t\t\t relevants \t     changed \t rating \t\t rating comment \t\t\t\t actual relevant files");
 			for (j = 0; j < 25; j++) { //used to separate the rows of data and improve appearance and ease of use
 				System.out.print("##########"); //the lines used to separate the information rows
@@ -242,14 +256,31 @@ public class HistoryParser {
 		for (i = 0; i < history.size(); i++){ //iterates through the entire RevisionNode list to print out its collected data
 			RevisionNode current = history.get(i); //takes the next node to be printed
 			fillArray(statArray, current.getRating());
+			double newSpace;
 			if (i < history.size()-1) {
-				interval += (double)current.getTimeSpace(history.get(i+1).getThisTime())/1000/60/60.0;
+				newSpace = (double)current.getTimeSpace(history.get(i+1).getThisTime())/1000/60/60.0;
+				interval += newSpace;
 			}
 			else {
+				newSpace = 0;
 				interval = Long.MAX_VALUE;
+			}
+			if (bundle.getString("revisionOverall?").equals("YES")) {
+				if (newSpace > (double)standard+Integer.parseInt(bundle.getString("range")) ||  newSpace < (double)standard-Integer.parseInt(bundle.getString("range"))) {
+					inRange = false;
+				}
+				else {
+					inRange = true;
+				}
+			}
+			else {
+				inRange = true;
 			}
 			
 			if (bundle.getString("table?").equals("YES")) {
+				if (!inRange) {
+					System.out.print("¥ ");
+				}
 				System.out.println(current.toString()); //prints the String representation of all the nodes data
 				for (j = 0; j < 25; j++) { //used to separate the rows of data and improve appearance and ease of use
 					if (interval <= Long.parseLong(bundle.getString("interval"))) {
@@ -295,9 +326,6 @@ public class HistoryParser {
 				System.out.println();
 
 			}
-		}
-		if (bundle.getString("revisionOverall?").equals("YES")) {
-			System.out.println("Average Time Period Between ALL Revisions: "+fullTimeAverage()+" hours");
 		}
 	}
 	
