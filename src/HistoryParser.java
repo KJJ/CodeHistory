@@ -63,7 +63,12 @@ public class HistoryParser {
 				}
 				ss = s.split(" "); //split the string along white spaces
 				rev.addLast(ss[0].substring(1)); //gets the revision number at the very beginning of s, removing the r to just get the number
-				date.addLast(ss[4]+" "+ss[5]);  // gets both the date and time of the revision
+				if (ss[4].equals("|")){
+					date.addLast(ss[5]+" "+ss[6]); 
+				}
+				else {
+					date.addLast(ss[4]+" "+ss[5]);  // gets both the date and time of the revision
+				}
 				userList.addLast(ss[2]);
 			}
 			/* 
@@ -291,7 +296,45 @@ public class HistoryParser {
 
 			}
 		}
+		if (bundle.getString("revisionOverall?").equals("YES")) {
+			System.out.println("Average Time Period Between ALL Revisions: "+fullTimeAverage()+" hours");
+		}
+	}
+	
+	public long fullTimeAverage() throws IOException {
+		String p = bundle.getString(bundle.getString("repo"));
+		String s;
+		String[] ss;
+		String previous = "";
+		String current = "";
+		long totalTime = 0;
+		int rev = 0;
+		Process exec = Runtime.getRuntime().exec("svn log "+p+" -q");
+		BufferedReader  stdInput=  new  BufferedReader(new
+	              InputStreamReader(exec.getInputStream()));
 		
+		while  ((s=  stdInput.readLine())  !=  null)  {
+			
+			if (s.startsWith("r")) {  //a line starting with a lower case r implies that we are at a new revision
+				
+				ss = s.split(" "); //split the string along white spaces
+				if (ss[4].equals("|")){
+					current = (ss[5]+" "+ss[6]); 
+				}
+				else {
+					current = (ss[4]+" "+ss[5]);  // gets both the date and time of the revision
+				}
+				Calendar thisTime = new GregorianCalendar(Integer.parseInt(current.split(" ")[0].split("-")[0]), Integer.parseInt(current.split(" ")[0].split("-")[1])-1, Integer.parseInt(current.split(" ")[0].split("-")[2]), Integer.parseInt(current.split(" ")[1].split(":")[0]), Integer.parseInt(current.split(" ")[1].split(":")[1]), Integer.parseInt(current.split(" ")[1].split(":")[2]));
+				if (!previous.equals("")){ //implies this is not the first iteration
+					Calendar lastTime = new GregorianCalendar(Integer.parseInt(previous.split(" ")[0].split("-")[0]), Integer.parseInt(previous.split(" ")[0].split("-")[1])-1, Integer.parseInt(previous.split(" ")[0].split("-")[2]), Integer.parseInt(previous.split(" ")[1].split(":")[0]), Integer.parseInt(previous.split(" ")[1].split(":")[1]), Integer.parseInt(previous.split(" ")[1].split(":")[2]));
+					long timeDiff = lastTime.getTimeInMillis()-thisTime.getTimeInMillis();
+					rev++;
+					totalTime += timeDiff;
+				}
+				previous = current;
+			}
+		}
+		return (((totalTime/rev)/1000)/60)/60;
 	}
 
 	/**
