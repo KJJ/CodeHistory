@@ -335,6 +335,7 @@ public class HistoryParser {
 		if (bundle.getString("revisionOverall?").equals("YES")) {
 			//tableBonus(standard);
 		}
+		fullCount();
 	}
 	
 	public long fullTimeAverage() throws IOException {
@@ -371,6 +372,32 @@ public class HistoryParser {
 			}
 		}
 		return (((totalTime/rev)/1000)/60)/60;
+	}
+	
+	public void fullCount() throws IOException {
+		String p = bundle.getString(bundle.getString("repo"));
+		String s;
+		String[] ss;
+		String current = "";
+		Process exec = Runtime.getRuntime().exec("svn log "+p+" -q -v");
+		BufferedReader  stdInput=  new  BufferedReader(new
+	              InputStreamReader(exec.getInputStream()));
+		CounterList<String> counter = new CounterList<String>();
+		
+		while  ((s=  stdInput.readLine())  !=  null)  {
+			if (s.startsWith("   M") || s.startsWith("   A") || s.startsWith("   D") || s.startsWith("   R")){
+				ss = s.split(" ");
+				/*if (ss.length == 7){
+					current = ss[6];//.substring(0, ss[6].lastIndexOf(')'));
+				}
+				else */{
+					current = ss[4];
+					counter.newInput(current);
+				}
+			}
+		}
+		System.out.println("start");
+		System.out.println(counter.toString());
 	}
 	
 	public void tableBonus(long average) throws IOException {

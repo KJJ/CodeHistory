@@ -22,7 +22,7 @@ public class CounterList<T> {
 			CounterNode<T> next = list.get(i);
 			
 			if(next.compare(obj)){
-				list.remove(i);
+				next  = list.remove(i);
 				next.anotherOne();
 				list.add(i, next);
 				return true;
@@ -40,8 +40,12 @@ public class CounterList<T> {
 		Iterator<CounterNode<T>> i = list.iterator();
 		while(i.hasNext()){
 			CounterNode<T> next = i.next();
-			out += "\n" + next.whatsTheItem() + "\t" + next.howManyAppearences() + "\n";
+			out += "\n" + next.whatsTheItem() + "\t" + next.howManyAppearences();// + "\n";
 		}
 		return out;
+	}
+	
+	public void sorting() {
+		
 	}
 }
