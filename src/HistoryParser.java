@@ -241,7 +241,7 @@ public class HistoryParser {
 			System.out.print("\n"); //provide spacing between output
 			System.out.println("Legend: ");
 			System.out.println("\t¥: \t\tindicates the time between this revision and the one before it is not \n\t\t\tin the selected range from the overall average\n");
-			System.out.println("\tA Line Of #: \tthe revisions between two of these are within the user selected \n\t\t\t interval range\n");
+			System.out.println("\tA Line Of #: \tthe revisions between two of these are within the user selected \n\t\t\t interval range, starting from the most recent revision\n");
 			System.out.println("\tA Line Of -: \tthe revisions separated by these are within the user selected \n\t\t\t interval range\n");
 			System.out.print("\n"); //provide spacing between output
 			System.out.println("commit \t date \t\t\t relevants \t     changed \t rating \t\t rating comment \t\t\t\t actual relevant files");
@@ -333,9 +333,9 @@ public class HistoryParser {
 		}
 		
 		if (bundle.getString("revisionOverall?").equals("YES")) {
-			//tableBonus(standard);
+			tableBonus(standard);
 		}
-		fullCount();
+		//fullCount();
 	}
 	
 	public long fullTimeAverage() throws IOException {
@@ -397,7 +397,7 @@ public class HistoryParser {
 			}
 		}
 		System.out.println("start");
-		System.out.println(counter.toString());
+		System.out.println(counter.sorting());
 	}
 	
 	public void tableBonus(long average) throws IOException {

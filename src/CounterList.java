@@ -45,7 +45,15 @@ public class CounterList<T> {
 		return out;
 	}
 	
-	public void sorting() {
-		
+	public String sorting() {
+		Iterator<CounterNode<T>> i = list.iterator();
+		String out = "";
+		while(i.hasNext()){
+			CounterNode<T> next = i.next();
+			if (next.howManyAppearences() > 1) {
+				out += "\n" + next.whatsTheItem() + "\t" + next.howManyAppearences();
+			}
+		}
+		return out;
 	}
 }
