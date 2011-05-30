@@ -20,7 +20,7 @@ public class HistoryParser {
 		args = arg;  // gets the user-requested files
 		int i; //loop counter
 		for (i = 0; i < args.length; i++) {
-			if (args[i].endsWith("/")) { //removes a a end slash to avoid confusion in the later statistics and output
+			if (args[i].endsWith("/")) { //removes a end slash to avoid confusion in the later statistics and output
 				args[i] = args[i].substring(0, args[i].lastIndexOf('/'));
 			}
 		}
@@ -160,7 +160,6 @@ public class HistoryParser {
 	 */
 	public void sortedInsert(LinkedList<RevisionNode> list, RevisionNode node){
 		
-		RevisionNodeComparator RNC = new RevisionNodeComparator(); //instantiate a new RevisionNode comparator
 		int i; //loop counter
 		if (list.peek() == null){ //checks if the list is empty
 			list.addFirst(node); //if the list is empty then simply place the node at the head
@@ -173,10 +172,10 @@ public class HistoryParser {
 				 * since compare returns 1 if the first argument is greater then the second, 
 				 * then it implies that node's revision is to small to be placed in front of this currently present node
 				 */
-				if (RNC.compare(list.get(i), node) > 0) { 
+				if (list.get(i).compare(node) > 0) { 
 					i++; //if this is the case, then prepare to check the next node in the list
 				}
-				else if (RNC.compare(list.get(i), node) == 0){
+				else if (list.get(i).compare(node) == 0){
 					return;
 				}
 				else {
