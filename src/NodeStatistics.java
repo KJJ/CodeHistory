@@ -201,7 +201,15 @@ public class NodeStatistics {
 			ratingAverage /= 100000;
 			nFilesAverage = nFilesAverage/revisionTotal; //rounding not used since it is an integer
 			relevantAverage = relevantAverage/revisionTotal; //rounding not used since it is an integer
-			timeDiffAverage = (((timeDiffAverage/(revisionTotal-1))/1000)/60)/60;
+			if (revisionTotal > 1) {
+				timeDiffAverage = timeDiffAverage/(revisionTotal-1);
+			}
+			else {
+				timeDiffLow = 0;
+				timeDiffHigh = 0;
+				revisionReference[4] = "N/A";
+				revisionReference[5] = "N/A";
+			}
 		}
 		
 	}
@@ -233,8 +241,16 @@ public class NodeStatistics {
 				}
 		
 				System.out.println();
-			
-				System.out.println("Average Time Between Revisions: " + timeDiffAverage + " hours");
+				if (timeDiffLow/1000/60 < 1){
+					System.out.println("Average Time Between Revisions: " + timeDiffAverage/1000 + " seconds");
+				}
+				else if (timeDiffLow/1000/60/60 < 1){
+					System.out.println("Average Time Between Revisions: " + timeDiffAverage/1000/60 + " minutes");
+				}
+				else {
+					System.out.println("Average Time Between Revisions: " + timeDiffAverage/1000/60/60 + " hours");
+				}
+				
 				if (timeDiffLow/1000/60 < 1){
 					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow/1000 +" seconds between Revisions "+revisionReference[5]);
 				}
@@ -244,9 +260,18 @@ public class NodeStatistics {
 				else {
 					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow/1000/60/60 +" hours between Revisions "+revisionReference[5]);
 				}
-				System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh/1000/60/60 +" hours between Revisions "+revisionReference[4]+ "\n");
-		
-				System.out.println("Average Rating: "+ ratingAverage);
+				
+				if (timeDiffHigh/1000/60 < 1){
+					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh/1000 +" seconds between Revisions "+revisionReference[4]);
+				}
+				else if (timeDiffHigh/1000/60/60 < 1){
+					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh/1000/60 +" minutes between Revisions "+revisionReference[4]);
+				}
+				else {
+					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh/1000/60/60 +" hours between Revisions "+revisionReference[4]);
+				}
+				
+				System.out.println("\nAverage Rating: "+ ratingAverage);
 				System.out.println("\t Lowest Rating: " + lowestRating+" for Revision "+revisionReference[1]);
 				System.out.println("\t Highest Rating: " + highestRating +" for Revision "+revisionReference[0]+ "\n");
 		
@@ -284,7 +309,7 @@ public class NodeStatistics {
 				f.close();
 			}
 			
-			if (bundle.getString("diffOrNot?").equals("YES")) {		
+			if (bundle.getString("diffOrNot?").equals("YES") && revisionTotal > 1) {		
 				
 				int j;
 				String pathFull = "";
