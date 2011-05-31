@@ -335,7 +335,9 @@ public class HistoryParser {
 		if (bundle.getString("revisionOverall?").equals("YES")) {
 			tableBonus(standard);
 		}
-		//fullCount();
+		if (bundle.getString("occurrences?").equals("YES")) {
+			fullCount();
+		}
 	}
 	
 	public long fullTimeAverage() throws IOException {
@@ -387,17 +389,12 @@ public class HistoryParser {
 		while  ((s=  stdInput.readLine())  !=  null)  {
 			if (s.startsWith("   M") || s.startsWith("   A") || s.startsWith("   D") || s.startsWith("   R")){
 				ss = s.split(" ");
-				/*if (ss.length == 7){
-					current = ss[6];//.substring(0, ss[6].lastIndexOf(')'));
-				}
-				else */{
-					current = ss[4];
-					counter.newInput(current);
-				}
+				current = ss[4];
+				counter.newInput(current);
 			}
 		}
 		System.out.println("start");
-		System.out.println(counter.sorting());
+		System.out.println(counter.toString());
 	}
 	
 	public void tableBonus(long average) throws IOException {

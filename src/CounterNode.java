@@ -22,11 +22,18 @@ public class CounterNode<T> {
 	}
 	
 	public boolean compare(T otherObj) {
-		if (this.whatsTheItem().equals(otherObj)){
-			return true;
+		return this.whatsTheItem().toString().equals(otherObj.toString());
+	}
+	
+	public int compareOccurrence(CounterNode<T> node) {
+		if (node.countOfInterest == this.countOfInterest) {
+			return 0;
+		}
+		else if (node.countOfInterest > this.countOfInterest) {
+			return -1;
 		}
 		else {
-			return false;
+			return 1;
 		}
 	}
 
