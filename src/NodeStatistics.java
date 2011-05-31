@@ -241,10 +241,10 @@ public class NodeStatistics {
 				}
 		
 				System.out.println();
-				if (timeDiffLow/1000/60 < 1){
+				if (timeDiffAverage/1000/60 < 1){
 					System.out.println("Average Time Between Revisions: " + timeDiffAverage/1000 + " seconds");
 				}
-				else if (timeDiffLow/1000/60/60 < 1){
+				else if (timeDiffAverage/1000/60/60 < 1){
 					System.out.println("Average Time Between Revisions: " + timeDiffAverage/1000/60 + " minutes");
 				}
 				else {
