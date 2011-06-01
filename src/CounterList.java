@@ -50,7 +50,11 @@ public class CounterList<T> {
 			list.add(i, next); //place the node in it proper place	
 		}
 	}
-
+	
+	public LinkedList<CounterNode<T>> getList() {
+		return list;
+	}
+	
 	public String toString() {
 		Iterator<CounterNode<T>> i = list.iterator();
 		String out = "";
