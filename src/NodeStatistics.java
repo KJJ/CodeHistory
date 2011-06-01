@@ -146,7 +146,7 @@ public class NodeStatistics {
 			
 			
 			relevantPresent[next.getNumberOfRelevants()-1] += 1; //how many relevant files there are here
-			if ((next.getTotalChanges()-next.getNumberOfRelevants()) < (10*next.getNumberOfRelevants())) {
+			if ((next.getTotalChanges()-next.getNumberOfRelevants()) < (Integer.parseInt(bundle.getString("irrelevantPerRelevant"))*next.getNumberOfRelevants())) {
 				irrelevantPresent[next.getNumberOfRelevants()-1] += 1; //having the acceptable number of irrelevant files
 			}
 			

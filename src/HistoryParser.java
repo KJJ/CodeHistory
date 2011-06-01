@@ -333,7 +333,7 @@ public class HistoryParser {
 		}
 		
 		if (bundle.getString("revisionOverall?").equals("YES")) {
-			tableBonus(standard);
+		//	tableBonus(standard); commented out due to error issues
 		}
 		if (bundle.getString("occurrences?").equals("YES")) {
 			fullCount();
