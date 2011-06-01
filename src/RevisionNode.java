@@ -36,6 +36,17 @@ public class RevisionNode {
 		thisTime = new GregorianCalendar(Integer.parseInt(date.split(" ")[0].split("-")[0]), Integer.parseInt(date.split(" ")[0].split("-")[1])-1, Integer.parseInt(date.split(" ")[0].split("-")[2]), Integer.parseInt(date.split(" ")[1].split(":")[0]), Integer.parseInt(date.split(" ")[1].split(":")[1]), Integer.parseInt(date.split(" ")[1].split(":")[2]));
 	}
 	
+	public RevisionNode(String dat, String rev, int query, String User, int changes) {
+		date = dat;
+		revision = rev;
+		totalChanges = changes;
+		rating = 0;
+		relevantFiles = new LinkedList<String>();
+		totalQuery = query;
+		user = User;
+		thisTime = new GregorianCalendar(Integer.parseInt(date.split(" ")[0].split("-")[0]), Integer.parseInt(date.split(" ")[0].split("-")[1])-1, Integer.parseInt(date.split(" ")[0].split("-")[2]), Integer.parseInt(date.split(" ")[1].split(":")[0]), Integer.parseInt(date.split(" ")[1].split(":")[1]), Integer.parseInt(date.split(" ")[1].split(":")[2]));
+	}
+	
 	public void setTimeSpace(Calendar previousTime) {
 		timeRelativeTo = thisTime.getTimeInMillis() - previousTime.getTimeInMillis();
 	}

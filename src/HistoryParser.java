@@ -11,7 +11,7 @@ public class HistoryParser {
 	// args holds the string array of passed parameters from the command line
 	private String[] args;
 	
-	private LinkedList<RevisionNode> outOfRange = new LinkedList<RevisionNode>();
+	private LinkedList<RevisionNode> initiallyRelevant = new LinkedList<RevisionNode>();
 	/**
 	 * Constructor: allows for access in the main code
 	 * @param arg file names to be looked for in the code
@@ -26,31 +26,19 @@ public class HistoryParser {
 		}
 	}
 	
-	/**
-	 * collects data on the specified files in relation to revision numbers, date of revision and the number of files changed in a relevant revision
-	 * @param exec Process executed, in this case a log command for a subversion repository
-	 * @return An array of String type linked lists containing in this order; revision numbers, revision date, revision changes. 
-	 * all lists are synchronized such that index i in all three lists pertains to a single revision.
-	 * @throws IOException due to the input from running the process exec
-	 */
-	public LinkedList<String>[] collectTargetData(Process exec) throws IOException{
+	public void nodeCycle(Process exec, int argNum) throws IOException{
 		BufferedReader  stdInput=  new  BufferedReader(new
 	              InputStreamReader(exec.getInputStream()));
 		
-		@SuppressWarnings("unchecked")
-		//holds the data on the targeted file log
-		LinkedList<String>[] data = new LinkedList[4];
 		//holds the current line of input in String form
 		String s;
 		//holds the split string
 		String[] ss;
-		LinkedList<String> userList = new LinkedList<String>();
+		String userList = "";
 		//revision list
-		LinkedList<String> rev = new LinkedList<String>();
+		String rev = "";
 		//list of revision dates
-		LinkedList<String> date = new LinkedList<String>();
-		//number of changed files list
-		LinkedList<String> nChanged = new LinkedList<String>();
+		String date = "";
 		//counter for how many files are changed
 		int count = 0;
 		
@@ -59,18 +47,20 @@ public class HistoryParser {
 			
 			if (s.startsWith("r")) {  //a line starting with a lower case r implies that we are at a new revision
 				if (count != 0) {  // check to see whether or not this is the first iteration
-					nChanged.addLast(Integer.toString(count));  //add the previous revision's file count to the changed list
+					RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count);
+					thisNode.newRelevantFile(args[argNum]);
+					sortedInsert(initiallyRelevant, thisNode);
 					count = 0;  //reset the counter
 				}
 				ss = s.split(" "); //split the string along white spaces
-				rev.addLast(ss[0].substring(1)); //gets the revision number at the very beginning of s, removing the r to just get the number
+				rev = (ss[0].substring(1)); //gets the revision number at the very beginning of s, removing the r to just get the number
 				if (ss[4].equals("|")){
-					date.addLast(ss[5]+" "+ss[6]); 
+					date = (ss[5]+" "+ss[6]); 
 				}
 				else {
-					date.addLast(ss[4]+" "+ss[5]);  // gets both the date and time of the revision
+					date = (ss[4]+" "+ss[5]);  // gets both the date and time of the revision
 				}
-				userList.addLast(ss[2]);
+				userList = (ss[2]);
 			}
 			/* 
 			 * other lines fall into two categories, those pertaining to file history and those that are
@@ -80,76 +70,12 @@ public class HistoryParser {
 			else if (s.startsWith("   M") || s.startsWith("   A") || s.startsWith("   D") || s.startsWith("   R")){
 				count++; //increase the counter for files changed in a certain revision
 			}
-		}
+		}	
 		
-		nChanged.addLast(Integer.toString(count));
-				
-		data[0] = rev; //store the revision list
-		data[1] = date; //store the date list
-		data[2] = nChanged; //store the number of files changed list
-		data[3] = userList;
-		return data; //return the array as output
-	}
-	
-	/**
-	 * takes the information found in collectTargetData and calculates the relevance rating and stores the data in a 
-	 * RevisionNode object which is placed in a RevisionNode LinkedList
-	 * @param RevisionList list of revision numbers in String form
-	 * @param DateList list of Strings specifying the respective revision's date
-	 * @param fileList String list of the number of files changed
-	 * @return the RevisionNode list holding all of the gathered/processed log data
-	 */
-	public LinkedList<RevisionNode> getHistoricalRelevancy(LinkedList<LinkedList<String>> UserList, LinkedList<LinkedList<String>> RevisionList, LinkedList<LinkedList<String>> DateList, LinkedList<LinkedList<String>> fileList){
-		int i, j; //loop counters
-		LinkedList<RevisionNode> results = new LinkedList<RevisionNode>(); //holds the results of processing the data
-		LinkedList<String> revision = new LinkedList<String>(); //stores the revisions encountered in order to check whether or not another file shares that revision
-		RevisionNode node; //node to hold the current revision's data before it is placed on the list
-		String currentRev; //the current revision
-		String elementToCompare; // used later to compare revisions to find linked files
+		RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count);
+		thisNode.newRelevantFile(args[argNum]);
+		sortedInsert(initiallyRelevant, thisNode);
 		
-		/*
-		 * since revisionList is the same size as the other lists, this makes it feasible to use its size as the iteration
-		 * manager. The Lists are lists of lists so each one is iterated through separately to fully collect all of the
-		 * data.
-		 */
-		for (i = 0; i < RevisionList.size(); i++) {
-			LinkedList<String> target = RevisionList.get(i);  //the list of revisions collected earlier
-			Iterator<String> targetIterator = target.iterator(); //iterator for the list of revisions		
-			Iterator<String> dateIterator = DateList.get(i).iterator(); //iterator for the list of dates	
-			Iterator<String> changeIterator = fileList.get(i).iterator(); //iterator for the list of files
-			Iterator<String> userIterator = UserList.get(i).iterator();
-			while (targetIterator.hasNext()) { //uses the equality of list lengths to avoid bounds exceptions
-				currentRev = targetIterator.next(); //gets the next revision number to process
-				
-				//instantiates the new node with the revision, date, total changed files and the number of changed queried files 
-				node = new RevisionNode(dateIterator.next(), currentRev, args.length, userIterator.next());
-				node.setTotalChanges(Integer.parseInt(changeIterator.next()));
-				node.newRelevantFile(args[i]); //add the current file to the revision list (NOTE: this makes use of how the file data is collected)
-				if (!revision.contains(currentRev)) { //if the revision has not been previously encountered
-					revision.addLast(currentRev); //add it to the revision tracking list
-					
-					/*
-					 * This loop jumps through all of the lists in RevisionList to look if any other file was affected 
-					 * by the revision in question.
-					 */
-					for (j = 0; j<RevisionList.size(); j++) { 
-						if (j == i) { //check to see if the list is the one currently being processed in the outer loop
-							continue; //skip the current list to avoid counting that file twice
-						}
-						Iterator<String> comparing = RevisionList.get(j).iterator(); //prepare an iterator to go through the list
-						while (comparing.hasNext()) { //spans the entire iteration					 
-							elementToCompare = comparing.next();  //get the next revision number in the list
-							if (currentRev.equals(elementToCompare)) { //indicates another file was changed in this revision
-								node.newRelevantFile(args[j]); //add the file name to the node's list (again, the code uses the order of arguments)
-								break; //end the loop since a revision only appears at most once per list
-							}
-						}
-					}
-					sortedInsert(results, node); //places the node in the list in such a way that the list is ordered by revision number (descending)
-				}
-			}
-		}
-		return results; //return the linked list of RevisionNode's
 	}
 	
 	/**
@@ -176,6 +102,15 @@ public class HistoryParser {
 					i++; //if this is the case, then prepare to check the next node in the list
 				}
 				else if (list.get(i).compare(node) == 0){
+					RevisionNode thatNode = list.remove(i);
+					int j;
+					for (j = 0; j < node.getRelevantFiles().size(); j++) {
+						String file = node.getRelevantFiles().get(j);
+						if (node.getRelevantFiles().contains(file)) {
+							thatNode.newRelevantFile(file);
+						}
+					}
+					list.add(i, thatNode);
 					return;
 				}
 				else {
@@ -197,10 +132,6 @@ public class HistoryParser {
 	public void printHistoryInformation() throws IOException{
 		
 		int i;//loop counter
-		LinkedList<LinkedList<String>> dataRepoRevision = new LinkedList<LinkedList<String>>(); //list that holds the revision number lists
-		LinkedList<LinkedList<String>> dataRepoDate = new LinkedList<LinkedList<String>>(); //list that holds the date of revision lists
-		LinkedList<LinkedList<String>> dataRepoNumberOfFiles = new LinkedList<LinkedList<String>>(); //list that holds list of the number of files changed in a revision
-		LinkedList<LinkedList<String>> dataRepoUser = new LinkedList<LinkedList<String>>();
 		long standard;
 		boolean inRange;
 		
@@ -219,11 +150,7 @@ public class HistoryParser {
 			}
 			String n = p+args[i]; //get the path to the file in question
 			Process exec = Runtime.getRuntime().exec("svn log -v "+n+" -q"); //uses the svn's log command to get the history of the queried file
-			LinkedList<String>[] info = collectTargetData(exec); //using the process from the previous line we parse the svn log for the current queried file
-			dataRepoRevision.addLast(info[0]); //the revision list is added to the main list for later processing
-			dataRepoDate.addLast(info[1]); //the date list is added to the main list for later processing
-			dataRepoNumberOfFiles.addLast(info[2]); //the amount of files changed list is added to the main list for later processing
-			dataRepoUser.addLast(info[3]);
+			nodeCycle(exec, i);
 		}
 		if (bundle.getString("revisionOverall?").equals("YES")) {
 			standard = fullTimeAverage();
@@ -254,7 +181,7 @@ public class HistoryParser {
 		double interval = 0;
 		int n = 0;
 		LinkedList<Integer> allN = new LinkedList<Integer>();
-		LinkedList<RevisionNode> history = getHistoricalRelevancy(dataRepoUser, dataRepoRevision, dataRepoDate, dataRepoNumberOfFiles); //fully process the collected data from each file's log
+		LinkedList<RevisionNode> history = initiallyRelevant;
 		System.out.println(); //further increase spacing between line break and table
 		for (i = 0; i < history.size(); i++){ //iterates through the entire RevisionNode list to print out its collected data
 			RevisionNode current = history.get(i); //takes the next node to be printed
@@ -271,7 +198,6 @@ public class HistoryParser {
 			if (bundle.getString("revisionOverall?").equals("YES")) {
 				if (newSpace > (double)standard+Integer.parseInt(bundle.getString("range"))*standard/100 ||  newSpace < (double)standard-Integer.parseInt(bundle.getString("range"))*standard/100) {
 					inRange = false;
-					//sortedInsert(outOfRange, current);
 				}
 				else {
 					inRange = true;
@@ -397,106 +323,6 @@ public class HistoryParser {
 		System.out.println(counter.toString());
 	}
 	
-	public void tableBonus(long average) throws IOException {
-		String p = bundle.getString(bundle.getString("repo"));
-		String s;
-		String[] ss;
-		String previous = "";
-		String current = "";
-		Process exec = Runtime.getRuntime().exec("svn log "+p+" -q");
-		BufferedReader  stdInput=  new  BufferedReader(new
-	              InputStreamReader(exec.getInputStream()));
-		RevisionNode nodeA = null;
-		RevisionNode nodeB = null;
-		String revision, user;
-		
-		while  ((s=  stdInput.readLine())  !=  null)  {
-			if (s.startsWith("r")) {  //a line starting with a lower case r implies that we are at a new revision
-				
-				ss = s.split(" "); //split the string along white spaces
-				
-				revision = ss[0].substring(1);
-				
-				user = ss[2];
-				if (!ss[3].equals("|")) {
-					user += ss[3];
-				}
-				
-				if (ss[4].equals("|")){
-					current = (ss[5]+" "+ss[6]); 
-				}
-				else {
-					current = (ss[4]+" "+ss[5]);  // gets both the date and time of the revision
-				}
-				nodeA = new RevisionNode(current, revision,  0, user);
-				Calendar thisTime = new GregorianCalendar(Integer.parseInt(current.split(" ")[0].split("-")[0]), Integer.parseInt(current.split(" ")[0].split("-")[1])-1, Integer.parseInt(current.split(" ")[0].split("-")[2]), Integer.parseInt(current.split(" ")[1].split(":")[0]), Integer.parseInt(current.split(" ")[1].split(":")[1]), Integer.parseInt(current.split(" ")[1].split(":")[2]));
-				if (!previous.equals("") && nodeB != null){ //implies this is not the first iteration
-					Calendar lastTime = new GregorianCalendar(Integer.parseInt(previous.split(" ")[0].split("-")[0]), Integer.parseInt(previous.split(" ")[0].split("-")[1])-1, Integer.parseInt(previous.split(" ")[0].split("-")[2]), Integer.parseInt(previous.split(" ")[1].split(":")[0]), Integer.parseInt(previous.split(" ")[1].split(":")[1]), Integer.parseInt(previous.split(" ")[1].split(":")[2]));
-					long timeDiff = lastTime.getTimeInMillis()-thisTime.getTimeInMillis();
-					if ((timeDiff > (double)average+Double.parseDouble(bundle.getString("range"))*average/100 ||  timeDiff < (double)average-Double.parseDouble(bundle.getString("range"))*average/100)) {
-						sortedInsert(outOfRange, nodeA);
-						sortedInsert(outOfRange, nodeB); 
-					}
-					else {
-						continue;
-					}
-				}
-				nodeB = nodeA;
-				previous = current;
-			}
-		}
-	
-		int j; //loop counter
-		
-		System.out.print("\n");
-		for (j = 0; j < 25; j++) { //create a line break to separate the query print out from the data table
-			System.out.print("=========="); //indicates the end of the list of queried files
-		}
-		System.out.print("\n"); //provide spacing between output
-		System.out.println("Legend: ");
-		System.out.println("\t¥: \t\tindicates the time between this revision and the one before it is not \n\t\t\tin the selected range from the overall average\n");
-		System.out.println("\tA Line Of #: \tthe revisions between two of these are within the user selected \n\t\t\t interval range\n");
-		System.out.println("\tA Line Of -: \tthe revisions separated by these are within the user selected \n\t\t\t interval range\n");
-		System.out.print("\n"); //provide spacing between output
-		System.out.println("commit \t date \t\t\t relevants \t     changed \t rating \t\t rating comment \t\t\t\t actual relevant files");		for (j = 0; j < 25; j++) { //used to separate the rows of data and improve appearance and ease of use
-		System.out.print("##########"); //the lines used to separate the information rows
-		}
-		
-
-		double interval = 0;
-		int i;
-		System.out.println(); //further increase spacing between line break and table
-		for (i = 0; i < outOfRange.size(); i++){ //iterates through the entire RevisionNode list to print out its collected data
-			RevisionNode currentNode = outOfRange.get(i); //takes the next node to be printed
-			double newSpace;
-			if (i < outOfRange.size()-1) {
-				newSpace = (double)currentNode.getTimeSpace(outOfRange.get(i+1).getThisTime())/1000/60/60.0;
-				interval += newSpace;
-			}
-			else {
-				newSpace = 0;
-				interval = Long.MAX_VALUE;
-			}
-				
-			System.out.println(currentNode.toString()); //prints the String representation of all the nodes data
-			for (j = 0; j < 25; j++) { //used to separate the rows of data and improve appearance and ease of use
-				if (interval <= Long.parseLong(bundle.getString("interval"))) {
-					System.out.print("----------"); //the lines used to separate the information rows
-				}
-				else {
-					System.out.print("##########");
-				}
-			}
-			
-			if (interval > Long.parseLong(bundle.getString("interval"))) {
-				interval = 0;
-			}
-			if (bundle.getString("table?").equals("YES")) {
-				System.out.print("\n"); //newline to skip down to the next row's position
-			}
-		}
-	}
-
 	/**
 	 * Takes the rating of a particular revision and uses it to place in an array
 	 * designed to store the rating ranges
