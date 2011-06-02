@@ -34,6 +34,7 @@ public class Main {
 		}
 		//catches any exception thrown
 		catch (Exception e) {
+			System.out.println("ERROR: "+e.getMessage());
 			e.printStackTrace(); //prints out the issue caught
 		}
 		long end = System.currentTimeMillis();
