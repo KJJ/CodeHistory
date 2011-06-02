@@ -361,12 +361,12 @@ public class NodeStatistics {
 		int i, j;
 		p.print(",");
 		for (j = 0; j < args.length; j++){
-			p.print(args[j].substring(args[j].lastIndexOf('/'))+",");
+			p.print(args[j].substring(args[j].lastIndexOf('/')+1)+",");
 		}
 		
 		p.println();
 		
-		for (i = 0; i < arrayIn.length; i++){
+		for (i = arrayIn.length-1; i >= 0; i--){
 			p.print(revisions[i]+",");
 			for (j = 0; j < arrayIn[i].length; j++) {
 				
