@@ -37,7 +37,7 @@ public class Main {
 			e.printStackTrace(); //prints out the issue caught
 		}
 		long end = System.currentTimeMillis();
-		if (bundle.getString("time?").equals("YES")) {
+		if (bundle.getString("timeToggle").equals("true")) {
 			System.out.println("\n("+(end-start)/1000.00+" seconds for completion)");
 		}
 	}
