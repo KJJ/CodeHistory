@@ -33,7 +33,9 @@ public class RevisionNode {
 		relevantFiles = new LinkedList<String>();
 		totalQuery = query;
 		user = User;
-		thisTime = new GregorianCalendar(Integer.parseInt(date.split(" ")[0].split("-")[0]), Integer.parseInt(date.split(" ")[0].split("-")[1])-1, Integer.parseInt(date.split(" ")[0].split("-")[2]), Integer.parseInt(date.split(" ")[1].split(":")[0]), Integer.parseInt(date.split(" ")[1].split(":")[1]), Integer.parseInt(date.split(" ")[1].split(":")[2]));
+		thisTime = new GregorianCalendar(Integer.parseInt(date.split(" ")[0].split("-")[0]), Integer.parseInt(date.split(" ")[0].split("-")[1])-1, 
+				Integer.parseInt(date.split(" ")[0].split("-")[2]), Integer.parseInt(date.split(" ")[1].split(":")[0]), Integer.parseInt(date.split(" ")[1].split(":")[1]), 
+					Integer.parseInt(date.split(" ")[1].split(":")[2]));
 	}
 	
 	public RevisionNode(String dat, String rev, int query, String User, int changes) {
@@ -44,7 +46,9 @@ public class RevisionNode {
 		relevantFiles = new LinkedList<String>();
 		totalQuery = query;
 		user = User;
-		thisTime = new GregorianCalendar(Integer.parseInt(date.split(" ")[0].split("-")[0]), Integer.parseInt(date.split(" ")[0].split("-")[1])-1, Integer.parseInt(date.split(" ")[0].split("-")[2]), Integer.parseInt(date.split(" ")[1].split(":")[0]), Integer.parseInt(date.split(" ")[1].split(":")[1]), Integer.parseInt(date.split(" ")[1].split(":")[2]));
+		thisTime = new GregorianCalendar(Integer.parseInt(date.split(" ")[0].split("-")[0]), Integer.parseInt(date.split(" ")[0].split("-")[1])-1, 
+				Integer.parseInt(date.split(" ")[0].split("-")[2]), Integer.parseInt(date.split(" ")[1].split(":")[0]), Integer.parseInt(date.split(" ")[1].split(":")[1]), 
+					Integer.parseInt(date.split(" ")[1].split(":")[2]));
 	}
 	
 	public void setTimeSpace(Calendar previousTime) {
@@ -220,7 +224,9 @@ public class RevisionNode {
 		double rat = this.getRating()*100000;
 		rat = Math.round(rat);
 		rat /= 100000;
-		out = revision+"\t"+date+"\t"+Integer.toString(numberOfRelevants)+"/"+Integer.toString(totalQuery)+" relevant files\t"+Integer.toString(totalChanges)+"\t"+rat+"\t\t"+ratingComment+"\t"+files;
+		out = revision+"\t"+date+"\t"+Integer.toString(numberOfRelevants)+"/"+Integer.toString(totalQuery)+" relevant files\t"+Integer.toString(totalChanges)
+																																			+"\t"+rat+"\t\t"+ratingComment+"\t"+files;
+		
 		return out;
 	}
 	

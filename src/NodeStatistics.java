@@ -44,6 +44,7 @@ public class NodeStatistics {
 	private String[] commits;
 	private String[] intervals;
 	private Calendar lastTime;
+	private int[][] existsHere;
 
 	/**
 	 * Constructor: initializes all fields to prepare for analysis
@@ -90,6 +91,7 @@ public class NodeStatistics {
 		relevants[list.size()] = "Relevants Present";
 		irrelevants[list.size()]= "Irrelevants Present";
 		ratings[list.size()] = "Rating of Relevance";
+		existsHere = new int[list.size()][args.length];
 	}
 	
 	/**
@@ -104,12 +106,20 @@ public class NodeStatistics {
 		String previousRev = "";
 		Iterator<RevisionNode> runThrough = toAnalyze.iterator(); //preparing to go through every relevant revision's data
 		RevisionNode next = null; //null to determine later whether or not the list is empty or not
+		int j;
 		while (runThrough.hasNext()){ 
 			
 			next = runThrough.next(); //the next revision's data node
 			
 			revisions[toAnalyze.indexOf(next)] = "r"+next.getRevision();
 			relevants[toAnalyze.indexOf(next)] = Integer.toString(next.getNumberOfRelevants());
+			for (j = 0; j < args.length; j++){
+				LinkedList<String> relevantList = next.getRelevantFiles();
+				if (relevantList.contains(args[j])) {
+					existsHere[toAnalyze.indexOf(next)][j] = 1;
+				}
+			}
+			
 			if (next.getTotalChanges()-next.getNumberOfRelevants() >= 0) {
 				irrelevants[toAnalyze.indexOf(next)]= Integer.toString(next.getTotalChanges()-next.getNumberOfRelevants());
 			}
@@ -118,10 +128,15 @@ public class NodeStatistics {
 			}
 			ratings[toAnalyze.indexOf(next)] = Double.toString(next.getRating());
 			
-			Calendar thisTime = new GregorianCalendar(Integer.parseInt(next.getDate().split(" ")[0].split("-")[0]), Integer.parseInt(next.getDate().split(" ")[0].split("-")[1])-1, Integer.parseInt(next.getDate().split(" ")[0].split("-")[2]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[0]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[1]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[2]));
+			Calendar thisTime = new GregorianCalendar(Integer.parseInt(next.getDate().split(" ")[0].split("-")[0]), Integer.parseInt(next.getDate().split(" ")[0].split("-")[1])-1,
+					Integer.parseInt(next.getDate().split(" ")[0].split("-")[2]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[0]),
+						Integer.parseInt(next.getDate().split(" ")[1].split(":")[1]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[2]));
 		
 			if (highestRating == -1){ //implies this is the first iteration
-				lastTime = new GregorianCalendar(Integer.parseInt(next.getDate().split(" ")[0].split("-")[0]), Integer.parseInt(next.getDate().split(" ")[0].split("-")[1])-1, Integer.parseInt(next.getDate().split(" ")[0].split("-")[2]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[0]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[1]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[2]));
+				lastTime = new GregorianCalendar(Integer.parseInt(next.getDate().split(" ")[0].split("-")[0]), Integer.parseInt(next.getDate().split(" ")[0].split("-")[1])-1, 
+						Integer.parseInt(next.getDate().split(" ")[0].split("-")[2]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[0]), 
+							Integer.parseInt(next.getDate().split(" ")[1].split(":")[1]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[2]));
+				
 				now = "Revision "+next.getRevision()+" at ("+next.getDate()+")"; //the latest revision's date and number
 				previousRev = next.getRevision();
 			}
@@ -222,7 +237,8 @@ public class NodeStatistics {
 		analyze();
 		int i;
 		
-		if (bundle.getString("otherStats?").equals("YES") || bundle.getString("groups?").equals("YES") || bundle.getString("percent?").equals("YES") | bundle.getString("diffOrNot?").equals("YES")) {
+		if (bundle.getString("otherStatsToggle").equals("true") || bundle.getString("groupsToggle").equals("true") || bundle.getString("percentToggle").equals("true") || 
+																																		bundle.getString("diffOrNotToggle").equals("true")) {
 			System.out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
 		}
 		
@@ -231,7 +247,7 @@ public class NodeStatistics {
 		}
 		
 		else {
-			if (bundle.getString("otherStats?").equals("YES")) {
+			if (bundle.getString("otherStatsToggle").equals("true")) {
 				System.out.println("Relevant Segment of Revision History: "+then+" to "+now+" \n");
 				System.out.println("Total Number of Relevant Revisions: " + revisionTotal);
 				System.out.println("\t Average Number of relevant files per revision: "+ Math.round(relevantAverage) + "\n");
@@ -278,70 +294,118 @@ public class NodeStatistics {
 				System.out.println("Average Number of Changed files: "+ nFilesAverage);
 				System.out.println("\t Lowest Number of Changed Files: " + lowestFileNumber+" changed at Revision "+revisionReference[3]);
 				System.out.println("\t Highest Number of Changed Files: " + highestFileNumber+" changed at Revision "+revisionReference[2] + "\n");
-				}
-			if (bundle.getString("groups?").equals("YES")) {
+			}
+			
+			if (bundle.getString("groupsToggle").equals("true")) {
 				grouping.currentOutput();
 			}
 			if (args.length > 1) {
-				if (bundle.getString("percent?").equals("YES")) {
+				if (bundle.getString("percentToggle").equals("true")) {
 					percentages(args);
 				}
 			}
 			
-			if (bundle.getString("CSV?").equals("YES")) {
-				
-				System.out.println(); //spacing
-				FileWriter f = new FileWriter(bundle.getString("csv"));
-				PrintWriter p = new PrintWriter(f);
-				Object[][] input = {revisionsToo, flowOfTime};
-				CSVWork(input, p, f);
-				Object[][] nextInput = {revisions, ratings};
-				CSVWork(nextInput, p, f);
-				nextInput[1] = irrelevants;
-				CSVWork(nextInput, p, f);
-				nextInput[1] = relevants;
-				CSVWork(nextInput, p, f);
-				nextInput[0] = intervals;
-				nextInput[1] = commits;
-				CSVWork(nextInput, p, f);
-				p.flush();
-				p.close();
-				f.close();
+			if (bundle.getString("CSVToggle").equals("true")) {
+				csv();
 			}
 			
-			if (bundle.getString("diffOrNot?").equals("YES") && revisionTotal > 1) {		
-				
-				int j;
-				String pathFull = "";
-				DiffParser dp = new DiffParser(args);
-				String path = bundle.getString(bundle.getString("repo"));
-				System.out.print("\t");
-				
-				for (i = 0; i < args.length; i++) {
-					System.out.print("\t\t "+args[i].substring(args[i].lastIndexOf('/')));
-				}
-				
-				System.out.println("\n");
-				
-					for (i = 0; i < revisionsToo.length-1; i++) {
-						System.out.print("Revisions " + revisionsToo[i] + ":\t");
-						
-						for (j = 0; j < args.length; j++) {
-							pathFull = path+args[j]+" ";
-							Process exec = Runtime.getRuntime().exec("svn diff -r "+ revisionsToo[i].split("-")[0] +":"+ revisionsToo[i].split("-")[1] +" "+ pathFull);
-							dp.diffOut(exec);
-						}
-						
-						System.out.println("\n");
-					}
+			if (bundle.getString("diffOrNotToggle").equals("true") && revisionTotal > 1) {		
+				diff();
 			}
 
 		}
 		
-		if (bundle.getString("otherStats?").equals("YES") || bundle.getString("groups?").equals("YES") || bundle.getString("percent?").equals("YES") | bundle.getString("diffOrNot?").equals("YES")) {
+		if (bundle.getString("otherStatsToggle").equals("true") || bundle.getString("groupsToggle").equals("true") || bundle.getString("percentToggle").equals("true") || 
+																																		bundle.getString("diffOrNotToggle").equals("true")) {
 			System.out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
 		}
 
+	}
+	
+	public void csv() throws IOException {
+		System.out.println(); //spacing
+		FileWriter f = new FileWriter(bundle.getString("csv"));
+		PrintWriter p = new PrintWriter(f);
+		Object[][] input = {revisionsToo, flowOfTime};
+		CSVWork(input, p, f);
+		Object[][] nextInput = {revisions, ratings};
+		CSVWork(nextInput, p, f);
+		nextInput[1] = irrelevants;
+		CSVWork(nextInput, p, f);
+		nextInput[1] = relevants;
+		CSVWork(nextInput, p, f);
+		nextInput[0] = intervals;
+		nextInput[1] = commits;
+		CSVWork(nextInput, p, f);
+		specialCSV(existsHere, p, f);
+		p.flush();
+		p.close();
+		f.close();
+	}
+	
+	//IO code from http://javacodeonline.blogspot.com/2009/09/java-code-to-write-to-csv-file.html
+	public void CSVWork(Object[][] arrayIn, PrintWriter p, FileWriter f) throws IOException {
+		int i, j;
+
+		for (i = arrayIn[0].length-1; i >= 0; i--){
+			for (j = 0; j < arrayIn.length; j++) {
+				p.print(arrayIn[j][i]+",");
+			}
+			p.println();
+		}
+		p.println();
+	}
+	
+	//IO code from http://javacodeonline.blogspot.com/2009/09/java-code-to-write-to-csv-file.html
+	public void specialCSV(int[][] arrayIn, PrintWriter p, FileWriter f) throws IOException {
+		int i, j;
+		p.print(",");
+		for (j = 0; j < args.length; j++){
+			p.print(args[j].substring(args[j].lastIndexOf('/'))+",");
+		}
+		
+		p.println();
+		
+		for (i = 0; i < arrayIn.length; i++){
+			p.print(revisions[i]+",");
+			for (j = 0; j < arrayIn[i].length; j++) {
+				
+				if (arrayIn[i][j] == 1) {
+					p.print("1,");
+				}
+				else {
+					p.print(",");
+				}
+			}
+			p.println();
+		}
+		p.println();
+	}
+	
+	public void diff() throws IOException{
+		int j, i;
+		String pathFull = "";
+		DiffParser dp = new DiffParser(args);
+		String path = bundle.getString(bundle.getString("repo"));
+		System.out.print("\t");
+		
+		for (i = 0; i < args.length; i++) {
+			System.out.print("\t\t "+args[i].substring(args[i].lastIndexOf('/')));
+		}
+		
+		System.out.println("\n");
+		
+			for (i = 0; i < revisionsToo.length-1; i++) {
+				System.out.print("Revisions " + revisionsToo[i] + ":\t");
+				
+				for (j = 0; j < args.length; j++) {
+					pathFull = path+args[j]+" ";
+					Process exec = Runtime.getRuntime().exec("svn diff -r "+ revisionsToo[i].split("-")[0] +":"+ revisionsToo[i].split("-")[1] +" "+ pathFull);
+					dp.diffOut(exec);
+				}
+				
+				System.out.println("\n");
+			}
 	}
 	
 	/**
@@ -379,18 +443,5 @@ public class NodeStatistics {
 				}
 			}
 		}
-	}
-	
-	//IO code from http://javacodeonline.blogspot.com/2009/09/java-code-to-write-to-csv-file.html
-	public void CSVWork(Object[][] arrayIn, PrintWriter p, FileWriter f) throws IOException {
-		int i, j;
-
-		for (i = arrayIn[0].length-1; i >= 0; i--){
-			for (j = 0; j < arrayIn.length; j++) {
-				p.print(arrayIn[j][i]+",");
-			}
-			p.println();
-		}
-		p.println();
 	}
 }
