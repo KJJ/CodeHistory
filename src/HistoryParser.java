@@ -26,7 +26,7 @@ public class HistoryParser {
 		}
 	}
 	
-	public void nodeCycle(Process exec, int argNum) throws IOException{
+	public void nodeCycle(Process exec, int argNum) throws Exception{
 		BufferedReader  stdInput=  new  BufferedReader(new
 	              InputStreamReader(exec.getInputStream()));
 		
@@ -68,7 +68,9 @@ public class HistoryParser {
 				count++; //increase the counter for files changed in a certain revision
 			}
 		}	
-		
+		if (rev.equals("")) {
+			throw new Exception("User did not enter the names properly");
+		}
 		RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count);
 		thisNode.newRelevantFile(args[argNum]);
 		sortedInsert(initiallyRelevant, thisNode);
@@ -131,9 +133,9 @@ public class HistoryParser {
 	 * printHistoryInformation both processes the log information of a Subversion repository through the methods above
 	 * and then prints out the names of the queried files along with all of the information stored in the RevisionNode
 	 * linked list in a table-style format
-	 * @throws IOException if the input from the command line processes throw an exception due to some error
+	 * @throws Exception 
 	 */
-	public void printHistoryInformation() throws IOException{
+	public void printHistoryInformation() throws Exception{
 		
 		int i;//loop counter
 		long standard;
