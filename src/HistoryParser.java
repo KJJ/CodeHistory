@@ -204,15 +204,15 @@ public class HistoryParser {
 				}
 			}
 			else {
-				inRange = true;
+				inRange = false;
 			}
 			
 			if (bundle.getString("tableToggle").equals("true")) {
-				if (!inRange) {
+				if (inRange) {
 					System.out.print("¥ ");
 				}
 				System.out.print(current.toString()); //prints the String representation of all the nodes data
-				if (interval <= Long.parseLong(bundle.getString("interval"))) {
+				if (interval <= Double.parseDouble(bundle.getString("interval"))) {
 					linesAndBounds("----------"); //the lines used to separate the information rows
 				}
 				else {
@@ -220,10 +220,10 @@ public class HistoryParser {
 				}
 			}
 			
-			if (interval <= Long.parseLong(bundle.getString("interval"))) {
+			if (interval <= Double.parseDouble(bundle.getString("interval"))) {
 				n++;
 			}
-			else if (interval > Long.parseLong(bundle.getString("interval"))) {
+			else if (interval > Double.parseDouble(bundle.getString("interval"))) {
 				n++;
 				allN.addFirst(n);
 				n = 0;

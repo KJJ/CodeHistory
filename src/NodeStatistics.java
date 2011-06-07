@@ -177,7 +177,8 @@ public class NodeStatistics {
 					files += nextFile; //else, just enter the file name
 				}
 			}
-				grouping.newInput(files); //send the group of files for file-group processing
+				
+			grouping.newInput(files, next.getRevision()); //send the group of files for file-group processing
 			
 			relevantAverage += next.getNumberOfRelevants(); //aggregation period of average calculation
 			ratingAverage += next.getRating(); //aggregation period of average calculation
@@ -263,8 +264,11 @@ public class NodeStatistics {
 				else if (timeDiffAverage/1000/60/60 < 1){
 					System.out.println("Average Time Between Revisions: " + timeDiffAverage/1000/60 + " minutes");
 				}
-				else {
+				else if (timeDiffAverage/1000/60/60 < 1000) {
 					System.out.println("Average Time Between Revisions: " + timeDiffAverage/1000/60/60 + " hours");
+				}
+				else {
+					System.out.println("Average Time Between Revisions: " + timeDiffAverage/1000/60/60/24 + " days");
 				}
 				
 				if (timeDiffLow/1000/60 < 1){
@@ -273,8 +277,11 @@ public class NodeStatistics {
 				else if (timeDiffLow/1000/60/60 < 1){
 					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow/1000/60 +" minutes between Revisions "+revisionReference[5]);
 				}
-				else {
+				else if (timeDiffLow/1000/60/60 < 1000) {
 					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow/1000/60/60 +" hours between Revisions "+revisionReference[5]);
+				}
+				else {
+					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow/1000/60/60/24 + " days between Revisions "+revisionReference[5]);
 				}
 				
 				if (timeDiffHigh/1000/60 < 1){
@@ -283,8 +290,11 @@ public class NodeStatistics {
 				else if (timeDiffHigh/1000/60/60 < 1){
 					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh/1000/60 +" minutes between Revisions "+revisionReference[4]);
 				}
-				else {
+				else if (timeDiffHigh/1000/60/60 < 1000) {
 					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh/1000/60/60 +" hours between Revisions "+revisionReference[4]);
+				}
+				else {
+					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh/1000/60/60/24 + " days between Revisions "+revisionReference[4]);
 				}
 				
 				System.out.println("\nAverage Rating: "+ ratingAverage);
