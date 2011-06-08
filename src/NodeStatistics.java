@@ -323,14 +323,16 @@ public class NodeStatistics {
 				csv();
 			}
 			
-			if (bundle.getString("diffOrNotToggle").equals("true") && revisionTotal > 1) {		
+			if (bundle.getString("diffToggle").equals("true") && revisionTotal > 1) {		
 				diff();
 			}
 			
-			System.out.println("Revision Comments: \n");
-			for (i = 0; i < commenting.size(); i++) {
-				System.out.println("\t"+revisions[i]+":");
-				System.out.println(commenting.get(i)+"\n");
+			if (bundle.getString("commentToggle").equals("true")) {
+				System.out.println("Revision Comments: \n");
+				for (i = 0; i < commenting.size(); i++) {
+					System.out.println("\t"+revisions[i]+":");
+					System.out.println(commenting.get(i)+"\n");
+				}
 			}
 
 		}
