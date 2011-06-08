@@ -17,6 +17,7 @@ public class RevisionNode {
 	private String user;						//user who added the revision
 	private long timeRelativeTo;
 	private Calendar thisTime;
+	private String comments;
 	
 	/**
 	 * Constructor. Allows the user to also enter the date and number of relevant files 
@@ -25,7 +26,8 @@ public class RevisionNode {
 	 * @param total how many changed files there are
 	 * @param query how many files were entered on the command line
 	 */
-	public RevisionNode(String dat, String rev, int query, String User) {
+	public RevisionNode(String dat, String rev, int query, String User, String comment) {
+		comments = comment;
 		date = dat;
 		revision = rev;
 		totalChanges = 0;
@@ -38,7 +40,8 @@ public class RevisionNode {
 					Integer.parseInt(date.split(" ")[1].split(":")[2]));
 	}
 	
-	public RevisionNode(String dat, String rev, int query, String User, int changes) {
+	public RevisionNode(String dat, String rev, int query, String User, int changes, String comment) {
+		comments = comment;
 		date = dat;
 		revision = rev;
 		totalChanges = changes;
@@ -62,6 +65,10 @@ public class RevisionNode {
 	
 	public Calendar getThisTime() {
 		return thisTime;
+	}
+	
+	public String getComments() {
+		return comments;
 	}
 
 	/**

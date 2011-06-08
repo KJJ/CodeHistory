@@ -36,18 +36,19 @@ public class HistoryParser {
 		String[] ss;
 		String userList = "";
 		//revision list
-		String rev = "";
+		String rev = "thisIsNotARevision";
 		//list of revision dates
 		String date = "";
 		//counter for how many files are changed
 		int count = 0;
+		String comment = "";
 		
 		// while there is input to process, execute this loop
 		while  ((s=  stdInput.readLine())  !=  null)  {
 			
 			if (s.startsWith("r")) {  //a line starting with a lower case r implies that we are at a new revision
 				if (count != 0) {  // check to see whether or not this is the first iteration
-					RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count);
+					RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
 					thisNode.newRelevantFile(args[argNum]);
 					sortedInsert(initiallyRelevant, thisNode);
 					count = 0;  //reset the counter
@@ -67,11 +68,14 @@ public class HistoryParser {
 			else if (s.startsWith("   M") || s.startsWith("   A") || s.startsWith("   D") || s.startsWith("   R")){
 				count++; //increase the counter for files changed in a certain revision
 			}
+			else if (!s.equals("Changed paths:") && !s.contains("-------")) {
+				comment += s+"\n";
+			}
 		}	
-		if (rev.equals("")) {
+		if (rev.equals("thisIsNotARevision")) {
 			throw new Exception("User did not enter the names properly");
 		}
-		RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count);
+		RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
 		thisNode.newRelevantFile(args[argNum]);
 		sortedInsert(initiallyRelevant, thisNode);
 	}
@@ -155,7 +159,7 @@ public class HistoryParser {
 				args[i] = "/"+args[i]; //if not then the / is added to the argument at runtime
 			}
 			String n = p+args[i]; //get the path to the file in question
-			Process exec = Runtime.getRuntime().exec("svn log -v "+n+" -q"); //uses the svn's log command to get the history of the queried file
+			Process exec = Runtime.getRuntime().exec("svn log -v "+n/*+" -q"*/); //uses the svn's log command to get the history of the queried file
 			nodeCycle(exec, i);
 		}
 		if (bundle.getString("revisionOverallToggle").equals("true")) {

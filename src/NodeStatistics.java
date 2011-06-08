@@ -45,6 +45,7 @@ public class NodeStatistics {
 	private String[] intervals;
 	private Calendar lastTime;
 	private int[][] existsHere;
+	private LinkedList<String> commenting;
 
 	/**
 	 * Constructor: initializes all fields to prepare for analysis
@@ -92,6 +93,7 @@ public class NodeStatistics {
 		irrelevants[list.size()]= "Irrelevants Present";
 		ratings[list.size()] = "Rating of Relevance";
 		existsHere = new int[list.size()][args.length];
+		commenting = new LinkedList<String>();
 	}
 	
 	/**
@@ -110,6 +112,8 @@ public class NodeStatistics {
 		while (runThrough.hasNext()){ 
 			
 			next = runThrough.next(); //the next revision's data node
+			
+			commenting.addLast(next.getComments());
 			
 			revisions[toAnalyze.indexOf(next)] = "r"+next.getRevision();
 			relevants[toAnalyze.indexOf(next)] = Integer.toString(next.getNumberOfRelevants());
@@ -322,8 +326,16 @@ public class NodeStatistics {
 			if (bundle.getString("diffOrNotToggle").equals("true") && revisionTotal > 1) {		
 				diff();
 			}
+			
+			System.out.println("Revision Comments: \n");
+			for (i = 0; i < commenting.size(); i++) {
+				System.out.println("\t"+revisions[i]+":");
+				System.out.println(commenting.get(i)+"\n");
+			}
 
 		}
+		
+		
 		
 		if (bundle.getString("otherStatsToggle").equals("true") || bundle.getString("groupsToggle").equals("true") || bundle.getString("percentToggle").equals("true") || 
 																																		bundle.getString("diffOrNotToggle").equals("true")) {
