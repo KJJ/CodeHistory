@@ -49,6 +49,7 @@ public class HistoryParser {
 			if (s.startsWith("r") && s.contains("|")) {  //a line starting with a lower case r implies that we are at a new revision
 				if (count != 0) {  // check to see whether or not this is the first iteration
 					RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
+					comment = "";
 					thisNode.newRelevantFile(args[argNum]);
 					sortedInsert(initiallyRelevant, thisNode);
 					count = 0;  //reset the counter
