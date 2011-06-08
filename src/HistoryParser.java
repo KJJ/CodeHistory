@@ -69,7 +69,7 @@ public class HistoryParser {
 				count++; //increase the counter for files changed in a certain revision
 			}
 			else if (!s.equals("Changed paths:") && !s.contains("-------")) {
-				comment += s+"\n";
+				comment += s+" ";
 			}
 		}	
 		if (rev.equals("thisIsNotARevision")) {

@@ -399,6 +399,7 @@ public class NodeStatistics {
 					p.print(",");
 				}
 			}
+			p.print(commenting.get(i));
 			p.println();
 		}
 		p.println();

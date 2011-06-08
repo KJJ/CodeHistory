@@ -27,7 +27,7 @@ public class RevisionNode {
 	 * @param query how many files were entered on the command line
 	 */
 	public RevisionNode(String dat, String rev, int query, String User, String comment) {
-		comments = comment;
+		comments = commaRemove(comment);
 		date = dat;
 		revision = rev;
 		totalChanges = 0;
@@ -41,7 +41,7 @@ public class RevisionNode {
 	}
 	
 	public RevisionNode(String dat, String rev, int query, String User, int changes, String comment) {
-		comments = comment;
+		comments = commaRemove(comment);
 		date = dat;
 		revision = rev;
 		totalChanges = changes;
@@ -53,6 +53,13 @@ public class RevisionNode {
 				Integer.parseInt(date.split(" ")[0].split("-")[2]), Integer.parseInt(date.split(" ")[1].split(":")[0]), Integer.parseInt(date.split(" ")[1].split(":")[1]), 
 					Integer.parseInt(date.split(" ")[1].split(":")[2]));
 	}
+	
+	public String commaRemove(String commaFilled){
+		String commaless = commaFilled;
+		commaless = commaless.replace(',', ';');
+		return commaless;
+	}
+	
 	
 	public void setTimeSpace(Calendar previousTime) {
 		timeRelativeTo = thisTime.getTimeInMillis() - previousTime.getTimeInMillis();
