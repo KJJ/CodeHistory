@@ -145,6 +145,7 @@ public class HistoryParser {
 		int i;//loop counter
 		long standard;
 		boolean inRange;
+		boolean lastWas = false;
 		
 		if (bundle.getString("queryToggle").equals("true")) {
 			System.out.println("Queried Files:"); //indicates the next lines show what was entered on the command line
@@ -213,8 +214,19 @@ public class HistoryParser {
 			}
 			
 			if (bundle.getString("tableToggle").equals("true")) {
-				if (inRange) {
+				if (inRange && !lastWas) {
 					System.out.print("¥ ");
+					lastWas = true;
+				}
+				else if (inRange && lastWas) {
+					System.out.print("¦ ");
+				}
+				else if (!inRange && lastWas) {
+					System.out.print("Æ ");
+					lastWas = false;
+				}
+				else {
+					System.out.print(" ");
 				}
 				System.out.print(current.toString()); //prints the String representation of all the nodes data
 				if (interval <= Double.parseDouble(bundle.getString("interval"))) {

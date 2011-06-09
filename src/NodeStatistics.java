@@ -147,7 +147,9 @@ public class NodeStatistics {
 			
 			else {
 				long timeDiff = lastTime.getTimeInMillis()-thisTime.getTimeInMillis();
-				flowOfTime[toAnalyze.indexOf(next)-1] = Long.toString(timeDiff/1000/60/60);
+				String a = Double.toString(timeDiff/1000/60/60/24.0);
+				a = a.substring(0, a.indexOf('.')) + " days & "+ Math.round(Double.parseDouble(a.substring(a.indexOf(".")))*24) + " hours";
+				flowOfTime[toAnalyze.indexOf(next)-1] = a;
 				revisionsToo[toAnalyze.indexOf(next)-1] = next.getRevision()+"-"+previousRev;
 				
 				if (timeDiff > timeDiffHigh){
@@ -387,7 +389,8 @@ public class NodeStatistics {
 		for (j = 0; j < args.length; j++){
 			p.print(args[j].substring(args[j].lastIndexOf('/')+1)+",");
 		}
-		
+		p.print("Intervals in days and hours:,");
+		p.print("Comments:,");
 		p.println();
 		
 		for (i = arrayIn.length-1; i >= 0; i--){
@@ -400,6 +403,12 @@ public class NodeStatistics {
 				else {
 					p.print(",");
 				}
+			}
+			if (i > 0) {
+				p.print(flowOfTime[i-1]+",");
+			}
+			else {
+				p.print(",");
 			}
 			p.print(commenting.get(i));
 			p.println();
