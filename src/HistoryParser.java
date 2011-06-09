@@ -219,7 +219,7 @@ public class HistoryParser {
 					lastWas = true;
 				}
 				else if (inRange && lastWas) {
-					System.out.print("¦ ");
+					System.out.print("´ ");
 				}
 				else if (!inRange && lastWas) {
 					System.out.print("Æ ");
