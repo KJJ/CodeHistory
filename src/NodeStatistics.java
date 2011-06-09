@@ -389,7 +389,7 @@ public class NodeStatistics {
 		for (j = 0; j < args.length; j++){
 			p.print(args[j].substring(args[j].lastIndexOf('/')+1)+",");
 		}
-		p.print("Intervals in days and hours:,");
+		p.print("Intervals from this revision to the next in days and hours:,");
 		p.print("Comments:,");
 		p.println();
 		
