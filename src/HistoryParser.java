@@ -177,6 +177,8 @@ public class HistoryParser {
 			System.out.print("\n"); //provide spacing between output
 			System.out.println("Legend: ");
 			System.out.println("\t•: \t\tindicates the time between this revision and the one before it is not \n\t\t\tin the selected range from the overall average\n");
+			System.out.println("\t¥: \t\tindicates that this revision and the one above it are in the intrval while \n\t\t\tthe current revision and the one below \n\t\t\titself is also within the specified range");
+			System.out.println("\t∆: \t\tindicate the bottom revision of a pair that have a time period within the \n\t\t\tdesired range but not with the one below itself");
 			System.out.println("\tA Line Of #: \tthe revisions between two of these are within the user selected \n\t\t\t interval range, starting from the most recent revision\n");
 			System.out.println("\tA Line Of -: \tthe revisions separated by these are within the user selected \n\t\t\t interval range\n");
 			System.out.print("\n"); //provide spacing between output
@@ -210,6 +212,10 @@ public class HistoryParser {
 				}
 			}
 			else {
+				inRange = false;
+			}
+			
+			if (i+1 == history.size() && lastWas) {
 				inRange = false;
 			}
 			
