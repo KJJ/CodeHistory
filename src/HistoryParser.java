@@ -48,10 +48,12 @@ public class HistoryParser {
 			
 			if (s.startsWith("r") && s.contains("|")) {  //a line starting with a lower case r implies that we are at a new revision
 				if (count != 0) {  // check to see whether or not this is the first iteration
-					RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
+					if (!bundle.getString("unwanted").contains(" "+rev+" ")) {
+						RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
+						thisNode.newRelevantFile(args[argNum]);
+						sortedInsert(initiallyRelevant, thisNode);
+					}
 					comment = "";
-					thisNode.newRelevantFile(args[argNum]);
-					sortedInsert(initiallyRelevant, thisNode);
 					count = 0;  //reset the counter
 				}
 				ss = s.split(" "); //split the string along white spaces
@@ -76,9 +78,11 @@ public class HistoryParser {
 		if (rev.equals("thisIsNotARevision")) {
 			throw new Exception("User did not enter the names properly");
 		}
-		RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
-		thisNode.newRelevantFile(args[argNum]);
-		sortedInsert(initiallyRelevant, thisNode);
+		if (!bundle.getString("unwanted").contains(" "+rev+" ")) {
+			RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
+			thisNode.newRelevantFile(args[argNum]);
+			sortedInsert(initiallyRelevant, thisNode);
+		}
 	}
 	
 	/**
@@ -177,7 +181,7 @@ public class HistoryParser {
 			System.out.print("\n"); //provide spacing between output
 			System.out.println("Legend: ");
 			System.out.println("\t¥: \t\tindicates the time between this revision and the one before it is not \n\t\t\tin the selected range from the overall average\n");
-			System.out.println("\t´: \t\tindicates that this revision and the one above it are in the intrval while \n\t\t\tthe current revision and the one below \n\t\t\titself is also within the specified range");
+			System.out.println("\t×: \t\tindicates that this revision and the one above it are in the intrval while \n\t\t\tthe current revision and the one below \n\t\t\titself is also within the specified range");
 			System.out.println("\tÆ: \t\tindicate the bottom revision of a pair that have a time period within the \n\t\t\tdesired range but not with the one below itself");
 			System.out.println("\tA Line Of #: \tthe revisions between two of these are within the user selected \n\t\t\t interval range, starting from the most recent revision\n");
 			System.out.println("\tA Line Of -: \tthe revisions separated by these are within the user selected \n\t\t\t interval range\n");
@@ -218,6 +222,10 @@ public class HistoryParser {
 			if (i+1 == history.size() && lastWas) {
 				inRange = false;
 			}
+			else if (i+1 == history.size()) {
+				inRange = false;
+				lastWas = false;
+			}
 			
 			if (bundle.getString("tableToggle").equals("true")) {
 				if (inRange && !lastWas) {
@@ -225,7 +233,7 @@ public class HistoryParser {
 					lastWas = true;
 				}
 				else if (inRange && lastWas) {
-					System.out.print("´ ");
+					System.out.print("× ");
 				}
 				else if (!inRange && lastWas) {
 					System.out.print("Æ ");
