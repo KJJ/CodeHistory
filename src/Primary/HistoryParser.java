@@ -52,7 +52,7 @@ public class HistoryParser {
 			
 			if (s.startsWith("r") && s.contains("|")) {  //a line starting with a lower case r implies that we are at a new revision
 				if (count != 0) {  // check to see whether or not this is the first iteration
-					if (!(undesirable.contains(" "+rev+" ") || undesirable.contains(":"+rev+" "))) {
+					if (!(undesirable.contains(" "+rev+" ") || undesirable.contains(":"+rev+" ") || undesirable.contains(":"+rev+"."))) {
 						RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
 						thisNode.newRelevantFile(args[argNum]);
 						sortedInsert(initiallyRelevant, thisNode);
@@ -82,7 +82,7 @@ public class HistoryParser {
 		if (rev.equals("thisIsNotARevision")) {
 			throw new Exception("User did not enter the names properly");
 		}
-		if (!(undesirable.contains(" "+rev+" ") || undesirable.contains(":"+rev+" "))) {
+		if (!(undesirable.contains(" "+rev+" ") || undesirable.contains(":"+rev+" ") || undesirable.contains(":"+rev+"."))) {
 			RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
 			thisNode.newRelevantFile(args[argNum]);
 			sortedInsert(initiallyRelevant, thisNode);
