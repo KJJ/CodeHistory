@@ -392,7 +392,7 @@ public class NodeStatistics {
 		for (j = 0; j < args.length; j++){
 			p.print(args[j].substring(args[j].lastIndexOf('/')+1)+",");
 		}
-		p.print("Intervals from this revision from the last in days and hours:,");
+		p.print("Time elapsed since the last significant revision:,");
 		p.print("Comments:,");
 		p.println();
 		
