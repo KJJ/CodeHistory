@@ -1,5 +1,8 @@
+package Primary;
+
 import java.io.*;
 import java.util.*;
+
 
 //Source of IO reading code: stackoverflow.com
 
@@ -42,13 +45,14 @@ public class HistoryParser {
 		//counter for how many files are changed
 		int count = 0;
 		String comment = "";
+		String undesirable = bundle.getString("unwanted");
 		
 		// while there is input to process, execute this loop
 		while  ((s=  stdInput.readLine())  !=  null)  {
 			
 			if (s.startsWith("r") && s.contains("|")) {  //a line starting with a lower case r implies that we are at a new revision
 				if (count != 0) {  // check to see whether or not this is the first iteration
-					if (!bundle.getString("unwanted").contains(" "+rev+" ")) {
+					if (!(undesirable.contains(" "+rev+" ") || undesirable.contains(":"+rev+" "))) {
 						RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
 						thisNode.newRelevantFile(args[argNum]);
 						sortedInsert(initiallyRelevant, thisNode);
@@ -78,7 +82,7 @@ public class HistoryParser {
 		if (rev.equals("thisIsNotARevision")) {
 			throw new Exception("User did not enter the names properly");
 		}
-		if (!bundle.getString("unwanted").contains(" "+rev+" ")) {
+		if (!(undesirable.contains(" "+rev+" ") || undesirable.contains(":"+rev+" "))) {
 			RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
 			thisNode.newRelevantFile(args[argNum]);
 			sortedInsert(initiallyRelevant, thisNode);

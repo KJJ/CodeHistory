@@ -1,3 +1,5 @@
+package Primary;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -6,6 +8,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
+
 
 public class NodeStatistics {
 	
