@@ -392,7 +392,7 @@ public class NodeStatistics {
 		for (j = 0; j < args.length; j++){
 			p.print(args[j].substring(args[j].lastIndexOf('/')+1)+",");
 		}
-		p.print("Intervals from this revision to the next in days and hours:,");
+		p.print("Intervals from this revision from the last in days and hours:,");
 		p.print("Comments:,");
 		p.println();
 		
@@ -407,11 +407,11 @@ public class NodeStatistics {
 					p.print(",");
 				}
 			}
-			if (i > 0) {
-				p.print(flowOfTime[i-1]+",");
+			if (i < arrayIn.length-1) {
+				p.print(flowOfTime[i]+",");
 			}
 			else {
-				p.print(",");
+				p.print("N/A,");
 			}
 			p.print(commenting.get(i));
 			p.println();
