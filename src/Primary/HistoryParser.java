@@ -75,7 +75,7 @@ public class HistoryParser {
 			else if (s.startsWith("   M") || s.startsWith("   A") || s.startsWith("   D") || s.startsWith("   R")){
 				count++; //increase the counter for files changed in a certain revision
 			}
-			else if (!s.equals("Changed paths:") && !s.contains("-------")) {
+			else if (!s.equals("Changed paths:") && !s.contains("-------") && !s.startsWith("CVS: ")) {
 				comment += s+" ";
 			}
 		}	
