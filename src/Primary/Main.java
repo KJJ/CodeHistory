@@ -13,7 +13,7 @@ public class Main {
 		for (i=0; i < args.length; i++){
 			for(j = i+1; j < args.length; j++){
 				if (args[i].equals(args[j])){
-					throw new Exception("2 queried files are the same file");
+					throw new Exception("2 queried files are the same file: " + args[i]);
 				}
 			}
 		}
