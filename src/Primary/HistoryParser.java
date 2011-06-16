@@ -14,13 +14,16 @@ public class HistoryParser {
 	// args holds the string array of passed parameters from the command line
 	private String[] args;
 	
+	private int[] ceiling;
+	
 	private LinkedList<RevisionNode> initiallyRelevant = new LinkedList<RevisionNode>();
 	/**
 	 * Constructor: allows for access in the main code
 	 * @param arg file names to be looked for in the code
 	 */
-	public HistoryParser(String[] arg) {
+	public HistoryParser(String[] arg, int[] ceil) {
 		args = arg;  // gets the user-requested files
+		ceiling = ceil;
 		int i; //loop counter
 		for (i = 0; i < args.length; i++) {
 			if (args[i].endsWith("/")) { //removes a end slash to avoid confusion in the later statistics and output
@@ -80,7 +83,7 @@ public class HistoryParser {
 			}
 		}	
 		if (rev.equals("thisIsNotARevision")) {
-			throw new Exception("User did not enter the names properly");
+			throw new Exception("User did not enter the names or starting revision properly");
 		}
 		if (!(undesirable.contains(" "+rev+" ") || undesirable.contains(":"+rev+" ") || undesirable.contains(" "+rev+"."))) {
 			RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
@@ -162,14 +165,23 @@ public class HistoryParser {
 		String p = bundle.getString(bundle.getString("repo")); //uses the config.properties file to get the path to the svn working copy being used
 		
 		for (i = 0; i < args.length; i++){  //loops for every specified file
-			if (bundle.getString("queryToggle").equals("true")) {
-				System.out.println("\n"+args[i]); //prints the files name and path from the start of the working copy
-			}
 			if (!args[i].startsWith("/")){ //all command line arguments must start with a / so it is checked if that is the case
 				args[i] = "/"+args[i]; //if not then the / is added to the argument at runtime
 			}
-			String n = p+args[i]; //get the path to the file in question
-			Process exec = Runtime.getRuntime().exec("svn log -v "+n/*+" -q"*/); //uses the svn's log command to get the history of the queried file
+			String n = p+args[i];
+			Process exec;
+			if (ceiling[i] == 0) {
+				if (bundle.getString("queryToggle").equals("true")) {
+					System.out.println("\n"+args[i]+"\t (the full log history)"); //prints the files name and path from the start of the working copy
+				}
+				exec = Runtime.getRuntime().exec("svn log -v "+n); //uses the svn's log command to get the history of the queried file
+			}
+			else {
+				if (bundle.getString("queryToggle").equals("true")) {
+					System.out.println("\n"+args[i]+"\t (starting at revision "+ceiling[i]+")"); //prints the files name and path from the start of the working copy
+				}
+				exec = Runtime.getRuntime().exec("svn log -v "+n+"@"+ceiling[i]);
+			}
 			nodeCycle(exec, i);
 		}
 		if (bundle.getString("revisionOverallToggle").equals("true")) {
