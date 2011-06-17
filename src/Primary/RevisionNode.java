@@ -36,7 +36,7 @@ public class RevisionNode {
 		relevantFiles = new LinkedList<String>();
 		totalQuery = query;
 		user = User;
-		thisTime = new GregorianCalendar(Integer.parseInt(date.split(" ")[0].split("-")[0]), Integer.parseInt(date.split(" ")[0].split("-")[1])-1, 
+		thisTime = new GregorianCalendar(Integer.parseInt(date.split(" ")[0].split("-")[0]), Integer.parseInt(date.split(" ")[0].split("-")[1]) - 1, 
 				Integer.parseInt(date.split(" ")[0].split("-")[2]), Integer.parseInt(date.split(" ")[1].split(":")[0]), Integer.parseInt(date.split(" ")[1].split(":")[1]), 
 					Integer.parseInt(date.split(" ")[1].split(":")[2]));
 	}
@@ -50,7 +50,7 @@ public class RevisionNode {
 		relevantFiles = new LinkedList<String>();
 		totalQuery = query;
 		user = User;
-		thisTime = new GregorianCalendar(Integer.parseInt(date.split(" ")[0].split("-")[0]), Integer.parseInt(date.split(" ")[0].split("-")[1])-1, 
+		thisTime = new GregorianCalendar(Integer.parseInt(date.split(" ")[0].split("-")[0]), Integer.parseInt(date.split(" ")[0].split("-")[1]) - 1, 
 				Integer.parseInt(date.split(" ")[0].split("-")[2]), Integer.parseInt(date.split(" ")[1].split(":")[0]), Integer.parseInt(date.split(" ")[1].split(":")[1]), 
 					Integer.parseInt(date.split(" ")[1].split(":")[2]));
 	}
@@ -223,7 +223,7 @@ public class RevisionNode {
 		Iterator<String> listIt = this.getRelevantFiles().iterator();
 		while(listIt.hasNext()){
 			String nextFile = listIt.next();
-			nextFile = nextFile.substring(nextFile.lastIndexOf('/')+1);
+			nextFile = nextFile.substring(nextFile.lastIndexOf('/') + 1);
 			if (listIt.hasNext()){
 				files += nextFile+", ";
 			}
@@ -236,11 +236,11 @@ public class RevisionNode {
 			use += "\t";
 		}
 		//information for this rounding found on http://www.java-forums.org/advanced-java/4130-rounding-double-two-decimal-places.html
-		double rat = this.getRating()*100000;
+		double rat = this.getRating() * 100000;
 		rat = Math.round(rat);
 		rat /= 100000;
-		out = revision+"\t"+date+"\t"+Integer.toString(numberOfRelevants)+"/"+Integer.toString(totalQuery)+" relevant files\t"+Integer.toString(totalChanges)
-																																			+"\t"+rat+"\t\t"+ratingComment+"\t"+files;
+		out = revision + "\t" + date + "\t" + Integer.toString(numberOfRelevants) + "/" + Integer.toString(totalQuery) + " relevant files\t" + Integer.toString(totalChanges)
+																																			+ "\t" + rat + "\t\t" + ratingComment + "\t" + files;
 		
 		return out;
 	}
@@ -260,13 +260,13 @@ public class RevisionNode {
 			return 1;
 		}
 		else if (relevant == totalChanged && relevant < amountOfRelevantFiles) {
-			return ((double)totalChanged/amountOfRelevantFiles);
+			return ((double) totalChanged / amountOfRelevantFiles);
 		}
 		else if (relevant == amountOfRelevantFiles && relevant != totalChanged){
-			return ((double)relevant/totalChanged);
+			return ((double) relevant / totalChanged);
 		}
 		
-		else return (double)relevant/(amountOfRelevantFiles + (double)irrelevant/totalChanged);
+		else return (double) relevant / (amountOfRelevantFiles + (double) irrelevant / totalChanged);
 	}
 	
 	/**

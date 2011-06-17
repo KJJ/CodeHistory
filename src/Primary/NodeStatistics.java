@@ -78,7 +78,7 @@ public class NodeStatistics {
 		int j = 0;
 		while (i.hasNext()) {
 			commits[j] = Integer.toString(i.next());
-			intervals[j] = "i"+(j+1);
+			intervals[j] = "i" + (j + 1);
 			j++;
 		}
 		if (list.size() != 0) {
@@ -118,7 +118,7 @@ public class NodeStatistics {
 			
 			commenting.addLast(next.getComments());
 			
-			revisions[toAnalyze.indexOf(next)] = "r"+next.getRevision();
+			revisions[toAnalyze.indexOf(next)] = "r" + next.getRevision();
 			relevants[toAnalyze.indexOf(next)] = Integer.toString(next.getNumberOfRelevants());
 			for (j = 0; j < args.length; j++){
 				LinkedList<String> relevantList = next.getRelevantFiles();
@@ -135,25 +135,25 @@ public class NodeStatistics {
 			}
 			ratings[toAnalyze.indexOf(next)] = Double.toString(next.getRating());
 			
-			Calendar thisTime = new GregorianCalendar(Integer.parseInt(next.getDate().split(" ")[0].split("-")[0]), Integer.parseInt(next.getDate().split(" ")[0].split("-")[1])-1,
+			Calendar thisTime = new GregorianCalendar(Integer.parseInt(next.getDate().split(" ")[0].split("-")[0]), Integer.parseInt(next.getDate().split(" ")[0].split("-")[1]) - 1,
 					Integer.parseInt(next.getDate().split(" ")[0].split("-")[2]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[0]),
 						Integer.parseInt(next.getDate().split(" ")[1].split(":")[1]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[2]));
 		
 			if (highestRating == -1){ //implies this is the first iteration
-				lastTime = new GregorianCalendar(Integer.parseInt(next.getDate().split(" ")[0].split("-")[0]), Integer.parseInt(next.getDate().split(" ")[0].split("-")[1])-1, 
+				lastTime = new GregorianCalendar(Integer.parseInt(next.getDate().split(" ")[0].split("-")[0]), Integer.parseInt(next.getDate().split(" ")[0].split("-")[1]) - 1, 
 						Integer.parseInt(next.getDate().split(" ")[0].split("-")[2]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[0]), 
 							Integer.parseInt(next.getDate().split(" ")[1].split(":")[1]), Integer.parseInt(next.getDate().split(" ")[1].split(":")[2]));
 				
-				now = "Revision "+next.getRevision()+" at ("+next.getDate()+")"; //the latest revision's date and number
+				now = "Revision " + next.getRevision() + " at (" + next.getDate() + ")"; //the latest revision's date and number
 				previousRev = next.getRevision();
 			}
 			
 			else {
-				long timeDiff = lastTime.getTimeInMillis()-thisTime.getTimeInMillis();
-				String a = Double.toString(timeDiff/1000/60/60/24.0);
-				a = a.substring(0, a.indexOf('.')) + " days & "+ Math.round(Double.parseDouble(a.substring(a.indexOf(".")))*24) + " hours";
-				flowOfTime[toAnalyze.indexOf(next)-1] = a;
-				revisionsToo[toAnalyze.indexOf(next)-1] = next.getRevision()+"-"+previousRev;
+				long timeDiff = lastTime.getTimeInMillis() - thisTime.getTimeInMillis();
+				String a = Double.toString(timeDiff / 1000 / 60 / 60 / 24.0);
+				a = a.substring(0, a.indexOf('.')) + " days & "+ Math.round(Double.parseDouble(a.substring(a.indexOf("."))) * 24) + " hours";
+				flowOfTime[toAnalyze.indexOf(next) - 1] = a;
+				revisionsToo[toAnalyze.indexOf(next) - 1] = next.getRevision() + "-"+previousRev;
 				
 				if (timeDiff > timeDiffHigh){
 					timeDiffHigh = timeDiff;
@@ -170,17 +170,17 @@ public class NodeStatistics {
 			
 			
 			relevantPresent[next.getNumberOfRelevants()-1] += 1; //how many relevant files there are here
-			if ((next.getTotalChanges()-next.getNumberOfRelevants()) < (Integer.parseInt(bundle.getString("irrelevantPerRelevant"))*next.getNumberOfRelevants())) {
-				irrelevantPresent[next.getNumberOfRelevants()-1] += 1; //having the acceptable number of irrelevant files
+			if ((next.getTotalChanges() - next.getNumberOfRelevants()) < (Integer.parseInt(bundle.getString("irrelevantPerRelevant")) * next.getNumberOfRelevants())) {
+				irrelevantPresent[next.getNumberOfRelevants() - 1] += 1; //having the acceptable number of irrelevant files
 			}
 			
 			String files = "";
 			Iterator<String> listIt = next.getRelevantFiles().iterator();
 			while (listIt.hasNext()){
 				String nextFile = listIt.next();
-				nextFile = nextFile.substring(nextFile.lastIndexOf('/')+1); //only take the file's name, not its path
+				nextFile = nextFile.substring(nextFile.lastIndexOf('/') + 1); //only take the file's name, not its path
 				if (listIt.hasNext()){
-					files += nextFile+", "; //if this is not the last file, put in a comma
+					files += nextFile + ", "; //if this is not the last file, put in a comma
 				}
 				else {
 					files += nextFile; //else, just enter the file name
@@ -194,14 +194,14 @@ public class NodeStatistics {
 			nFilesAverage += next.getTotalChanges(); //aggregation period of average calculation
 			if (next.getRating() > highestRating){
 				//information for this rounding found on http://www.java-forums.org/advanced-java/4130-rounding-double-two-decimal-places.html
-				highestRating = next.getRating() *100000;
+				highestRating = next.getRating() * 100000;
 				highestRating = Math.round(highestRating);
 				highestRating /= 100000;
 				revisionReference[0] = next.getRevision();
 			}
 			if (next.getRating() < lowestRating){
 				//information for this rounding found on http://www.java-forums.org/advanced-java/4130-rounding-double-two-decimal-places.html
-				lowestRating = next.getRating() *100000;
+				lowestRating = next.getRating() * 100000;
 				lowestRating = Math.round(lowestRating);
 				lowestRating /= 100000;
 				revisionReference[1] = next.getRevision();
@@ -219,15 +219,15 @@ public class NodeStatistics {
 			previousRev = next.getRevision();
 		}
 		if (next != null) { //if the list was not empty
-			then = "Revision "+next.getRevision()+" at ("+next.getDate()+")"; //the last relevant revision and date of the log
+			then = "Revision " + next.getRevision() + " at (" + next.getDate() + ")"; //the last relevant revision and date of the log
 			//information for this rounding found on http://www.java-forums.org/advanced-java/4130-rounding-double-two-decimal-places.html
-			ratingAverage = (ratingAverage/revisionTotal)*100000; 
+			ratingAverage = (ratingAverage/revisionTotal) * 100000; 
 			ratingAverage = Math.round(ratingAverage);
 			ratingAverage /= 100000;
 			nFilesAverage = nFilesAverage/revisionTotal; //rounding not used since it is an integer
 			relevantAverage = relevantAverage/revisionTotal; //rounding not used since it is an integer
 			if (revisionTotal > 1) {
-				timeDiffAverage = timeDiffAverage/(revisionTotal-1);
+				timeDiffAverage = timeDiffAverage/(revisionTotal - 1);
 			}
 			else {
 				timeDiffLow = 0;
@@ -258,61 +258,61 @@ public class NodeStatistics {
 		
 		else {
 			if (bundle.getString("otherStatsToggle").equals("true")) {
-				System.out.println("Relevant Segment of Revision History: "+then+" to "+now+" \n");
+				System.out.println("Relevant Segment of Revision History: " + then + " to " + now + " \n");
 				System.out.println("Total Number of Relevant Revisions: " + revisionTotal);
-				System.out.println("\t Average Number of relevant files per revision: "+ Math.round(relevantAverage) + "\n");
+				System.out.println("\t Average Number of relevant files per revision: " + Math.round(relevantAverage) + "\n");
 				for (i = 0; i < args.length; i++) {
-					System.out.println("\t Number of Revisions Changing "+(i+1)+" of the Relevant Files: " + relevantPresent[i]);
-					System.out.println("\t\t Number of these revisions with under "+(10*(i+1))+" irrelevant extra files: " + irrelevantPresent[i] + "\n");
+					System.out.println("\t Number of Revisions Changing " + (i+1) + " of the Relevant Files: " + relevantPresent[i]);
+					System.out.println("\t\t Number of these revisions with under " + (10 * (i + 1)) + " irrelevant extra files: " + irrelevantPresent[i] + "\n");
 				}
 		
 				System.out.println();
-				if (timeDiffAverage/1000/60 < 1){
-					System.out.println("Average Time Between Revisions: " + timeDiffAverage/1000 + " seconds");
+				if (timeDiffAverage / 1000 / 60 < 1){
+					System.out.println("Average Time Between Revisions: " + timeDiffAverage / 1000 + " seconds");
 				}
-				else if (timeDiffAverage/1000/60/60 < 1){
-					System.out.println("Average Time Between Revisions: " + timeDiffAverage/1000/60 + " minutes");
+				else if (timeDiffAverage / 1000 / 60 / 60 < 1){
+					System.out.println("Average Time Between Revisions: " + timeDiffAverage / 1000 / 60 + " minutes");
 				}
-				else if (timeDiffAverage/1000/60/60 < 1000) {
-					System.out.println("Average Time Between Revisions: " + timeDiffAverage/1000/60/60 + " hours");
-				}
-				else {
-					System.out.println("Average Time Between Revisions: " + timeDiffAverage/1000/60/60/24 + " days");
-				}
-				
-				if (timeDiffLow/1000/60 < 1){
-					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow/1000 +" seconds between Revisions "+revisionReference[5]);
-				}
-				else if (timeDiffLow/1000/60/60 < 1){
-					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow/1000/60 +" minutes between Revisions "+revisionReference[5]);
-				}
-				else if (timeDiffLow/1000/60/60 < 1000) {
-					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow/1000/60/60 +" hours between Revisions "+revisionReference[5]);
+				else if (timeDiffAverage / 1000 / 60 / 60 < 1000) {
+					System.out.println("Average Time Between Revisions: " + timeDiffAverage / 1000 / 60 / 60 + " hours");
 				}
 				else {
-					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow/1000/60/60/24 + " days between Revisions "+revisionReference[5]);
+					System.out.println("Average Time Between Revisions: " + timeDiffAverage / 1000 / 60 / 60 / 24 + " days");
 				}
 				
-				if (timeDiffHigh/1000/60 < 1){
-					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh/1000 +" seconds between Revisions "+revisionReference[4]);
+				if (timeDiffLow / 1000 / 60 < 1){
+					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow / 1000 + " seconds between Revisions "+revisionReference[5]);
 				}
-				else if (timeDiffHigh/1000/60/60 < 1){
-					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh/1000/60 +" minutes between Revisions "+revisionReference[4]);
+				else if (timeDiffLow / 1000 / 60 / 60 < 1){
+					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow / 1000 / 60 + " minutes between Revisions "+revisionReference[5]);
 				}
-				else if (timeDiffHigh/1000/60/60 < 1000) {
-					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh/1000/60/60 +" hours between Revisions "+revisionReference[4]);
+				else if (timeDiffLow / 1000 / 60 / 60 < 1000) {
+					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow / 1000 / 60 / 60 + " hours between Revisions "+revisionReference[5]);
 				}
 				else {
-					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh/1000/60/60/24 + " days between Revisions "+revisionReference[4]);
+					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow / 1000 / 60 / 60 / 24 + " days between Revisions "+revisionReference[5]);
 				}
 				
-				System.out.println("\nAverage Rating: "+ ratingAverage);
-				System.out.println("\t Lowest Rating: " + lowestRating+" for Revision "+revisionReference[1]);
-				System.out.println("\t Highest Rating: " + highestRating +" for Revision "+revisionReference[0]+ "\n");
+				if (timeDiffHigh / 1000 / 60 < 1){
+					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh / 1000 +" seconds between Revisions "+revisionReference[4]);
+				}
+				else if (timeDiffHigh/1000 / 60 / 60 < 1){
+					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh / 1000 / 60 +" minutes between Revisions "+revisionReference[4]);
+				}
+				else if (timeDiffHigh / 1000 / 60 / 60 < 1000) {
+					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh / 1000 / 60 / 60 +" hours between Revisions "+revisionReference[4]);
+				}
+				else {
+					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh / 1000 / 60 / 60 / 24 + " days between Revisions "+revisionReference[4]);
+				}
+				
+				System.out.println("\nAverage Rating: " + ratingAverage);
+				System.out.println("\t Lowest Rating: " + lowestRating + " for Revision " + revisionReference[1]);
+				System.out.println("\t Highest Rating: " + highestRating + " for Revision " + revisionReference[0] + "\n");
 		
-				System.out.println("Average Number of Changed files: "+ nFilesAverage);
-				System.out.println("\t Lowest Number of Changed Files: " + lowestFileNumber+" changed at Revision "+revisionReference[3]);
-				System.out.println("\t Highest Number of Changed Files: " + highestFileNumber+" changed at Revision "+revisionReference[2] + "\n");
+				System.out.println("Average Number of Changed files: " + nFilesAverage);
+				System.out.println("\t Lowest Number of Changed Files: " + lowestFileNumber + " changed at Revision " + revisionReference[3]);
+				System.out.println("\t Highest Number of Changed Files: " + highestFileNumber + " changed at Revision " + revisionReference[2] + "\n");
 			}
 			
 			if (bundle.getString("groupsToggle").equals("true")) {
@@ -335,8 +335,8 @@ public class NodeStatistics {
 			if (bundle.getString("commentToggle").equals("true")) {
 				System.out.println("Revision Comments (IMPORTANT DISCLAIMER: all commas have been replaced with semi-colons to allow insertion into a csv file): \n");
 				for (i = 0; i < commenting.size(); i++) {
-					System.out.println("\t"+revisions[i]+":");
-					System.out.println(commenting.get(i)+"\n");
+					System.out.println("\t" + revisions[i] + ":");
+					System.out.println(commenting.get(i) + "\n");
 				}
 			}
 
@@ -376,9 +376,9 @@ public class NodeStatistics {
 	public void CSVWork(Object[][] arrayIn, PrintWriter p, FileWriter f) throws IOException {
 		int i, j;
 
-		for (i = arrayIn[0].length-1; i >= 0; i--){
+		for (i = arrayIn[0].length - 1; i >= 0; i--){
 			for (j = 0; j < arrayIn.length; j++) {
-				p.print(arrayIn[j][i]+",");
+				p.print(arrayIn[j][i] + ",");
 			}
 			p.println();
 		}
@@ -390,14 +390,14 @@ public class NodeStatistics {
 		int i, j;
 		p.print(",");
 		for (j = 0; j < args.length; j++){
-			p.print(args[j].substring(args[j].lastIndexOf('/')+1)+",");
+			p.print(args[j].substring(args[j].lastIndexOf('/') + 1) + ",");
 		}
 		p.print("Time elapsed since the last significant revision:,");
 		p.print("Comments:,");
 		p.println();
 		
-		for (i = arrayIn.length-1; i >= 0; i--){
-			p.print(revisions[i]+",");
+		for (i = arrayIn.length - 1; i >= 0; i--){
+			p.print(revisions[i] + ",");
 			for (j = 0; j < arrayIn[i].length; j++) {
 				
 				if (arrayIn[i][j] == 1) {
@@ -407,8 +407,8 @@ public class NodeStatistics {
 					p.print(",");
 				}
 			}
-			if (i < arrayIn.length-1) {
-				p.print(flowOfTime[i]+",");
+			if (i < arrayIn.length - 1) {
+				p.print(flowOfTime[i] + ",");
 			}
 			else {
 				p.print("N/A,");
@@ -427,7 +427,7 @@ public class NodeStatistics {
 		System.out.print("\t");
 		
 		for (i = 0; i < args.length; i++) {
-			System.out.print("\t\t "+args[i].substring(args[i].lastIndexOf('/')));
+			System.out.print("\t\t " + args[i].substring(args[i].lastIndexOf('/')));
 		}
 		
 		System.out.println("\n");
@@ -436,8 +436,8 @@ public class NodeStatistics {
 				System.out.print("Revisions " + revisionsToo[i] + ":\t");
 				
 				for (j = 0; j < args.length; j++) {
-					pathFull = path+args[j]+" ";
-					Process exec = Runtime.getRuntime().exec("svn diff -r "+ revisionsToo[i].split("-")[0] +":"+ revisionsToo[i].split("-")[1] +" "+ pathFull);
+					pathFull = path + args[j] + " ";
+					Process exec = Runtime.getRuntime().exec("svn diff -r " + revisionsToo[i].split("-")[0] + ":" + revisionsToo[i].split("-")[1] + " " + pathFull);
 					dp.diffOut(exec);
 				}
 				
@@ -457,7 +457,7 @@ public class NodeStatistics {
 		int[] infoArray; //array that holds the counters for each file-to-file comparison 
 		LinkedList<RevisionNode> theList = toAnalyze; // takes a copy of the RevisionNode list of data parsed from the log
 		
-		for (i=0; i < files.length; i++) { //for the every element in the parameter array
+		for (i = 0; i < files.length; i++) { //for the every element in the parameter array
 			infoArray = new int[files.length]; //set the array length to reflect how many elements there are
 			Iterator<RevisionNode> lIterator = theList.iterator(); //iterate through the list, for every node
 			while (lIterator.hasNext()) { //for every node in the RevisionNode list
@@ -471,12 +471,12 @@ public class NodeStatistics {
 				}
 			}
 			System.out.println(); //spacing
-			System.out.println("For the file "+files[i].substring(files[i].lastIndexOf("/")+1)+":"); //indicates what file we are talking about
+			System.out.println("For the file " + files[i].substring(files[i].lastIndexOf("/") + 1) + ":"); //indicates what file we are talking about
 			for (j = 0; j < files.length; j++) { //for the length of our data array
 				if (j != i) { //ignoring the current files slot since it would be 100% no matter what
-					int percent = (int) Math.round((infoArray[j]/(double)infoArray[i])*100); //round to the nearest percent
+					int percent = (int) Math.round((infoArray[j] / (double) infoArray[i]) * 100); //round to the nearest percent
 					//indicates that when file i is changed in a revision, file j is also changed at the same revision percent% of the time
-					System.out.println("\t When changed, " + files[j].substring(files[j].lastIndexOf("/")+1) +" is changed "+percent+"% of the time.");
+					System.out.println("\t When changed, " + files[j].substring(files[j].lastIndexOf("/") + 1) + " is changed " + percent + "% of the time.");
 				}
 			}
 		}

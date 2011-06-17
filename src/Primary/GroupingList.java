@@ -25,7 +25,7 @@ public class GroupingList extends CounterList<String>{
 		while (lIterator.hasNext()){ //for the duration of the list
 			CounterNode<String> next = lIterator.next(); //take each element out
 			//and print out its String representation and number of occurrences
-			System.out.print("\t The group ["+next.whatsTheItem()+"] occurs "+next.howManyAppearences()+" time(s). \n");
+			System.out.print("\t The group [" + next.whatsTheItem() + "] occurs " + next.howManyAppearences() + " time(s). \n");
 			System.out.print("\t\t Revisions: "); 
 			for (String[] info: groupRevisions) {
 				if (next.whatsTheItem().equals(info[0])) {
@@ -45,7 +45,7 @@ public class GroupingList extends CounterList<String>{
 			for (i = 0; i < groupRevisions.size(); i++){
 				String[] current = groupRevisions.get(i);
 				if (current[0].equals(obj)){
-					current[1] += ", "+revision;
+					current[1] += ", " + revision;
 					groupRevisions.remove(i);
 					groupRevisions.add(i, current);
 					break;

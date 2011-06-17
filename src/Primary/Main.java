@@ -19,12 +19,12 @@ public class Main {
 		}
 		//catches any exception thrown
 		catch (Exception e) {
-			System.out.println("ERROR: "+e.getMessage());
+			System.out.println("ERROR: " + e.getMessage());
 			e.printStackTrace(); //prints out the issue caught
 		}
 		long end = System.currentTimeMillis();
 		if (bundle.getString("timeToggle").equals("true")) {
-			System.out.println("\n("+(end-start)/1000.00+" seconds for completion)");
+			System.out.println("\n(" + (end-start) / 1000.00 + " seconds for completion)");
 		}
 	}
 }
