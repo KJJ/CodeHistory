@@ -17,13 +17,16 @@ public class HistoryParser {
 	private int[] ceiling;
 	
 	private LinkedList<RevisionNode> initiallyRelevant = new LinkedList<RevisionNode>();
+	
 	/**
 	 * Constructor: allows for access in the main code
 	 * @param arg file names to be looked for in the code
+	 * @throws Exception 
 	 */
-	public HistoryParser(String[] arg, int[] ceil) {
+	public HistoryParser(String[] arg) throws Exception {
 		args = arg;  // gets the user-requested files
-		ceiling = ceil;
+		ceiling = new int[args.length];
+		ceiling = checkOver(args, ceiling);
 		int i; //loop counter
 		for (i = 0; i < args.length; i++) {
 			if (args[i].endsWith("/")) { //removes a end slash to avoid confusion in the later statistics and output
@@ -32,7 +35,41 @@ public class HistoryParser {
 		}
 	}
 	
+	public int[] checkOver(String[] args, int[] ceiling) throws Exception {
+		if (args.length == 0) {
+			throw new Exception("No Files");
+		}
+		int i,j; //loops counters
+		
+		//the 2 for loops check each entry with every other in order to prevent duplicate entries from affecting the data
+		for (i=0; i < args.length; i++){
+			if (args[i].contains("(")) { //implying that the user has specified a starting point before the newest revision
+				ceiling[i] = Integer.parseInt(args[i].substring(args[i].indexOf('(') + 1, args[i].indexOf(')')));
+				args[i] = args[i].substring(0, args[i].indexOf('(')); //remove the number to prevent complications later
+			}
+			for(j = i+1; j < args.length; j++){
+				if (args[i].contains("(")) { //remove and store later revision filter data so that equal names are not missed
+					ceiling[i] = Integer.parseInt(args[i].substring(args[i].indexOf('(') + 1, args[i].indexOf(')')));
+					args[i] = args[i].substring(0, args[i].indexOf('('));  //remove the number to prevent complications later
+				}
+				if (args[i].equals(args[j])){ //2 identical file names found = error and exception
+					throw new Exception("2 queried files are the same file: " + args[i]); //gives a reason for the exception
+				}
+			}
+		}
+		return ceiling; //return the revision filters to be used in the creation of several processes 
+	}
+	
+	/**
+	 * nodeCycle goes through the svn log of a single file and collects the commit data by parsing the 
+	 * entries present on the log
+	 * @param exec process to be called and executed, concept based on examples from stackOverflow.com
+	 * @param argNum how many files were entered to be logged and examined
+	 * @throws Exception if the file does not exist in the repository at the current time, or specified time
+	 */
 	public void nodeCycle(Process exec, int argNum) throws Exception{
+		
+		//from stackOverflow.com example
 		BufferedReader  stdInput=  new  BufferedReader(new
 	              InputStreamReader(exec.getInputStream()));
 		
@@ -55,22 +92,24 @@ public class HistoryParser {
 			
 			if (s.startsWith("r") && s.contains("|")) {  //a line starting with a lower case r implies that we are at a new revision
 				if (count != 0) {  // check to see whether or not this is the first iteration
-					if (!(undesirable.contains(" "+rev+" ") || undesirable.contains(":"+rev+" ") || undesirable.contains(" "+rev+"."))) {
+					
+					//the if below checks to see if the the current revision has been explicitly rejected by the user in the config file
+					if (!(undesirable.contains(" " + rev + " ") || undesirable.contains(":" + rev + " ") || undesirable.contains(" " + rev + "."))) {
 						RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
 						thisNode.newRelevantFile(args[argNum]);
 						sortedInsert(initiallyRelevant, thisNode);
 					}
-					comment = "";
+					comment = ""; //clear the revision comment
 					count = 0;  //reset the counter
 				}
 				ss = s.split(" "); //split the string along white spaces
 				rev = ss[0].substring(1); //gets the revision number at the very beginning of s, removing the r to just get the number
 				if (ss[4].equals("|")){
-					date = ss[5]+" "+ss[6]; 
+					date = ss[5] + " " + ss[6]; 
 					userList = ss[2] + ss[3];
 				}
 				else {
-					date = ss[4]+" "+ss[5];  // gets both the date and time of the revision
+					date = ss[4] + " " + ss[5];  // gets both the date and time of the revision
 					userList = ss[2];
 				}
 			}
@@ -78,14 +117,16 @@ public class HistoryParser {
 			else if (s.startsWith("   M") || s.startsWith("   A") || s.startsWith("   D") || s.startsWith("   R")){
 				count++; //increase the counter for files changed in a certain revision
 			}
-			else if (!s.equals("Changed paths:") && !s.contains("-------") && !s.startsWith("CVS: ")) {
-				comment += s+" ";
+			else if (!s.equals("Changed paths:") && !s.contains("-------") && !s.startsWith("CVS: ")) { //filters out generally useless lines
+				comment += s + " "; //enters the comment data
 			}
 		}	
-		if (rev.equals("thisIsNotARevision")) {
+		if (rev.equals("thisIsNotARevision")) { //implies no revisions were ever found for this file and it therefore does not exist
 			throw new Exception("User did not enter the names or starting revision properly");
 		}
-		if (!(undesirable.contains(" "+rev+" ") || undesirable.contains(":"+rev+" ") || undesirable.contains(" "+rev+"."))) {
+		
+		//used to get the last revision that was cut off by the for loop
+		if (!(undesirable.contains(" " + rev + " ") || undesirable.contains(":" + rev + " ") || undesirable.contains(" " + rev + "."))) {
 			RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
 			thisNode.newRelevantFile(args[argNum]);
 			sortedInsert(initiallyRelevant, thisNode);
@@ -115,17 +156,17 @@ public class HistoryParser {
 				if (list.get(i).compare(node) > 0) { 
 					i++; //if this is the case, then prepare to check the next node in the list
 				}
-				else if (list.get(i).compare(node) == 0){
-					RevisionNode thatNode = list.remove(i);
-					int j;
+				else if (list.get(i).compare(node) == 0){  //if the node is equal to the other
+					RevisionNode thatNode = list.remove(i); //remove the node from its current place
+					int j; //loop counter
 					for (j = 0; j < node.getRelevantFiles().size(); j++) {
 						String file = node.getRelevantFiles().get(j);
 						if (node.getRelevantFiles().contains(file)) {
-							thatNode.newRelevantFile(file);
+							thatNode.newRelevantFile(file); //uses the functions built-in conflict checking to avoid putting in the same file twice
 						}
 					}
-					list.add(i, thatNode);
-					return;
+					list.add(i, thatNode); // return the node to its original location
+					return; //end the function call
 				}
 				else {
 					break; //if the nodes revision is greater, then it should be placed at index i, so the loop ends early
@@ -136,9 +177,13 @@ public class HistoryParser {
 		}
 	}
 	
+	/**
+	 * prints out the boundary lines at regular lengths when needed for the output
+	 * @param line the line of characters to be printed
+	 */
 	public void linesAndBounds(String line) {
-		int j;
-		System.out.print("\n");
+		int j; //loop counter
+		System.out.print("\n"); //spacing to avoid conflict with valuable data
 		for (j = 0; j < Integer.parseInt(bundle.getString("lineLengths")); j++) { //create a line break to separate the query print out from the data table
 			System.out.print(line); //indicates the end of the list of queried files
 		}
@@ -149,14 +194,14 @@ public class HistoryParser {
 	 * printHistoryInformation both processes the log information of a Subversion repository through the methods above
 	 * and then prints out the names of the queried files along with all of the information stored in the RevisionNode
 	 * linked list in a table-style format
-	 * @throws Exception 
+	 * @throws Exception for various input errors
 	 */
 	public void printHistoryInformation() throws Exception{
 		
-		int i;//loop counter
-		long standard;
-		boolean inRange;
-		boolean lastWas = false;
+		int i;							//loop counter
+		long standard;					//holds the average time between every single revision in the repository
+		boolean inRange;				//records whether the current time interval is within the chosen range
+		boolean lastWas = false;		//Records whether the last time interval was within range of the configuration bound
 		
 		if (bundle.getString("queryToggle").equals("true")) {
 			System.out.println("Queried Files:"); //indicates the next lines show what was entered on the command line
@@ -166,36 +211,36 @@ public class HistoryParser {
 		
 		for (i = 0; i < args.length; i++){  //loops for every specified file
 			if (!args[i].startsWith("/")){ //all command line arguments must start with a / so it is checked if that is the case
-				args[i] = "/"+args[i]; //if not then the / is added to the argument at runtime
+				args[i] = "/" + args[i]; //if not then the / is added to the argument at runtime
 			}
-			String n = p+args[i];
-			Process exec;
-			if (ceiling[i] == 0) {
+			String n = p + args[i];
+			Process exec;				//the command to be executed 
+			if (ceiling[i] == 0) { //if 0, then no revision was specified
 				if (bundle.getString("queryToggle").equals("true")) {
-					System.out.println("\n"+args[i]+"\t (the full log history)"); //prints the files name and path from the start of the working copy
+					System.out.println("\n" + args[i] + "\t (the full log history)"); //prints the files name and path from the start of the working copy
 				}
-				exec = Runtime.getRuntime().exec("svn log -v "+n); //uses the svn's log command to get the history of the queried file
+				exec = Runtime.getRuntime().exec("svn log -v " + n); //uses the svn's log command to get the history of the queried file
 			}
 			else {
 				if (bundle.getString("queryToggle").equals("true")) {
-					System.out.println("\n"+args[i]+"\t (starting at revision "+ceiling[i]+")"); //prints the files name and path from the start of the working copy
+					System.out.println("\n" + args[i] + "\t (starting at revision " + ceiling[i] + ")"); //prints the file name and the most recent selected revision
 				}
-				exec = Runtime.getRuntime().exec("svn log -v "+n+"@"+ceiling[i]);
+				exec = Runtime.getRuntime().exec("svn log -v " + n + "@" + ceiling[i]); //svn command starting at a particular revision
 			}
-			nodeCycle(exec, i);
+			nodeCycle(exec, i); //execute the command and collect the desired data
 		}
 		if (bundle.getString("revisionOverallToggle").equals("true")) {
-			standard = fullTimeAverage();
-			System.out.println("\n Average Time Period Between ALL Revisions: "+standard+" hours");
+			standard = fullTimeAverage(); //gets the average time between all revisions in the chosen repository
+			System.out.println("\n Average Time Period Between ALL Revisions: " + standard + " hours"); //and then print that time
 		}
 		else {
-			standard = Long.MAX_VALUE-(long)Integer.parseInt(bundle.getString("range"));
+			standard = Long.MAX_VALUE-(long)Integer.parseInt(bundle.getString("range")); //else just use the percentage as a base for the time ranges
 		}
 		int j; //loop counter
 		if (bundle.getString("tableToggle").equals("true")) {
 			linesAndBounds("==========");
 			System.out.print("\n"); //provide spacing between output
-			System.out.println("Legend: ");
+			System.out.println("Legend: "); //this explains the meanings behind the symbols and lines used in the table
 			System.out.println("\t¥: \t\tindicates the time between this revision and the one before it is not \n\t\t\tin the selected range from the overall average\n");
 			System.out.println("\t×: \t\tindicates that this revision and the one above it are in the intrval while \n\t\t\tthe current revision and the one below \n\t\t\titself is also within the specified range");
 			System.out.println("\tÆ: \t\tindicate the bottom revision of a pair that have a time period within the \n\t\t\tdesired range but not with the one below itself");
@@ -206,122 +251,127 @@ public class HistoryParser {
 			linesAndBounds("##########"); //the lines used to separate the information rows
 		}
 
-		int[] statArray = new int[10];
-		double interval = 0;
-		int n = 0;
-		LinkedList<Integer> allN = new LinkedList<Integer>();
-		LinkedList<RevisionNode> history = initiallyRelevant;
+		int[] statArray = new int[10]; //array used for the rating scattering table
+		double interval = 0; //how long the current interval is
+		int n = 0; //counts how many revisions there are right now in the current interval
+		LinkedList<Integer> allN = new LinkedList<Integer>(); //holds the various interval information
+		LinkedList<RevisionNode> history = initiallyRelevant; //gets the relevant revision data
 		for (i = 0; i < history.size(); i++){ //iterates through the entire RevisionNode list to print out its collected data
 			RevisionNode current = history.get(i); //takes the next node to be printed
-			fillArray(statArray, current.getRating());
-			double newSpace;
-			if (i < history.size()-1) {
-				newSpace = (double)current.getTimeSpace(history.get(i+1).getThisTime())/1000/60/60.0;
-				interval += newSpace;
+			fillArray(statArray, current.getRating()); //takes the current rating and plots it in the table
+			double newSpace; //space between the current two observed revisions
+			if (i < history.size()-1) { //if there is a revision after the current one
+				newSpace = (double)current.getTimeSpace(history.get(i + 1).getThisTime()) / 1000 / 60 / 60.0; //newSpace becomes the interval between the two
+				interval += newSpace; //increase interval time counter by the new interval
 			}
 			else {
-				newSpace = 0;
-				interval = Long.MAX_VALUE;
+				newSpace = 0; //null the space
+				interval = Long.MAX_VALUE; //and put the interval to its maximum size
 			}
 			if (bundle.getString("revisionOverallToggle").equals("true")) {
-				if (newSpace > (double)standard+Integer.parseInt(bundle.getString("range"))*standard/100 ||  newSpace < (double)standard-Integer.parseInt(bundle.getString("range"))*standard/100) {
-					inRange = false;
+				if (newSpace > (double)standard + Integer.parseInt(bundle.getString("range")) * standard / 100 ||  newSpace < (double)standard-Integer.parseInt(bundle.getString("range"))*standard/100) {
+					inRange = false; //if the node is outside the specified range based on the configuration file parameters
 				}
 				else {
-					inRange = true;
+					inRange = true; //if it is within range
 				}
 			}
 			else {
-				inRange = false;
+				inRange = false; //permanently set it to false due to branch conditions
 			}
 			
-			if (i+1 == history.size() && lastWas) {
-				inRange = false;
+			if (i+1 == history.size() && lastWas) { //indicate that there will only be one more revision so the next symbol should by a triangle
+				inRange = false; //prevents a diamond from appearing
 			}
-			else if (i+1 == history.size()) {
+			else if (i+1 == history.size()) { //otherwise simply remove the chance of a symbol from appearing
 				inRange = false;
 				lastWas = false;
 			}
 			
 			if (bundle.getString("tableToggle").equals("true")) {
 				if (inRange && !lastWas) {
-					System.out.print("¥ ");
-					lastWas = true;
+					System.out.print("¥ "); //first revision in a time-pair
+					lastWas = true; //flags the next revision to note its relationship to the previous (ie: this) revision
 				}
-				else if (inRange && lastWas) {
-					System.out.print("× ");
+				else if (inRange && lastWas) { 
+					System.out.print("× "); //revision that shares a time relationship with revisions directly above and below it
 				}
 				else if (!inRange && lastWas) {
-					System.out.print("Æ ");
-					lastWas = false;
+					System.out.print("Æ "); //only has a relationship with the revision above it, not below it
+					lastWas = false; //indicate to the next revision that the last revision is not important to it
 				}
 				else {
-					System.out.print(" ");
+					System.out.print(" "); //indicate no relationships around this node
 				}
 				System.out.print(current.toString()); //prints the String representation of all the nodes data
 				if (interval <= Double.parseDouble(bundle.getString("interval"))) {
 					linesAndBounds("----------"); //the lines used to separate the information rows
 				}
 				else {
-					linesAndBounds("##########");
+					linesAndBounds("##########"); //end of a desired interval
 				}
 			}
 			
 			if (interval <= Double.parseDouble(bundle.getString("interval"))) {
-				n++;
+				n++; //indicates another revision was in the current interval range
 			}
 			else if (interval > Double.parseDouble(bundle.getString("interval"))) {
-				n++;
-				allN.addFirst(n);
-				n = 0;
-				interval = 0;
+				n++; //counts the last revision
+				allN.addFirst(n); //adds the new interval readings
+				n = 0; //reset the counter
+				interval = 0; //put the interval back to it original count, zero
 			}
 		}
 		
-		System.out.println("\n");
+		System.out.println("\n"); //spacing
 		NodeStatistics stats = new NodeStatistics(history, args, allN); // prepares to process data held in the RevisionNode list
 		stats.statsOut(); //output the statistics to the screen
 		
 		System.out.println("\n");
 		if (bundle.getString("ratingsToggle").equals("true")) {
-			System.out.println("Rating Graph: looking for grouping\n");
+			System.out.println("Rating Graph: looking for grouping\n"); //title of the graph
 			for (i = 1; i <= statArray.length; i++){
-				System.out.print("("+(double)(i-1)/10+", "+(double)i/10+"]:  "); //current range interval
+				System.out.print("(" + (double) (i-1) / 10 + ", " + (double) i / 10 + "]:  "); //current range interval
 				for (j = 0; j < statArray[i-1]; j++){ //loop through the entire range of rating intervals
 					System.out.print("|"); // one '|' = one rating in this range
 				}
-				System.out.print("  ("+statArray[i-1]+")"); //print out the numerical representation of that interval for easier use
+				System.out.print("  (" + statArray[i-1] + ")"); //print out the numerical representation of that interval for easier use
 				linesAndBounds("=========="); //indicates the end of the list of queried files
 			}
 		}
 
 		if (bundle.getString("occurrencesToggle").equals("true")) {
-			fullCount();
+			fullCount(); //counts out how many times every file name occurs in the entire repository history
 		}
 	}
 	
+	/**
+	 * gets the average time interval between all (relevant and irrelevant) revisions
+	 * @return the average time
+	 * @throws IOException input error while reading from the console
+	 */
 	public long fullTimeAverage() throws IOException {
-		String p = bundle.getString(bundle.getString("repo"));
-		String s;
-		String[] ss;
-		String previous = "";
-		String current = "";
-		long totalTime = 0;
-		int rev = 0;
-		Process exec = Runtime.getRuntime().exec("svn log "+p+" -q");
-		BufferedReader  stdInput=  new  BufferedReader(new
+		String p = bundle.getString(bundle.getString("repo")); //get the repository URL
+		String s;//current input line
+		String[] ss; //breaking down the line to get the date information
+		String previous = ""; //the last line's date stamp
+		String current = ""; //the current lines date stamp
+		long totalTime = 0; //the sum of all interval times
+		int rev = 0; //how many revisions there were in total
+		Process exec = Runtime.getRuntime().exec("svn log " + p + " -q");
+		BufferedReader  stdInput =  new  BufferedReader(new
 	              InputStreamReader(exec.getInputStream()));
 		
-		while  ((s=  stdInput.readLine())  !=  null)  {
+		while  ((s =  stdInput.readLine())  !=  null)  {
 			
 			if (s.startsWith("r")) {  //a line starting with a lower case r implies that we are at a new revision
 				
 				ss = s.split(" "); //split the string along white spaces
 				if (ss[4].equals("|")){
-					current = (ss[5]+" "+ss[6]); 
+					current = (ss[5] + " " + ss[6]); 
 				}
 				else {
-					current = (ss[4]+" "+ss[5]);  // gets both the date and time of the revision
+					current = (ss[4] + " " + ss[5]);  // gets both the date and time of the revision
 				}
 				Calendar thisTime = new GregorianCalendar(Integer.parseInt(current.split(" ")[0].split("-")[0]), Integer.parseInt(current.split(" ")[0].split("-")[1])-1, Integer.parseInt(current.split(" ")[0].split("-")[2]), Integer.parseInt(current.split(" ")[1].split(":")[0]), Integer.parseInt(current.split(" ")[1].split(":")[1]), Integer.parseInt(current.split(" ")[1].split(":")[2]));
 				if (!previous.equals("")){ //implies this is not the first iteration
@@ -333,7 +383,7 @@ public class HistoryParser {
 				previous = current;
 			}
 		}
-		return (((totalTime/rev)/1000)/60)/60;
+		return (((totalTime / rev) / 1000) / 60) / 60;
 	}
 	
 	public void fullCount() throws IOException {
@@ -341,7 +391,7 @@ public class HistoryParser {
 		String s;
 		String[] ss;
 		String current = "";
-		Process exec = Runtime.getRuntime().exec("svn log "+p+" -q -v");
+		Process exec = Runtime.getRuntime().exec("svn log " + p + " -q -v");
 		BufferedReader  stdInput=  new  BufferedReader(new
 	              InputStreamReader(exec.getInputStream()));
 		CounterList<String> counter = new CounterList<String>();
@@ -366,8 +416,8 @@ public class HistoryParser {
 	public void fillArray(int[] array, double rating){ 
 		int i = 0; // loop counter
 		while (i <= array.length){ //while in the bounds of the array...
-			if (rating <= (double)i/10){ // checks if this is the interval that the rating falls in
-				array[i-1] = array[i-1]+1; //if so the that interval section is incremented to indicate that change of the data
+			if (rating <= (double) i / 10){ // checks if this is the interval that the rating falls in
+				array[i-1] = array[i-1] + 1; //if so the that interval section is incremented to indicate that change of the data
 				break; //end the loop since 1 rating is only in one interval
 			}
 			i++;
