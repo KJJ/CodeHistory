@@ -34,20 +34,35 @@ public class NodeStatistics {
 	private GroupingList grouping = new GroupingList(); 
 	//average number of relevant files per revision
 	private double relevantAverage;
+	//average time difference between 2 relevant revisions
 	private long timeDiffAverage;
+	//longest period of time between 2 relevant revisions
 	private long timeDiffHigh;
+	//shortest period of time between 2 relevant revisions
 	private long timeDiffLow;
+	//stores the various time intervals for later
 	private String[] flowOfTime;
+	//holds the various relevant revision number pairs in string format
 	private String[] revisionsToo;
+	//config file commands
 	private ResourceBundle bundle = ResourceBundle.getBundle("config");
+	//revision numbers in string format
 	private String revisions[];
+	//how many irrelevant files there are to each revision
 	private String irrelevants[];
+	//how many relevant files there are to each revision
 	private String relevants[];
+	//the rating for each revision are held here
 	private String ratings[];
+	//the number of commits per interval
 	private String[] commits;
+	//indicates which interal is being displayed, format; i + number
 	private String[] intervals;
+	//the date of the previous revision
 	private Calendar lastTime;
+	//holds data on where and when each file was present ( 1 = present, 0 = not present)
 	private int[][] existsHere;
+	//holds the comments for each revision
 	private LinkedList<String> commenting;
 
 	/**
@@ -103,14 +118,16 @@ public class NodeStatistics {
 	 * analyze, as its name suggests, analyzes a RevisionNode list and finds helpful data on the revisions as a whole
 	 * data found includes:
 	 *  max/min/average relevance rating
-	 *  max/min/average number of files changed i a revision
+	 *  max/min/average number of files changed in a revision
 	 *  average number of relevant files
 	 *  file groupings
 	 */
 	public void analyze(){
+		//for pairing consecutive revisions for time interval output
 		String previousRev = "";
 		Iterator<RevisionNode> runThrough = toAnalyze.iterator(); //preparing to go through every relevant revision's data
 		RevisionNode next = null; //null to determine later whether or not the list is empty or not
+		//loop counter
 		int j;
 		while (runThrough.hasNext()){ 
 			
@@ -153,7 +170,7 @@ public class NodeStatistics {
 				String a = Double.toString(timeDiff / 1000 / 60 / 60 / 24.0);
 				a = a.substring(0, a.indexOf('.')) + " days & "+ Math.round(Double.parseDouble(a.substring(a.indexOf("."))) * 24) + " hours";
 				flowOfTime[toAnalyze.indexOf(next) - 1] = a;
-				revisionsToo[toAnalyze.indexOf(next) - 1] = next.getRevision() + "-"+previousRev;
+				revisionsToo[toAnalyze.indexOf(next) - 1] = next.getRevision() + "-" + previousRev;
 				
 				if (timeDiff > timeDiffHigh){
 					timeDiffHigh = timeDiff;
@@ -169,7 +186,7 @@ public class NodeStatistics {
 			}
 			
 			
-			relevantPresent[next.getNumberOfRelevants()-1] += 1; //how many relevant files there are here
+			relevantPresent[next.getNumberOfRelevants() - 1] += 1; //how many relevant files there are here
 			if ((next.getTotalChanges() - next.getNumberOfRelevants()) < (Integer.parseInt(bundle.getString("irrelevantPerRelevant")) * next.getNumberOfRelevants())) {
 				irrelevantPresent[next.getNumberOfRelevants() - 1] += 1; //having the acceptable number of irrelevant files
 			}
@@ -422,7 +439,7 @@ public class NodeStatistics {
 	public void diff() throws IOException{
 		int j, i;
 		String pathFull = "";
-		DiffParser dp = new DiffParser(args);
+		DiffParser dp = new DiffParser();
 		String path = bundle.getString(bundle.getString("repo"));
 		System.out.print("\t");
 		
