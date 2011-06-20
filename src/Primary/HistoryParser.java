@@ -234,7 +234,7 @@ public class HistoryParser {
 			System.out.println("\n Average Time Period Between ALL Revisions: " + standard + " hours"); //and then print that time
 		}
 		else {
-			standard = Long.MAX_VALUE-(long)Integer.parseInt(bundle.getString("range")); //else just use the percentage as a base for the time ranges
+			standard = Long.MAX_VALUE-(long)Integer.parseInt(bundle.getString("consecutiveRange")); //else just use the percentage as a base for the time ranges
 		}
 		int j; //loop counter
 		if (bundle.getString("tableToggle").equals("true")) {
@@ -269,7 +269,7 @@ public class HistoryParser {
 				interval = Long.MAX_VALUE; //and put the interval to its maximum size
 			}
 			if (bundle.getString("revisionOverallToggle").equals("true")) {
-				if (newSpace > (double)standard + Integer.parseInt(bundle.getString("range")) * standard / 100 ||  newSpace < (double)standard-Integer.parseInt(bundle.getString("range"))*standard/100) {
+				if (newSpace > (double)standard + Integer.parseInt(bundle.getString("consecutiveRange")) * standard / 100 ||  newSpace < (double)standard-Integer.parseInt(bundle.getString("consecutiveRange"))*standard/100) {
 					inRange = false; //if the node is outside the specified range based on the configuration file parameters
 				}
 				else {
@@ -304,7 +304,7 @@ public class HistoryParser {
 					System.out.print(" "); //indicate no relationships around this node
 				}
 				System.out.print(current.toString()); //prints the String representation of all the nodes data
-				if (interval <= Double.parseDouble(bundle.getString("interval"))) {
+				if (interval <= Double.parseDouble(bundle.getString("intervalLength"))) {
 					linesAndBounds("----------"); //the lines used to separate the information rows
 				}
 				else {
@@ -312,10 +312,10 @@ public class HistoryParser {
 				}
 			}
 			
-			if (interval <= Double.parseDouble(bundle.getString("interval"))) {
+			if (interval <= Double.parseDouble(bundle.getString("intervalLength"))) {
 				n++; //indicates another revision was in the current interval range
 			}
-			else if (interval > Double.parseDouble(bundle.getString("interval"))) {
+			else if (interval > Double.parseDouble(bundle.getString("intervalLength"))) {
 				n++; //counts the last revision
 				allN.addFirst(n); //adds the new interval readings
 				n = 0; //reset the counter

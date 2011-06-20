@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 public class GroupingList extends CounterList<String>{
 	
+	//holds the revisions for each group
 	private LinkedList<String[]> groupRevisions;
 	
 	//the list of GroupingNode's that hold the groups found in the RevisionNode list as it is processed
@@ -37,9 +38,14 @@ public class GroupingList extends CounterList<String>{
 		}
 	}
 	
+	/**
+	 * takes an object and what revision it is from and places it into its proper place.
+	 * @param obj the new group object
+	 * @param revision the revision tied with that object
+	 */
 	public void newInput(String obj, String revision) {
-		super.newInput(obj);
-		int i;
+		super.newInput(obj); //use the inherited insertion
+		int i; //loop counter
 		String[] next = {obj, revision};
 		if (groupRevisions.size() != 0) {
 			for (i = 0; i < groupRevisions.size(); i++){

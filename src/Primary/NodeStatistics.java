@@ -370,7 +370,7 @@ public class NodeStatistics {
 	
 	public void csv() throws IOException {
 		System.out.println(); //spacing
-		FileWriter f = new FileWriter(bundle.getString("csv"));
+		FileWriter f = new FileWriter(bundle.getString("csvName"));
 		PrintWriter p = new PrintWriter(f);
 		Object[][] input = {revisionsToo, flowOfTime};
 		CSVWork(input, p, f);
