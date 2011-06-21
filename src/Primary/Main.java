@@ -1,4 +1,4 @@
-package Primary;
+package primary;
 
 import java.util.ResourceBundle;
 
