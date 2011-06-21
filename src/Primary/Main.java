@@ -24,7 +24,7 @@ public class Main {
 		}
 		long end = System.currentTimeMillis();
 		if (bundle.getString("timeToggle").equals("true")) {
-			System.out.println("\n(" + (end-start) / 1000.00 + " seconds for completion)");
+			System.out.println("\n(" + (end - start) / 1000.00 + " seconds for completion)");
 		}
 	}
 }

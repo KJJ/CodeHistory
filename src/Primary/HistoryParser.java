@@ -391,16 +391,18 @@ public class HistoryParser {
 		String s;
 		String[] ss;
 		String current = "";
+		int count = 0;
 		Process exec = Runtime.getRuntime().exec("svn log " + p + " -q -v");
 		BufferedReader  stdInput=  new  BufferedReader(new
 	              InputStreamReader(exec.getInputStream()));
-		CounterList<String> counter = new CounterList<String>();
+		CounterList<String> counter = new CounterList<String>(true);
 		
-		while  ((s=  stdInput.readLine())  !=  null)  {
+		while  ((s =  stdInput.readLine())  !=  null)  {
 			if (s.startsWith("   M") || s.startsWith("   A") || s.startsWith("   D") || s.startsWith("   R")){
 				ss = s.split(" ");
 				current = ss[4];
 				counter.newInput(current);
+				count++;
 			}
 		}
 		System.out.println("start");

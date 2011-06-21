@@ -11,20 +11,23 @@ public class CounterList<T> {
 	private LinkedList<CounterNode<T>> list;
 	// the config file bundle
 	private ResourceBundle bundle = ResourceBundle.getBundle("config");
+	private boolean limitation;
 
 	/**
 	 * Constructor, initializes the list
 	 */
-	public CounterList() {
+	public CounterList(boolean limit) {
 		list = new LinkedList<CounterNode<T>>();
+		limitation = limit;
 	}
 	
 	/**
 	 * Constructor, initializes the list and enters the first element to be tracked
 	 */
-	public CounterList(CounterNode<T> firstElement) {
+	public CounterList(CounterNode<T> firstElement, boolean limit) {
 		list = new LinkedList<CounterNode<T>>();
 		list.addFirst(firstElement);
+		limitation = limit;
 	}
 	
 	/**
@@ -83,12 +86,24 @@ public class CounterList<T> {
 	 * overrides the inherited toString operation 
 	 */
 	public String toString() {
+		int j = 0;
+		int displaySize = 1029384756;
+		if (limitation) {
+			displaySize = Integer.parseInt(bundle.getString("occurrenceDisplayLimit"));
+		}
+		else {
+			displaySize = Integer.MAX_VALUE;
+		}
 		Iterator<CounterNode<T>> i = list.iterator(); //since all nodes will be touched, but not changed
 		String out = ""; //holds what will be returned
 		while(i.hasNext()){
 			CounterNode<T> next = i.next();
-			if (next.howManyAppearences() > Integer.parseInt(bundle.getString("filter"))) { //keeps values too low to be considered important out
+			if (next.howManyAppearences() > Integer.parseInt(bundle.getString("counterLowerLimit"))) { //keeps values too low to be considered important out
 				out += "\n" + next.toString(); //concatenates the next node to the output
+				if (j >= displaySize) {
+					break;
+				}
+				j++;
 			}
 		}
 		return out; //only returns the string, it does not print it out

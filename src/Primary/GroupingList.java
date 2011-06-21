@@ -13,7 +13,7 @@ public class GroupingList extends CounterList<String>{
 	 * Constructor, initializes the GroupingNode list
 	 */
 	public GroupingList () {
-		super();
+		super(false);
 		groupRevisions = new LinkedList<String[]>();
 	}
 	

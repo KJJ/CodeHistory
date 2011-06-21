@@ -71,6 +71,8 @@ public class NodeStatistics {
 	 * @param arg the queried files paired with the linked list
 	 */
 	public NodeStatistics(LinkedList<RevisionNode> list, String[] arg, LinkedList<Integer> intervalList){
+		
+		//initializations
 		toAnalyze = list;
 		revisionTotal = list.size();
 		ratingAverage = 0;
@@ -90,18 +92,24 @@ public class NodeStatistics {
 		commits = new String[intervalList.size()+1];
 		intervals = new String[intervalList.size()+1];
 		Iterator<Integer> i = intervalList.iterator();
+		
 		int j = 0;
 		while (i.hasNext()) {
 			commits[j] = Integer.toString(i.next());
 			intervals[j] = "i" + (j + 1);
 			j++;
 		}
+		
+		//the following strings placed in all of these arrays are usede in the csv file later
+		
 		if (list.size() != 0) {
+			
 			flowOfTime[list.size()-1] = "Time Between Revisions";
 			revisionsToo[list.size()-1] = "Revision Pair";
 			commits[commits.length-1] = "commits per";
 			intervals[intervals.length-1] = "interval";
 		}
+		
 		revisions = new String[list.size()+1];
 		relevants = new String[list.size()+1];
 		irrelevants = new String[list.size()+1];
@@ -123,12 +131,14 @@ public class NodeStatistics {
 	 *  file groupings
 	 */
 	public void analyze(){
+		
 		//for pairing consecutive revisions for time interval output
 		String previousRev = "";
 		Iterator<RevisionNode> runThrough = toAnalyze.iterator(); //preparing to go through every relevant revision's data
 		RevisionNode next = null; //null to determine later whether or not the list is empty or not
 		//loop counter
 		int j;
+		
 		while (runThrough.hasNext()){ 
 			
 			next = runThrough.next(); //the next revision's data node
@@ -137,6 +147,7 @@ public class NodeStatistics {
 			
 			revisions[toAnalyze.indexOf(next)] = "r" + next.getRevision();
 			relevants[toAnalyze.indexOf(next)] = Integer.toString(next.getNumberOfRelevants());
+			
 			for (j = 0; j < args.length; j++){
 				LinkedList<String> relevantList = next.getRelevantFiles();
 				if (relevantList.contains(args[j])) {
@@ -258,14 +269,14 @@ public class NodeStatistics {
 	
 	/**
 	 * prints out all of the statistics that have been gathered from the log analysis and grouping code
-	 * @throws IOException 
+	 * @throws IOException in the event of a csv error
 	 */
 	public void statsOut() throws IOException {
-		analyze();
+		analyze(); //see the above method
 		int i;
 		
 		if (bundle.getString("otherStatsToggle").equals("true") || bundle.getString("groupsToggle").equals("true") || bundle.getString("percentToggle").equals("true") || 
-																																		bundle.getString("diffOrNotToggle").equals("true")) {
+																																		bundle.getString("diffToggle").equals("true")) {
 			System.out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
 		}
 		
@@ -361,8 +372,9 @@ public class NodeStatistics {
 		
 		
 		
-		if (bundle.getString("otherStatsToggle").equals("true") || bundle.getString("groupsToggle").equals("true") || bundle.getString("percentToggle").equals("true") || 
-																																		bundle.getString("diffOrNotToggle").equals("true")) {
+		if (bundle.getString("otherStatsToggle").equals("true") || bundle.getString("groupsToggle").equals("true") || 
+				bundle.getString("percentToggle").equals("true") || bundle.getString("diffToggle").equals("true")) {
+			
 			System.out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
 		}
 
