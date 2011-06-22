@@ -94,7 +94,7 @@ public class HistoryParser {
 				if (count != 0) {  // check to see whether or not this is the first iteration
 					
 					//the if below checks to see if the the current revision has been explicitly rejected by the user in the config file
-					if (!(undesirable.contains(" " + rev + " ") || undesirable.contains(":" + rev + " ") || undesirable.contains(" " + rev + "."))) {
+					if (!(undesirable.contains(" " + rev + " ") || undesirable.contains("<" + rev + " ") || undesirable.contains(" " + rev + ">") || undesirable.contains("<" + rev + ">"))) {
 						RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
 						thisNode.newRelevantFile(args[argNum]);
 						sortedInsert(initiallyRelevant, thisNode);
