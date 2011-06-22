@@ -56,7 +56,7 @@ public class NodeStatistics {
 	private String ratings[];
 	//the number of commits per interval
 	private String[] commits;
-	//indicates which interal is being displayed, format; i + number
+	//indicates which internal is being displayed, format; i + number
 	private String[] intervals;
 	//the date of the previous revision
 	private Calendar lastTime;
@@ -370,7 +370,7 @@ public class NodeStatistics {
 			}
 			
 			if (bundle.getString("groupsToggle").equals("true")) {
-				grouping.currentOutput();
+				grouping.currentOutput(out);
 			}
 			if (args.length > 1) {
 				if (bundle.getString("percentToggle").equals("true")) {
