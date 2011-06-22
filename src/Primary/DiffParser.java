@@ -2,6 +2,7 @@ package primary;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 
 
 
@@ -45,10 +46,11 @@ public class DiffParser {
 	 * @param exec the diff command
 	 * @throws IOException if the input or output is incorrect
 	 */
-	public void diffOut(Process exec) throws IOException {
+	public void diffOut(Process exec, PrintWriter out) throws IOException {
 		diffData(exec); //gets the data
-			System.out.print("Deleted: " + del + "\t Added: " + ins + " \t| "); //prints that data out
-				del = 0; //reset field
+		System.out.print("Deleted: " + del + "\t Added: " + ins + " \t| "); //prints that data out
+		out.print("Deleted: " + del + "\t Added: " + ins + " \t| ");
+		del = 0; //reset field
 		ins = 0; //reset field
 	}
 }

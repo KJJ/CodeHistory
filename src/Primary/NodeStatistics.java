@@ -100,7 +100,7 @@ public class NodeStatistics {
 			j++;
 		}
 		
-		//the following strings placed in all of these arrays are usede in the csv file later
+		//the following strings placed in all of these arrays are used in the csv file later
 		
 		if (list.size() != 0) {
 			
@@ -271,76 +271,102 @@ public class NodeStatistics {
 	 * prints out all of the statistics that have been gathered from the log analysis and grouping code
 	 * @throws IOException in the event of a csv error
 	 */
-	public void statsOut() throws IOException {
+	public void statsOut(PrintWriter out) throws IOException {
 		analyze(); //see the above method
 		int i;
 		
 		if (bundle.getString("otherStatsToggle").equals("true") || bundle.getString("groupsToggle").equals("true") || bundle.getString("percentToggle").equals("true") || 
 																																		bundle.getString("diffToggle").equals("true")) {
 			System.out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
+			out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
 		}
 		
 		if (lowestRating == 2) { //implies no data was ever given since no rating will ever be above 1, let alone at 2
 			System.out.println("Nothing here to give statistics on \n");
+			out.println("Nothing here to give statistics on \n");
 		}
 		
 		else {
 			if (bundle.getString("otherStatsToggle").equals("true")) {
 				System.out.println("Relevant Segment of Revision History: " + then + " to " + now + " \n");
+				out.println("Relevant Segment of Revision History: " + then + " to " + now + " \n");
 				System.out.println("Total Number of Relevant Revisions: " + revisionTotal);
+				out.println("Total Number of Relevant Revisions: " + revisionTotal);
 				System.out.println("\t Average Number of relevant files per revision: " + Math.round(relevantAverage) + "\n");
+				out.println("\t Average Number of relevant files per revision: " + Math.round(relevantAverage) + "\n");
 				for (i = 0; i < args.length; i++) {
 					System.out.println("\t Number of Revisions Changing " + (i+1) + " of the Relevant Files: " + relevantPresent[i]);
+					out.println("\t Number of Revisions Changing " + (i+1) + " of the Relevant Files: " + relevantPresent[i]);
 					System.out.println("\t\t Number of these revisions with under " + (10 * (i + 1)) + " irrelevant extra files: " + irrelevantPresent[i] + "\n");
+					out.println("\t\t Number of these revisions with under " + (10 * (i + 1)) + " irrelevant extra files: " + irrelevantPresent[i] + "\n");
 				}
 		
 				System.out.println();
+				out.println();
 				if (timeDiffAverage / 1000 / 60 < 1){
 					System.out.println("Average Time Between Revisions: " + timeDiffAverage / 1000 + " seconds");
+					out.println("Average Time Between Revisions: " + timeDiffAverage / 1000 + " seconds");
 				}
 				else if (timeDiffAverage / 1000 / 60 / 60 < 1){
 					System.out.println("Average Time Between Revisions: " + timeDiffAverage / 1000 / 60 + " minutes");
+					out.println("Average Time Between Revisions: " + timeDiffAverage / 1000 / 60 + " minutes");
 				}
 				else if (timeDiffAverage / 1000 / 60 / 60 < 1000) {
 					System.out.println("Average Time Between Revisions: " + timeDiffAverage / 1000 / 60 / 60 + " hours");
+					out.println("Average Time Between Revisions: " + timeDiffAverage / 1000 / 60 / 60 + " hours");
 				}
 				else {
 					System.out.println("Average Time Between Revisions: " + timeDiffAverage / 1000 / 60 / 60 / 24 + " days");
+					out.println("Average Time Between Revisions: " + timeDiffAverage / 1000 / 60 / 60 / 24 + " days");
 				}
 				
 				if (timeDiffLow / 1000 / 60 < 1){
 					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow / 1000 + " seconds between Revisions "+revisionReference[5]);
+					out.println("\t Lowest Time Between Revisions: " + timeDiffLow / 1000 + " seconds between Revisions "+revisionReference[5]);
 				}
 				else if (timeDiffLow / 1000 / 60 / 60 < 1){
 					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow / 1000 / 60 + " minutes between Revisions "+revisionReference[5]);
+					out.println("\t Lowest Time Between Revisions: " + timeDiffLow / 1000 / 60 + " minutes between Revisions "+revisionReference[5]);
 				}
 				else if (timeDiffLow / 1000 / 60 / 60 < 1000) {
 					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow / 1000 / 60 / 60 + " hours between Revisions "+revisionReference[5]);
+					out.println("\t Lowest Time Between Revisions: " + timeDiffLow / 1000 / 60 / 60 + " hours between Revisions "+revisionReference[5]);
 				}
 				else {
 					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow / 1000 / 60 / 60 / 24 + " days between Revisions "+revisionReference[5]);
+					out.println("\t Lowest Time Between Revisions: " + timeDiffLow / 1000 / 60 / 60 / 24 + " days between Revisions "+revisionReference[5]);
 				}
 				
 				if (timeDiffHigh / 1000 / 60 < 1){
 					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh / 1000 +" seconds between Revisions "+revisionReference[4]);
+					out.println("\t Highest Time Between Revisions: " + timeDiffHigh / 1000 +" seconds between Revisions "+revisionReference[4]);
 				}
 				else if (timeDiffHigh/1000 / 60 / 60 < 1){
 					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh / 1000 / 60 +" minutes between Revisions "+revisionReference[4]);
+					out.println("\t Highest Time Between Revisions: " + timeDiffHigh / 1000 / 60 +" minutes between Revisions "+revisionReference[4]);
 				}
 				else if (timeDiffHigh / 1000 / 60 / 60 < 1000) {
 					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh / 1000 / 60 / 60 +" hours between Revisions "+revisionReference[4]);
+					out.println("\t Highest Time Between Revisions: " + timeDiffHigh / 1000 / 60 / 60 +" hours between Revisions "+revisionReference[4]);
 				}
 				else {
 					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh / 1000 / 60 / 60 / 24 + " days between Revisions "+revisionReference[4]);
+					out.println("\t Highest Time Between Revisions: " + timeDiffHigh / 1000 / 60 / 60 / 24 + " days between Revisions "+revisionReference[4]);
 				}
 				
 				System.out.println("\nAverage Rating: " + ratingAverage);
+				out.println("\nAverage Rating: " + ratingAverage);
 				System.out.println("\t Lowest Rating: " + lowestRating + " for Revision " + revisionReference[1]);
+				out.println("\t Lowest Rating: " + lowestRating + " for Revision " + revisionReference[1]);
 				System.out.println("\t Highest Rating: " + highestRating + " for Revision " + revisionReference[0] + "\n");
+				out.println("\t Highest Rating: " + highestRating + " for Revision " + revisionReference[0] + "\n");
 		
 				System.out.println("Average Number of Changed files: " + nFilesAverage);
+				out.println("Average Number of Changed files: " + nFilesAverage);
 				System.out.println("\t Lowest Number of Changed Files: " + lowestFileNumber + " changed at Revision " + revisionReference[3]);
+				out.println("\t Lowest Number of Changed Files: " + lowestFileNumber + " changed at Revision " + revisionReference[3]);
 				System.out.println("\t Highest Number of Changed Files: " + highestFileNumber + " changed at Revision " + revisionReference[2] + "\n");
+				out.println("\t Highest Number of Changed Files: " + highestFileNumber + " changed at Revision " + revisionReference[2] + "\n");
 			}
 			
 			if (bundle.getString("groupsToggle").equals("true")) {
@@ -348,7 +374,7 @@ public class NodeStatistics {
 			}
 			if (args.length > 1) {
 				if (bundle.getString("percentToggle").equals("true")) {
-					percentages(args);
+					percentages(args, out);
 				}
 			}
 			
@@ -357,14 +383,17 @@ public class NodeStatistics {
 			}
 			
 			if (bundle.getString("diffToggle").equals("true") && revisionTotal > 1) {		
-				diff();
+				diff(out);
 			}
 			
 			if (bundle.getString("commentToggle").equals("true")) {
 				System.out.println("Revision Comments (IMPORTANT DISCLAIMER: all commas have been replaced with semi-colons to allow insertion into a csv file): \n");
+				out.println("Revision Comments (IMPORTANT DISCLAIMER: all commas have been replaced with semi-colons to allow insertion into a csv file): \n");
 				for (i = 0; i < commenting.size(); i++) {
 					System.out.println("\t" + revisions[i] + ":");
+					out.println("\t" + revisions[i] + ":");
 					System.out.println(commenting.get(i) + "\n");
+					out.println(commenting.get(i) + "\n");
 				}
 			}
 
@@ -376,6 +405,7 @@ public class NodeStatistics {
 				bundle.getString("percentToggle").equals("true") || bundle.getString("diffToggle").equals("true")) {
 			
 			System.out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
+			out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
 		}
 
 	}
@@ -448,7 +478,7 @@ public class NodeStatistics {
 		p.println();
 	}
 	
-	public void diff() throws IOException{
+	public void diff(PrintWriter out) throws IOException{
 		int j, i;
 		String pathFull = "";
 		DiffParser dp = new DiffParser();
@@ -457,20 +487,24 @@ public class NodeStatistics {
 		
 		for (i = 0; i < args.length; i++) {
 			System.out.print("\t\t " + args[i].substring(args[i].lastIndexOf('/')));
+			out.print("\t\t " + args[i].substring(args[i].lastIndexOf('/')));
 		}
 		
 		System.out.println("\n");
+		out.println("\n");
 		
 			for (i = 0; i < revisionsToo.length-1; i++) {
 				System.out.print("Revisions " + revisionsToo[i] + ":\t");
+				out.print("Revisions " + revisionsToo[i] + ":\t");
 				
 				for (j = 0; j < args.length; j++) {
 					pathFull = path + args[j] + " ";
 					Process exec = Runtime.getRuntime().exec("svn diff -r " + revisionsToo[i].split("-")[0] + ":" + revisionsToo[i].split("-")[1] + " " + pathFull);
-					dp.diffOut(exec);
+					dp.diffOut(exec, out);
 				}
 				
 				System.out.println("\n");
+				out.println("\n");
 			}
 	}
 	
@@ -481,7 +515,7 @@ public class NodeStatistics {
 	 * @param files relevant files, as determined by the user in the command-line parameters
 	 * @throws IOException 
 	 */
-	public void percentages(String[] files) throws IOException {
+	public void percentages(String[] files, PrintWriter out) throws IOException {
 		int i, j; //loop counters
 		int[] infoArray; //array that holds the counters for each file-to-file comparison 
 		LinkedList<RevisionNode> theList = toAnalyze; // takes a copy of the RevisionNode list of data parsed from the log
@@ -500,12 +534,15 @@ public class NodeStatistics {
 				}
 			}
 			System.out.println(); //spacing
+			out.println();
 			System.out.println("For the file " + files[i].substring(files[i].lastIndexOf("/") + 1) + ":"); //indicates what file we are talking about
+			out.println("For the file " + files[i].substring(files[i].lastIndexOf("/") + 1) + ":");
 			for (j = 0; j < files.length; j++) { //for the length of our data array
 				if (j != i) { //ignoring the current files slot since it would be 100% no matter what
 					int percent = (int) Math.round((infoArray[j] / (double) infoArray[i]) * 100); //round to the nearest percent
 					//indicates that when file i is changed in a revision, file j is also changed at the same revision percent% of the time
 					System.out.println("\t When changed, " + files[j].substring(files[j].lastIndexOf("/") + 1) + " is changed " + percent + "% of the time.");
+					out.println("\t When changed, " + files[j].substring(files[j].lastIndexOf("/") + 1) + " is changed " + percent + "% of the time.");
 				}
 			}
 		}

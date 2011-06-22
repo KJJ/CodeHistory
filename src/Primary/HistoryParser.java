@@ -181,13 +181,16 @@ public class HistoryParser {
 	 * prints out the boundary lines at regular lengths when needed for the output
 	 * @param line the line of characters to be printed
 	 */
-	public void linesAndBounds(String line) {
+	public void linesAndBounds(String line, PrintWriter out) {
 		int j; //loop counter
 		System.out.print("\n"); //spacing to avoid conflict with valuable data
+		out.print("\n");
 		for (j = 0; j < Integer.parseInt(bundle.getString("lineLengths")); j++) { //create a line break to separate the query print out from the data table
 			System.out.print(line); //indicates the end of the list of queried files
+			out.print(line);
 		}
 		System.out.print("\n"); //provide spacing between output
+		out.print("\n");
 	}
 
 	/**
@@ -203,8 +206,13 @@ public class HistoryParser {
 		boolean inRange;				//records whether the current time interval is within the chosen range
 		boolean lastWas = false;		//Records whether the last time interval was within range of the configuration bound
 		
+		//based on example at http://www.abbeyworkshop.com/howto/java/writeText/index.html
+		FileWriter outFile = new FileWriter(bundle.getString("textFile"));
+        PrintWriter out = new PrintWriter(outFile);
+        
 		if (bundle.getString("queryToggle").equals("true")) {
 			System.out.println("Queried Files:"); //indicates the next lines show what was entered on the command line
+			out.println("Queried Files:");
 		}
 		
 		String p = bundle.getString(bundle.getString("repo")); //uses the config.properties file to get the path to the svn working copy being used
@@ -218,12 +226,14 @@ public class HistoryParser {
 			if (ceiling[i] == 0) { //if 0, then no revision was specified
 				if (bundle.getString("queryToggle").equals("true")) {
 					System.out.println("\n" + args[i] + "\t (the full log history)"); //prints the files name and path from the start of the working copy
+					out.println("\n" + args[i] + "\t (the full log history)");
 				}
 				exec = Runtime.getRuntime().exec("svn log -v " + n); //uses the svn's log command to get the history of the queried file
 			}
 			else {
 				if (bundle.getString("queryToggle").equals("true")) {
 					System.out.println("\n" + args[i] + "\t (starting at revision " + ceiling[i] + ")"); //prints the file name and the most recent selected revision
+					out.println("\n" + args[i] + "\t (starting at revision " + ceiling[i] + ")");
 				}
 				exec = Runtime.getRuntime().exec("svn log -v " + n + "@" + ceiling[i]); //svn command starting at a particular revision
 			}
@@ -232,13 +242,14 @@ public class HistoryParser {
 		if (bundle.getString("revisionOverallToggle").equals("true")) {
 			standard = fullTimeAverage(); //gets the average time between all revisions in the chosen repository
 			System.out.println("\n Average Time Period Between ALL Revisions: " + standard + " hours"); //and then print that time
+			out.println("\n Average Time Period Between ALL Revisions: " + standard + " hours");
 		}
 		else {
 			standard = Long.MAX_VALUE-(long)Integer.parseInt(bundle.getString("consecutiveRange")); //else just use the percentage as a base for the time ranges
 		}
 		int j; //loop counter
 		if (bundle.getString("tableToggle").equals("true")) {
-			linesAndBounds("==========");
+			linesAndBounds("==========", out);
 			System.out.print("\n"); //provide spacing between output
 			System.out.println("Legend: "); //this explains the meanings behind the symbols and lines used in the table
 			System.out.println("\t¥: \t\tindicates the time between this revision and the one before it is not \n\t\t\tin the selected range from the overall average\n");
@@ -248,7 +259,17 @@ public class HistoryParser {
 			System.out.println("\tA Line Of -: \tthe revisions separated by these are within the user selected \n\t\t\t interval range\n");
 			System.out.print("\n"); //provide spacing between output
 			System.out.print("commit \t date \t\t\t relevants \t     changed \t rating \t\t rating comment \t\t\t\t actual relevant files");
-			linesAndBounds("##########"); //the lines used to separate the information rows
+			
+			out.print("\n"); //provide spacing between output
+			out.println("Legend: "); //this explains the meanings behind the symbols and lines used in the table
+			out.println("\t¥: \t\tindicates the time between this revision and the one before it is not \n\t\t\tin the selected range from the overall average\n");
+			out.println("\t×: \t\tindicates that this revision and the one above it are in the intrval while \n\t\t\tthe current revision and the one below \n\t\t\titself is also within the specified range");
+			out.println("\tÆ: \t\tindicate the bottom revision of a pair that have a time period within the \n\t\t\tdesired range but not with the one below itself");
+			out.println("\tA Line Of #: \tthe revisions between two of these are within the user selected \n\t\t\t interval range, starting from the most recent revision\n");
+			out.println("\tA Line Of -: \tthe revisions separated by these are within the user selected \n\t\t\t interval range\n");
+			out.print("\n"); //provide spacing between output
+			out.print("commit \t date \t\t\t relevants \t     changed \t rating \t\t rating comment \t\t\t\t actual relevant files");
+			linesAndBounds("##########", out); //the lines used to separate the information rows
 		}
 
 		int[] statArray = new int[10]; //array used for the rating scattering table
@@ -291,24 +312,29 @@ public class HistoryParser {
 			if (bundle.getString("tableToggle").equals("true")) {
 				if (inRange && !lastWas) {
 					System.out.print("¥ "); //first revision in a time-pair
+					out.print("¥ ");
 					lastWas = true; //flags the next revision to note its relationship to the previous (ie: this) revision
 				}
 				else if (inRange && lastWas) { 
 					System.out.print("× "); //revision that shares a time relationship with revisions directly above and below it
+					out.print("× ");
 				}
 				else if (!inRange && lastWas) {
 					System.out.print("Æ "); //only has a relationship with the revision above it, not below it
+					out.print("Æ ");
 					lastWas = false; //indicate to the next revision that the last revision is not important to it
 				}
 				else {
 					System.out.print(" "); //indicate no relationships around this node
+					out.print(" ");
 				}
 				System.out.print(current.toString()); //prints the String representation of all the nodes data
+				out.print(current.toString());
 				if (interval <= Double.parseDouble(bundle.getString("intervalLength"))) {
-					linesAndBounds("----------"); //the lines used to separate the information rows
+					linesAndBounds("----------", out); //the lines used to separate the information rows
 				}
 				else {
-					linesAndBounds("##########"); //end of a desired interval
+					linesAndBounds("##########", out); //end of a desired interval
 				}
 			}
 			
@@ -324,25 +350,32 @@ public class HistoryParser {
 		}
 		
 		System.out.println("\n"); //spacing
+		out.println("\n");
 		NodeStatistics stats = new NodeStatistics(history, args, allN); // prepares to process data held in the RevisionNode list
-		stats.statsOut(); //output the statistics to the screen
+		stats.statsOut(out); //output the statistics to the screen
 		
 		System.out.println("\n");
+		out.println("\n");
 		if (bundle.getString("ratingsToggle").equals("true")) {
 			System.out.println("Rating Graph: looking for grouping\n"); //title of the graph
+			out.println("Rating Graph: looking for grouping\n");
 			for (i = 1; i <= statArray.length; i++){
 				System.out.print("(" + (double) (i-1) / 10 + ", " + (double) i / 10 + "]:  "); //current range interval
+				out.print("(" + (double) (i-1) / 10 + ", " + (double) i / 10 + "]:  ");
 				for (j = 0; j < statArray[i-1]; j++){ //loop through the entire range of rating intervals
 					System.out.print("|"); // one '|' = one rating in this range
+					out.print("|");
 				}
 				System.out.print("  (" + statArray[i-1] + ")"); //print out the numerical representation of that interval for easier use
-				linesAndBounds("=========="); //indicates the end of the list of queried files
+				out.print("  (" + statArray[i-1] + ")");
+				linesAndBounds("==========", out); //indicates the end of the list of queried files
 			}
 		}
 
 		if (bundle.getString("occurrencesToggle").equals("true")) {
-			fullCount(); //counts out how many times every file name occurs in the entire repository history
+			fullCount(out); //counts out how many times every file name occurs in the entire repository history
 		}
+		out.close();
 	}
 	
 	/**
@@ -386,7 +419,7 @@ public class HistoryParser {
 		return (((totalTime / rev) / 1000) / 60) / 60;
 	}
 	
-	public void fullCount() throws IOException {
+	public void fullCount(PrintWriter out) throws IOException {
 		String p = bundle.getString(bundle.getString("repo"));
 		String s;
 		String[] ss;
@@ -406,7 +439,9 @@ public class HistoryParser {
 			}
 		}
 		System.out.println("start");
+		out.println("start");
 		System.out.println(counter.toString());
+		out.println(counter.toString());
 	}
 	
 	/**
