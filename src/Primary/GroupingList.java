@@ -1,5 +1,6 @@
 package primary;
 
+import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -20,21 +21,26 @@ public class GroupingList extends CounterList<String>{
 	/**
 	 * prints out the grouping statistics of the relevant parts of the revision log
 	 */
-	public void currentOutput() {
+	public void currentOutput(PrintWriter out) {
 		Iterator<CounterNode<String>> lIterator = getList().iterator(); //for running through the entire list
 		System.out.println("File Change Groupings: \n"); //header
+		out.println("File Change Groupings: \n");
 		while (lIterator.hasNext()){ //for the duration of the list
 			CounterNode<String> next = lIterator.next(); //take each element out
 			//and print out its String representation and number of occurrences
 			System.out.print("\t The group [" + next.whatsTheItem() + "] occurs " + next.howManyAppearences() + " time(s). \n");
+			out.print("\t The group [" + next.whatsTheItem() + "] occurs " + next.howManyAppearences() + " time(s). \n");
 			System.out.print("\t\t Revisions: "); 
+			out.print("\t\t Revisions: ");
 			for (String[] info: groupRevisions) {
 				if (next.whatsTheItem().equals(info[0])) {
 					System.out.print(info[1]);
+					out.print(info[1]);
 					break;
 				}
 			}
 			System.out.println("\n");
+			out.println("\n");
 		}
 	}
 	
