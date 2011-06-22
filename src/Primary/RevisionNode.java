@@ -66,15 +66,28 @@ public class RevisionNode {
 		timeRelativeTo = thisTime.getTimeInMillis() - previousTime.getTimeInMillis();
 	}
 	
+	/**
+	 * 
+	 * @param previousTime the time used for the difference
+	 * @return the amount of time between the 2 dates as a long value
+	 */
 	public long getTimeSpace(Calendar previousTime) {
 		setTimeSpace(previousTime);
 		return timeRelativeTo;
 	}
 	
+	/**
+	 * 
+	 * @return revision time
+	 */
 	public Calendar getThisTime() {
 		return thisTime;
 	}
 	
+	/**
+	 * 
+	 * @return revision comments
+	 */
 	public String getComments() {
 		return comments;
 	}
