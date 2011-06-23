@@ -1,300 +1,268 @@
 Revision Pair,Time Between Revisions,
-707794-708717,3 days & 23 hours,
-708717-710199,5 days & 23 hours,
-710199-711932,2 days & 19 hours,
-711932-711985,0 days & 3 hours,
-711985-713869,7 days & 2 hours,
-713869-713889,0 days & 1 hours,
-713889-714036,0 days & 14 hours,
-714036-714040,0 days & 0 hours,
-714040-717974,1 days & 11 hours,
-717974-720267,8 days & 15 hours,
-720267-720694,1 days & 5 hours,
-720694-722522,6 days & 15 hours,
-722522-722524,0 days & 0 hours,
-722524-722528,0 days & 0 hours,
-722528-725879,9 days & 8 hours,
-725879-728081,7 days & 16 hours,
-728081-728161,0 days & 3 hours,
-728161-728197,0 days & 2 hours,
-728197-728806,2 days & 21 hours,
-728806-729554,4 days & 1 hours,
-729554-730212,3 days & 19 hours,
-730212-730896,3 days & 8 hours,
-730896-739458,27 days & 21 hours,
-739458-757733,52 days & 11 hours,
-757733-766937,27 days & 13 hours,
-766937-770525,10 days & 2 hours,
-770525-772025,4 days & 22 hours,
-772025-784856,40 days & 14 hours,
-784856-784857,0 days & 0 hours,
-784857-787385,7 days & 3 hours,
-787385-787390,0 days & 0 hours,
-787390-787394,0 days & 0 hours,
-787394-787674,0 days & 17 hours,
-787674-787689,0 days & 0 hours,
-787689-789392,6 days & 3 hours,
-789392-789883,1 days & 1 hours,
-789883-790693,1 days & 22 hours,
-790693-792340,6 days & 4 hours,
-792340-792739,1 days & 0 hours,
-792739-792969,0 days & 16 hours,
-792969-793040,0 days & 2 hours,
-793040-793042,0 days & 0 hours,
-793042-793062,0 days & 1 hours,
-793062-793597,2 days & 20 hours,
-793597-793732,0 days & 7 hours,
-793732-793761,0 days & 1 hours,
-793761-796361,7 days & 16 hours,
-796361-797686,3 days & 6 hours,
-797686-801281,11 days & 16 hours,
-801281-895202,149 days & 22 hours,
-895202-895204,0 days & 0 hours,
-895204-912026,48 days & 7 hours,
-912026-997329,207 days & 14 hours,
-997329-997331,0 days & 0 hours,
-997331-1076736,169 days & 5 hours,
-1076736-1087090,27 days & 2 hours,
+272-296,64 days & 16 hours,
+296-351,157 days & 12 hours,
+351-352,0 days & 0 hours,
+352-358,0 days & 16 hours,
+358-387,191 days & 18 hours,
+387-389,14 days & 2 hours,
+389-390,31 days & 12 hours,
+390-391,34 days & 0 hours,
+391-392,10 days & 3 hours,
+392-393,0 days & 2 hours,
+393-396,3 days & 3 hours,
+396-466,307 days & 16 hours,
+466-467,14 days & 7 hours,
+467-468,5 days & 4 hours,
+468-470,1 days & 17 hours,
+470-497,61 days & 1 hours,
+497-518,46 days & 4 hours,
+518-522,3 days & 16 hours,
+522-527,1 days & 1 hours,
+527-550,87 days & 4 hours,
+550-551,0 days & 10 hours,
+551-556,3 days & 7 hours,
+556-558,1 days & 23 hours,
+558-583,45 days & 22 hours,
+583-585,31 days & 11 hours,
+585-588,21 days & 19 hours,
+588-589,1 days & 4 hours,
+589-592,3 days & 16 hours,
+592-594,0 days & 10 hours,
+594-595,0 days & 18 hours,
+595-596,1 days & 20 hours,
+596-597,4 days & 20 hours,
+597-604,11 days & 0 hours,
+604-608,2 days & 6 hours,
+608-609,0 days & 0 hours,
+609-611,0 days & 2 hours,
+611-622,5 days & 16 hours,
+622-647,7 days & 8 hours,
+647-649,83 days & 9 hours,
+649-682,106 days & 13 hours,
+682-688,48 days & 18 hours,
+688-695,50 days & 20 hours,
+695-706,3 days & 1 hours,
+706-711,0 days & 18 hours,
+711-714,0 days & 2 hours,
+714-716,7 days & 0 hours,
+716-717,0 days & 0 hours,
+717-722,4 days & 20 hours,
+722-732,57 days & 11 hours,
 
 Revision,Rating of Relevance,
-r707794,0.05555555555555555,
-r708717,0.5,
-r710199,0.045454545454545456,
-r711932,0.3333333333333333,
-r711985,1.0,
-r713869,0.3333333333333333,
-r713889,1.0,
-r714036,0.3333333333333333,
-r714040,1.0,
-r717974,0.3333333333333333,
-r720267,0.2,
-r720694,0.5,
-r722522,0.5,
-r722524,1.0,
-r722528,0.5,
-r725879,0.125,
-r728081,0.09090909090909091,
-r728161,0.5,
-r728197,0.2,
-r728806,0.16666666666666666,
-r729554,0.25,
-r730212,0.5,
-r730896,0.5,
-r739458,0.5,
-r757733,1.0,
-r766937,0.5,
-r770525,0.5,
-r772025,0.14285714285714285,
-r784856,0.2,
-r784857,1.0,
-r787385,0.16666666666666666,
-r787390,1.0,
-r787394,1.0,
-r787674,1.0,
-r787689,1.0,
-r789392,0.08333333333333333,
-r789883,0.5,
-r790693,1.0,
-r792340,0.1111111111111111,
-r792739,0.3333333333333333,
-r792969,0.5,
-r793040,0.5,
-r793042,0.5,
-r793062,1.0,
-r793597,0.25,
-r793732,0.05263157894736842,
-r793761,0.16666666666666666,
-r796361,1.0,
-r797686,1.0,
-r801281,1.0,
-r895202,0.0625,
-r895204,0.2,
-r912026,0.25,
-r997329,1.0,
-r997331,1.0,
-r1076736,0.2,
-r1087090,0.1,
+r272,0.7782007458048477,
+r296,0.7813738441215323,
+r351,0.11428571428571428,
+r352,0.7842669845053636,
+r358,0.7845579078455791,
+r387,0.11124260355029586,
+r389,0.44859813084112155,
+r390,0.7793122886133033,
+r391,0.11188811188811189,
+r392,0.3368421052631579,
+r393,0.783419689119171,
+r396,0.11162790697674418,
+r466,0.7848761408083441,
+r467,0.22608695652173913,
+r468,0.11290322580645161,
+r470,0.6691449814126395,
+r497,0.22275449101796407,
+r518,0.2229965156794425,
+r522,0.11124999999999999,
+r527,0.7788027108433734,
+r550,0.11188811188811189,
+r551,0.8008474576271186,
+r556,0.22857142857142856,
+r558,0.11249999999999999,
+r583,0.11320754716981131,
+r585,0.11151079136690646,
+r588,0.7883495145631069,
+r589,0.5681818181818181,
+r592,0.024464831804281346,
+r594,0.6782608695652174,
+r595,0.44897959183673475,
+r596,0.7887323943661971,
+r597,0.34782608695652173,
+r604,0.016359918200409,
+r608,0.11363636363636363,
+r609,0.3448275862068966,
+r611,0.24,
+r622,0.2245989304812834,
+r647,0.7793320011418784,
+r649,0.11538461538461539,
+r682,0.11320754716981131,
+r688,0.23076923076923078,
+r695,0.2223454394233435,
+r706,0.11160714285714285,
+r711,0.3461538461538462,
+r714,0.11147540983606558,
+r716,0.448,
+r717,0.016632016632016633,
+r722,0.11249999999999999,
+r732,0.6823529411764706,
 
 Revision,Irrelevants Present,
-r707794,17,
-r708717,1,
-r710199,21,
-r711932,2,
-r711985,0,
-r713869,2,
-r713889,0,
-r714036,2,
-r714040,0,
-r717974,2,
-r720267,4,
-r720694,1,
-r722522,1,
-r722524,0,
-r722528,1,
-r725879,7,
-r728081,10,
-r728161,1,
-r728197,4,
-r728806,5,
-r729554,3,
-r730212,1,
-r730896,1,
-r739458,1,
-r757733,0,
-r766937,1,
-r770525,1,
-r772025,6,
-r784856,4,
-r784857,0,
-r787385,5,
-r787390,0,
-r787394,0,
-r787674,0,
-r787689,0,
-r789392,11,
-r789883,1,
-r790693,0,
-r792340,8,
-r792739,2,
-r792969,1,
-r793040,1,
-r793042,1,
-r793062,0,
-r793597,3,
-r793732,18,
-r793761,5,
-r796361,0,
-r797686,0,
-r801281,0,
-r895202,15,
-r895204,4,
-r912026,3,
-r997329,0,
-r997331,0,
-r1076736,4,
-r1087090,9,
+r272,1424,
+r296,162,
+r351,3,
+r352,87,
+r358,83,
+r387,93,
+r389,44,
+r390,388,
+r391,15,
+r392,29,
+r393,101,
+r396,23,
+r466,79,
+r467,11,
+r468,6,
+r470,174,
+r497,91,
+r518,62,
+r522,88,
+r527,584,
+r550,15,
+r551,20,
+r556,6,
+r558,8,
+r583,5,
+r585,30,
+r588,51,
+r589,20,
+r592,319,
+r594,33,
+r595,40,
+r596,49,
+r597,5,
+r604,481,
+r608,4,
+r609,7,
+r611,1,
+r622,19,
+r647,383,
+r649,2,
+r682,5,
+r688,4,
+r695,399,
+r706,24,
+r711,6,
+r714,33,
+r716,52,
+r717,473,
+r722,8,
+r732,23,
 
 Revision,Relevants Present,
-r707794,1,
-r708717,1,
-r710199,1,
-r711932,1,
-r711985,1,
-r713869,1,
-r713889,1,
-r714036,1,
-r714040,1,
-r717974,1,
-r720267,1,
-r720694,1,
-r722522,1,
-r722524,1,
-r722528,1,
-r725879,1,
-r728081,1,
-r728161,1,
-r728197,1,
-r728806,1,
-r729554,1,
-r730212,1,
-r730896,1,
-r739458,1,
-r757733,1,
-r766937,1,
-r770525,1,
-r772025,1,
-r784856,1,
-r784857,1,
-r787385,1,
-r787390,1,
-r787394,1,
-r787674,1,
-r787689,1,
-r789392,1,
-r789883,1,
-r790693,1,
-r792340,1,
-r792739,1,
-r792969,1,
-r793040,1,
-r793042,1,
-r793062,1,
-r793597,1,
-r793732,1,
-r793761,1,
-r796361,1,
-r797686,1,
-r801281,1,
-r895202,1,
-r895204,1,
-r912026,1,
-r997329,1,
-r997331,1,
-r1076736,1,
-r1087090,1,
+r272,7,
+r296,7,
+r351,1,
+r352,7,
+r358,7,
+r387,1,
+r389,4,
+r390,7,
+r391,1,
+r392,3,
+r393,7,
+r396,1,
+r466,7,
+r467,2,
+r468,1,
+r470,6,
+r497,2,
+r518,2,
+r522,1,
+r527,7,
+r550,1,
+r551,7,
+r556,2,
+r558,1,
+r583,1,
+r585,1,
+r588,7,
+r589,5,
+r592,8,
+r594,6,
+r595,4,
+r596,7,
+r597,3,
+r604,8,
+r608,1,
+r609,3,
+r611,2,
+r622,2,
+r647,7,
+r649,1,
+r682,1,
+r688,2,
+r695,2,
+r706,1,
+r711,3,
+r714,1,
+r716,4,
+r717,8,
+r722,1,
+r732,6,
 
 interval,commits per,
-i4,4,
-i3,6,
-i2,32,
-i1,15,
+i7,10,
+i6,16,
+i5,11,
+i4,1,
+i3,7,
+i2,4,
+i1,1,
 
-,build.xml,Time elapsed since the last significant revision:,Comments:,
-r707794,1,N/A, move over to an independent module  
-r708717,1,3 days & 23 hours, add test target  
-r710199,1,5 days & 23 hours, Setting svn:keywords (Author Date Id Revision) and svn:eol-style (native) for the jdbc-pool module.  
-r711932,1,2 days & 19 hours, Improve documentation  
-r711985,1,0 days & 3 hours, Modify build script to generate a distribution  
-r713869,1,7 days & 2 hours, Add a change log to the module  
-r713889,1,0 days & 1 hours, increment build number and control it from build file at this point  
-r714036,1,0 days & 14 hours, A disconnect should not throw an error  
-r714040,1,0 days & 0 hours, fix spacing issues  
-r717974,1,1 days & 11 hours, Make sure it compiles with JDK1.5; this is one of the times you wish you had preprocessor statements  
-r720267,1,8 days & 15 hours, Add doc; update version number  
-r720694,1,1 days & 5 hours, increment version number  
-r722522,1,6 days & 15 hours, update version to next rev  
-r722524,1,0 days & 0 hours, Add fairness test to build.xml  
-r722528,1,0 days & 0 hours, remove some not needed test; add compile version  
-r725879,1,9 days & 8 hours, Implement JMX notification of query times and query failures  
-r728081,1,7 days & 16 hours, Documented interceptors a bit better; implemented setters for interceptor properties  
-r728161,1,0 days & 3 hours, inc version number  
-r728197,1,0 days & 2 hours, Removed calling to a JDK 1.6 method if its run under 1.5 and still take advantage of the JMX features  
-r728806,1,2 days & 21 hours, Implemented a way to get a delegate using standard APIs rather than custom handling  
-r729554,1,4 days & 1 hours, Refactor the query report for multi purpose  
-r730212,1,3 days & 19 hours, Make sure that the packaged up binaries have a MD5 sum as well; to verify download size  
-r730896,1,3 days & 8 hours, update version  
-r739458,1,27 days & 21 hours, adjust for first tag  
-r757733,1,52 days & 11 hours, force 1.5 at this time; don't inherit parent value of 1.6  
-r766937,1,27 days & 13 hours, Add dependency to tomcat 7 now  
-r770525,1,10 days & 2 hours, Prepare for next build  
-r772025,1,4 days & 22 hours, Update test cases with a dummy driver  
-r784856,1,40 days & 14 hours, Add in NOTICE and LICENSE file. Fix the links in the documentation.   
-r784857,1,0 days & 0 hours, Correct name  
-r787385,1,7 days & 3 hours, Refactor to be more independent; so that one can build from source archive without too many hooplas as suggested by sebb  
-r787390,1,0 days & 0 hours, Add in test runner  
-r787394,1,0 days & 0 hours, Don't create the test table during the run  
-r787674,1,0 days & 17 hours, Make a default build target that builds automatically without need to know what.   
-r787689,1,0 days & 0 hours, Dont try to run the base test  
-r789392,1,6 days & 3 hours, Remove all usage of GPL or LGPL downloads. Use H2 for test database (EPL1.0) as it can be downloaded and easily embedded. Derby didn't work; too slow to populate test data with. Add Javadoc per Sebb's suggestion. Add EPL and CPL to LICENSE since we use it in the unit test cases.   
-r789883,1,1 days & 1 hours, Apply patch by sebb from https://issues.apache.org/bugzilla/show_bug.cgi?id=47458 Store db properties in build.properties using a prefix of testdb  
-r790693,1,1 days & 22 hours, break out javadoc into its own target  
-r792340,1,6 days & 4 hours, remove dependency on the modeler so that the pool can run outside of tomcat and still have jmx query notifications.   
-r792739,1,1 days & 0 hours, Fix https://issues.apache.org/bugzilla/show_bug.cgi?id=47149 Explicitly specify encoding for the source files 
-r792969,1,0 days & 16 hours, Add manifest to binary JAR Fix XML error in doc  
-r793040,1,0 days & 2 hours, were not using DBCP anywhere  
-r793042,1,0 days & 0 hours, remove dbcp add classpath to javadoc start documenting DataSource  
-r793062,1,0 days & 1 hours, correct dependency  
-r793597,1,2 days & 20 hours, Create a package file for the JavaDoc main package  
-r793732,1,0 days & 7 hours, Add tons of javadoc Remove the finalizers; they behave way differently in the new JDK; so let the programmer be responsible for closures   
-r793761,1,0 days & 1 hours, more javadoc and corrections  
-r796361,1,7 days & 16 hours, Allow to run perf test as a one off   
-r797686,1,3 days & 6 hours, Add missing files to distribution  
-r801281,1,11 days & 16 hours, apply patch from sebb for https://issues.apache.org/bugzilla/show_bug.cgi?id=47452   
-r895202,1,149 days & 22 hours, Update copyright year for TC trunk.  
-r895204,1,0 days & 0 hours, Borrow a few things from the main Tomcat build.xml: - use general version filter - automatically set year to the current year - use patch version property without dot.   The dot is added when combining it into a version number  I don't know whether the double '@' are intended for the ant replacement markers in MANIFEST.MF (the outer ones remain after ant filtering); but that is unchanged from the previous behaviour.  
-r912026,1,48 days & 7 hours, In some drivers; the call to setTransactionIsolation should be the very first call  
-r997329,1,207 days & 14 hours, Include the suffix in the version number 
-r997331,1,0 days & 0 hours, Fix niggle 
-r1076736,1,169 days & 5 hours, Add missing files and license header Add NOTICE/LICENSE to all JAR files  
-r1087090,1,27 days & 2 hours, Add in ability to build with Maven  
+,ClearFileAction.java,ExportFileAction.java,LoadFileAction.java,LoadRecentFileAction.java,NewFileAction.java,OpenFileAction.java,OpenRecentFileAction.java,SaveFileAction.java,Time elapsed since the last significant revision:,Comments:,
+r272,1,1,1,1,,1,1,1,N/A, Switch to JHotDraw7 sources  
+r296,1,1,1,1,,1,1,1,64 days & 16 hours, Changes for JHotDraw 7.0.8 
+r351,,,,,,1,,,157 days & 12 hours, Upgraded teddyapplication sample to JSR-296 appframework-0.42. 
+r352,1,1,1,1,,1,1,1,0 days & 0 hours, Upgraded teddyapplication sample to JSR-296 appframework-0.42. 
+r358,1,1,1,1,,1,1,1,0 days & 16 hours, Fixing broken repository. 
+r387,1,,,,,,,,191 days & 18 hours, - Fixed a major performance issue in the drawing framework which caused performance hits when loading and editing drawings. This required changes in several interfaces and classes of JHotDraw. - Added support for constrained rotation of figures (work in progress) - Added support for canvas fill color and fill opacity. - Revised the design of GroupAction/UngroupAction and CombineAction/SplitAction. - Revised a number of language keys in Label.properties. - Moved Project.clear() method from EDT to worker thread. This required changes in several interfaces and classes of JHotDraw. - Upgraded from NetBeans 5.5 to 6.0. - Upgraded to a newer version of Quaqua L&F. 
+r389,,1,,,,1,1,1,14 days & 2 hours, - Fixed drawing tool activation issues which occured on Mac OS X leopard. I had to extend the interfaces of Application and Project for this; and to change actions and tools which depend on these interfaces. - Renamed constants for property names. They are now called propertyname_PROPERTY rather than PROP_propertyname. The _PROPERTY suffix is more consistent with property name constants in the JDK. - Added support for the window.documentFile property on Mac OS X as outlined in http://developer.apple.com/technotes/tn2007/tn2196.html 
+r390,1,1,1,1,,1,1,1,31 days & 12 hours, Fixed copyright disclaimer in source files. 
+r391,,,,,,1,,,34 days & 0 hours, Enhancements: - Extending Figure interface with isTransformable() method; and implementing support for it in the framework. (Work in progress)  Fixes: - Pasting into an SVG drawing pasted the figures twice. 
+r392,,,,,,1,1,1,10 days & 3 hours, Fixes: - First round of fixes for the upcoming JHotDraw 7.1 release. 
+r393,1,1,1,1,,1,1,1,0 days & 2 hours, Changes: - Renamed org.jhotdraw.app.Project to View to be consistent with other application frameworks; such as JSR-296. 
+r396,,,,,,,,1,3 days & 3 hours, Removed redundant documentation from the project; and replaced it by links to the online documentation pages and the JHotDraw Wiki. 
+r466,1,1,1,1,,1,1,1,307 days & 16 hours, - Property names in resource bundles match now the corresponding JavaBeans properties. - BezierFigure now correctly returns empty bounds; if the bezier path is entirely horizontal or entirely vertical. - Added LayouterSample to the mini samples package. 
+r467,,,1,,,1,,,14 days & 7 hours, - Added LoadDirectoryAction; OpenDirectoryAction; DirectoryView.  
+r468,,,,,,1,,,5 days & 4 hours, - Fixed broken labels. 
+r470,1,1,1,,,1,1,1,1 days & 17 hours, - Reworked ResourceBundleUtil and all dependent .properties files and classes. 
+r497,,,,,,1,1,,61 days & 1 hours, - Added font formatting fields to SVG toolbars. - Added HSV color palette. - Fixed a number of SVG comliance bugs. 
+r518,,,,,,1,1,,46 days & 4 hours, Fixed a memory leak which occured when DrawingViews; which shared a single DrawingEditor; were created and disposed. 
+r522,,1,,,,,,,3 days & 16 hours, - Placed the design pattern comments between <hr> tags to make them better visible. - Added missing design pattern comments and cleaned up the existing ones. 
+r527,1,1,1,1,,1,1,1,1 days & 1 hours, Use svn:keywords "Id" to inject version number into class comments. 
+r550,,,,,,,,1,87 days & 4 hours, - Added initial pages for a tutorial to the documentation. - Improved the documentation of several classes. - Added convenience methods for reading and writing a drawing from/to files to SVGDrawingPanel. 
+r551,1,1,1,1,,1,1,1,0 days & 10 hours, - Redesigned Worker class. - Fixed bugs in SVGDrawingPanel read() and write() methods.  - Added read() and write() methods to SVGDrawingPanel which take an InputFormat resp. OutputFormat as parameter. - Added SVGDrawingPanelSample to "mini" sample package.  
+r556,,,1,,,1,,,3 days & 7 hours, Added constructor with Application and View to AbstractViewAction. 
+r558,,1,,,,,,,1 days & 23 hours, - Added AbstractPreferencesAction - Updated class comments of Application classes.  
+r583,,,,,,1,,,45 days & 22 hours, DefaultOSXApplication: - The "invisible" frame which holds the screen menu bar was showing as a small white rectangle on Snow Leopard. - The menu items of the screen menu bar did not always show up on Snow Leopard.  Open Action: - We have to calculate the window position of the filechooser by ourselves on Snow Leopard.  
+r585,,,,,,1,,,31 days & 11 hours, Removed unnecessary null checks when closing a stream. 
+r588,,1,1,1,1,1,1,1,21 days & 19 hours, Enhancement to the Application framework: - The application framework works now with URI objects instead of File objects. This allows the creation of applications which are not file-based. Such as network-based applications (for example browsers); and database-oriented applications. 
+r589,,1,1,1,,1,,1,1 days & 4 hours, Moved URIChooser and JFileURIChooser out of subpackage org.jhotdraw.gui.chooser into org.jhotdraw.gui package. 
+r592,1,1,1,1,1,1,1,1,3 days & 16 hours, Application framework: Reworked application actions and generation of standard menus. 
+r594,1,1,1,,1,1,,1,0 days & 10 hours, Fixed JavaDoc errors. 
+r595,1,,1,,1,1,,,0 days & 18 hours, Application framework:  - Fixed errors in menu creation.  - Shortened names of default applications. 
+r596,1,1,1,1,,1,1,1,1 days & 20 hours, Reworked the application framework.  - There is now a hierarchy of action maps instead of one map for the whole application.  - (File) choosers are now created by the application model instead of by the views. 
+r597,,,,,,1,1,1,4 days & 20 hours, - Load and save actions print a stack trace when file saving fails. - Fixed ActionMap creation. - Fixed menu creation when a JMenu has no text. 
+r604,1,1,1,1,1,1,1,1,11 days & 0 hours, Its 2010 now. :-) 
+r608,,1,,,,,,,2 days & 6 hours, Fixed javadoc warnings. 
+r609,1,,,1,,,1,,0 days & 0 hours, Removing DirectoryView interface. Fixed wrong names in class comments. 
+r611,,,,,,1,1,,0 days & 2 hours, OpenApplicationFileAction opens file in empty view if available. 
+r622,,,1,,,,,1,5 days & 16 hours, - Moved ExtensionFileFilter from io package into gui.filechooser package. - Deprecated DOMStorableInputOutputFormat. 
+r647,1,1,1,1,1,,1,1,7 days & 8 hours, Added @Override annotations. 
+r649,,,,,,1,,,83 days & 9 hours, Fixed NPE in OpenFileAction. Added missing labels for EditFindAction. 
+r682,,,,1,,,,,106 days & 13 hours, Makes LoadRecentFileAction work like OpenRecentFileAction when now View is open. 
+r688,,,,,,1,1,,48 days & 18 hours, Adds method isEmpty() to the View interface. OpenFileAction and OpenRecentFileAction reuse an existing view only; if it is empty. 
+r695,,1,,,,,,1,50 days & 20 hours, Replaces annotation package by FindBugs annotations. Replaces package.html files by package-info.java files. Adds NonNull and Nullable annotations. Fixes correctness issues reported by FindBugs. 
+r706,,,,1,,,,,3 days & 1 hours, Fixes dead local stores discovered by FindBugs. 
+r711,,,,,,1,1,1,0 days & 18 hours, Removes instanceof checks which always evaluate to true discovered by FindBugs. 
+r714,,,,,,,,1,0 days & 2 hours, Fixes potential null dereferences discovered by FindBugs. 
+r716,1,1,1,1,,,,,7 days & 0 hours, Redesigns menu creation. The code for building the menu items is now factored out into a MenuBuilder class. 
+r717,1,1,1,1,1,1,1,1,0 days & 0 hours, Shortens the license headers. 
+r722,,,,,1,,,,4 days & 20 hours, Adds support for the "-open" main argument to AbstractApplication. Fixes issues with actions and menus in the SVG Sample application. Fixes a NPE in JAttributeSlider. Fixes a NPE in FocusWindowAction. Fixes the missing title of the view menu in SDIApplication. 
+r732,,1,1,1,,1,1,1,57 days & 11 hours, Adds the features "Open last URI on launch and "Allow multiple views per URI". 
 

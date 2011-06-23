@@ -1,0 +1,27 @@
+Top 25 Occurring File Names:
+
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/draw/DefaultDrawingView.java	70
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/draw/action/ButtonFactory.java	55
+/trunk/jhotdraw7/nbproject/project.properties	52
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/samples/svg/io/SVGInputFormat.java	48
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/samples/svg/SVGApplicationModel.java	43
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/app/DefaultOSXApplication.java	43
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/draw/AbstractCompositeFigure.java	42
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/samples/svg/figures/SVGPathFigure.java	41
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/samples/svg/figures/SVGTextFigure.java	40
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/draw/Labels_de.properties	39
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/draw/Labels.properties	39
+/trunk/jhotdraw7/lib/quaqua.jar	39
+/trunk/jhotdraw7/build-svg.xml	38
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/draw/Figure.java	37
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/draw/BezierFigure.java	37
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/samples/svg/figures/SVGTextAreaFigure.java	37
+/trunk/jhotdraw6/src/org/jhotdraw/application/DrawApplication.java	36
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/samples/svg/io/SVGOutputFormat.java	36
+/trunk/jhotdraw6/src/org/jhotdraw/standard/StandardDrawingView.java	34
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/app/AbstractApplication.java	34
+/trunk/jhotdraw7/build-jhotdraw.xml	34
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/draw/DefaultDrawingEditor.java	33
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/draw/AttributeKeys.java	33
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/samples/svg/figures/SVGImageFigure.java	33
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/samples/svg/SVGApplet.java	32

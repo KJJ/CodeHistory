@@ -1,8 +1,22 @@
 Queried Files:
 
-/modules/jdbc-pool/build.xml	 (the full log history)
+/jhotdraw7/src/main/java/org/jhotdraw/app/action/file/ClearFileAction.java	 (the full log history)
 
- Average Time Period Between ALL Revisions: 7 hours
+/jhotdraw7/src/main/java/org/jhotdraw/app/action/file/ExportFileAction.java	 (the full log history)
+
+/jhotdraw7/src/main/java/org/jhotdraw/app/action/file/LoadFileAction.java	 (the full log history)
+
+/jhotdraw7/src/main/java/org/jhotdraw/app/action/file/LoadRecentFileAction.java	 (the full log history)
+
+/jhotdraw7/src/main/java/org/jhotdraw/app/action/file/NewFileAction.java	 (the full log history)
+
+/jhotdraw7/src/main/java/org/jhotdraw/app/action/file/OpenFileAction.java	 (the full log history)
+
+/jhotdraw7/src/main/java/org/jhotdraw/app/action/file/OpenRecentFileAction.java	 (the full log history)
+
+/jhotdraw7/src/main/java/org/jhotdraw/app/action/file/SaveFileAction.java	 (the full log history)
+
+ Average Time Period Between ALL Revisions: 147 hours
 
 ==========================================================================================================================================================================================================================================================
 
@@ -24,322 +38,446 @@ Legend:
 
 commit 	 date 			 relevants 	     changed 	 rating 		 rating comment 				 actual relevant files
 ##########################################################################################################################################################################################################################################################
-¥ 1087090	2011-03-30 15:40:59	1/1 relevant files	10	0.1		Impure Superset of the queried files found	build.xml
+¥ 732	2011-01-22 13:26:30	6/8 relevant files	29	0.68235		Subset of Relevants mixed with Irrelevants	ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 1076736	2011-03-03 12:20:38	1/1 relevant files	5	0.2		Impure Superset of the queried files found	build.xml
+× 722	2010-11-26 01:49:25	1/8 relevant files	9	0.1125		Subset of Relevants mixed with Irrelevants	NewFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 997331	2010-09-15 07:39:08	1/1 relevant files	1	1.0		Absolutely relevant, pure set of the query	build.xml
+× 717	2010-11-21 05:30:57	8/8 relevant files	481	0.01663		Impure Superset of the queried files found	ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, NewFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 997329	2010-09-15 07:34:42	1/1 relevant files	1	1.0		Absolutely relevant, pure set of the query	build.xml
+× 716	2010-11-21 05:15:36	4/8 relevant files	56	0.448		Subset of Relevants mixed with Irrelevants	ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+× 714	2010-11-14 04:29:13	1/8 relevant files	34	0.11148		Subset of Relevants mixed with Irrelevants	SaveFileAction.java
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+× 711	2010-11-14 01:40:42	3/8 relevant files	9	0.34615		Subset of Relevants mixed with Irrelevants	OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+× 706	2010-11-13 07:37:53	1/8 relevant files	25	0.11161		Subset of Relevants mixed with Irrelevants	LoadRecentFileAction.java
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+× 695	2010-11-10 06:01:58	2/8 relevant files	401	0.22235		Subset of Relevants mixed with Irrelevants	ExportFileAction.java, SaveFileAction.java
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+× 688	2010-09-20 10:15:56	2/8 relevant files	6	0.23077		Subset of Relevants mixed with Irrelevants	OpenFileAction.java, OpenRecentFileAction.java
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+× 682	2010-08-02 15:47:14	1/8 relevant files	6	0.11321		Subset of Relevants mixed with Irrelevants	LoadRecentFileAction.java
 ##########################################################################################################################################################################################################################################################
-× 912026	2010-02-19 16:02:49	1/1 relevant files	4	0.25		Impure Superset of the queried files found	build.xml
+× 649	2010-04-18 02:31:31	1/8 relevant files	3	0.11538		Subset of Relevants mixed with Irrelevants	OpenFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 895204	2010-01-02 08:22:41	1/1 relevant files	5	0.2		Impure Superset of the queried files found	build.xml
+× 647	2010-01-24 15:52:59	7/8 relevant files	390	0.77933		Subset of Relevants mixed with Irrelevants	ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, NewFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 895202	2010-01-02 07:22:50	1/1 relevant files	16	0.0625		Impure Superset of the queried files found	build.xml
+× 622	2010-01-17 06:54:18	2/8 relevant files	21	0.2246		Subset of Relevants mixed with Irrelevants	LoadFileAction.java, SaveFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 801281	2009-08-05 10:05:39	1/1 relevant files	1	1.0		Absolutely relevant, pure set of the query	build.xml
+× 611	2010-01-11 14:18:29	2/8 relevant files	3	0.24		Subset of Relevants mixed with Irrelevants	OpenFileAction.java, OpenRecentFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 797686	2009-07-24 17:08:32	1/1 relevant files	1	1.0		Absolutely relevant, pure set of the query	build.xml
+× 609	2010-01-11 12:06:35	3/8 relevant files	10	0.34483		Subset of Relevants mixed with Irrelevants	ClearFileAction.java, LoadRecentFileAction.java, OpenRecentFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 796361	2009-07-21 10:19:34	1/1 relevant files	1	1.0		Absolutely relevant, pure set of the query	build.xml
+× 608	2010-01-11 11:46:00	1/8 relevant files	5	0.11364		Subset of Relevants mixed with Irrelevants	ExportFileAction.java
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+× 604	2010-01-09 05:00:29	8/8 relevant files	489	0.01636		Impure Superset of the queried files found	ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, NewFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+× 597	2009-12-29 04:30:58	3/8 relevant files	8	0.34783		Subset of Relevants mixed with Irrelevants	OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+× 596	2009-12-24 07:58:45	7/8 relevant files	56	0.78873		Subset of Relevants mixed with Irrelevants	ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+× 595	2009-12-22 11:06:07	4/8 relevant files	44	0.44898		Subset of Relevants mixed with Irrelevants	ClearFileAction.java, LoadFileAction.java, NewFileAction.java, OpenFileAction.java
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+× 594	2009-12-21 16:32:52	6/8 relevant files	39	0.67826		Subset of Relevants mixed with Irrelevants	ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, NewFileAction.java, OpenFileAction.java, SaveFileAction.java
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+× 592	2009-12-21 06:30:39	8/8 relevant files	327	0.02446		Impure Superset of the queried files found	ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, NewFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+× 589	2009-12-17 14:16:46	5/8 relevant files	25	0.56818		Subset of Relevants mixed with Irrelevants	ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, OpenFileAction.java, SaveFileAction.java
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+× 588	2009-12-16 10:10:14	7/8 relevant files	58	0.78835		Subset of Relevants mixed with Irrelevants	ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, NewFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+× 585	2009-11-24 14:53:05	1/8 relevant files	31	0.11151		Subset of Relevants mixed with Irrelevants	OpenFileAction.java
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+× 583	2009-10-24 04:16:39	1/8 relevant files	6	0.11321		Subset of Relevants mixed with Irrelevants	OpenFileAction.java
 ##########################################################################################################################################################################################################################################################
-× 793761	2009-07-13 18:08:01	1/1 relevant files	6	0.16667		Impure Superset of the queried files found	build.xml
+× 558	2009-09-08 06:14:37	1/8 relevant files	9	0.1125		Subset of Relevants mixed with Irrelevants	ExportFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 793732	2009-07-13 16:18:17	1/1 relevant files	19	0.05263		Impure Superset of the queried files found	build.xml
+× 556	2009-09-06 07:06:03	2/8 relevant files	8	0.22857		Subset of Relevants mixed with Irrelevants	LoadFileAction.java, OpenFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 793597	2009-07-13 08:50:49	1/1 relevant files	4	0.25		Impure Superset of the queried files found	build.xml
+× 551	2009-09-02 23:50:46	7/8 relevant files	27	0.80085		Subset of Relevants mixed with Irrelevants	ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 793062	2009-07-10 12:17:37	1/1 relevant files	1	1.0		Absolutely relevant, pure set of the query	build.xml
+× 550	2009-09-02 12:57:29	1/8 relevant files	16	0.11189		Subset of Relevants mixed with Irrelevants	SaveFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 793042	2009-07-10 11:16:25	1/1 relevant files	2	0.5		Impure Superset of the queried files found	build.xml
+× 527	2009-06-07 08:28:19	7/8 relevant files	591	0.7788		Subset of Relevants mixed with Irrelevants	ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 793040	2009-07-10 11:08:35	1/1 relevant files	2	0.5		Impure Superset of the queried files found	build.xml
+× 522	2009-06-06 06:47:22	1/8 relevant files	89	0.11125		Subset of Relevants mixed with Irrelevants	ExportFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 792969	2009-07-10 09:03:43	1/1 relevant files	2	0.5		Impure Superset of the queried files found	build.xml
+× 518	2009-06-02 14:45:43	2/8 relevant files	64	0.223		Subset of Relevants mixed with Irrelevants	OpenFileAction.java, OpenRecentFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 792739	2009-07-09 16:53:56	1/1 relevant files	3	0.33333		Impure Superset of the queried files found	build.xml
+× 497	2009-04-17 09:48:15	2/8 relevant files	93	0.22275		Subset of Relevants mixed with Irrelevants	OpenFileAction.java, OpenRecentFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 792340	2009-07-08 16:34:40	1/1 relevant files	9	0.11111		Impure Superset of the queried files found	build.xml
+× 470	2009-02-15 07:38:51	6/8 relevant files	180	0.66914		Subset of Relevants mixed with Irrelevants	ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 790693	2009-07-02 11:35:26	1/1 relevant files	1	1.0		Absolutely relevant, pure set of the query	build.xml
+× 468	2009-02-13 14:23:09	1/8 relevant files	7	0.1129		Subset of Relevants mixed with Irrelevants	OpenFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 789883	2009-06-30 13:15:28	1/1 relevant files	2	0.5		Impure Superset of the queried files found	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 789392	2009-06-29 11:38:21	1/1 relevant files	12	0.08333		Impure Superset of the queried files found	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 787689	2009-06-23 08:29:00	1/1 relevant files	1	1.0		Absolutely relevant, pure set of the query	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 787674	2009-06-23 07:54:38	1/1 relevant files	1	1.0		Absolutely relevant, pure set of the query	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 787394	2009-06-22 14:51:57	1/1 relevant files	1	1.0		Absolutely relevant, pure set of the query	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 787390	2009-06-22 14:46:32	1/1 relevant files	1	1.0		Absolutely relevant, pure set of the query	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 787385	2009-06-22 14:29:20	1/1 relevant files	6	0.16667		Impure Superset of the queried files found	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 784857	2009-06-15 10:49:24	1/1 relevant files	1	1.0		Absolutely relevant, pure set of the query	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 784856	2009-06-15 10:46:37	1/1 relevant files	5	0.2		Impure Superset of the queried files found	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 772025	2009-05-05 19:49:43	1/1 relevant files	7	0.14286		Impure Superset of the queried files found	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 770525	2009-04-30 21:40:28	1/1 relevant files	2	0.5		Impure Superset of the queried files found	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 766937	2009-04-20 19:15:15	1/1 relevant files	2	0.5		Impure Superset of the queried files found	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 757733	2009-03-24 05:20:26	1/1 relevant files	1	1.0		Absolutely relevant, pure set of the query	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 739458	2009-01-30 17:18:24	1/1 relevant files	2	0.5		Impure Superset of the queried files found	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 730896	2009-01-02 19:55:04	1/1 relevant files	2	0.5		Impure Superset of the queried files found	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 730212	2008-12-30 11:37:07	1/1 relevant files	2	0.5		Impure Superset of the queried files found	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 729554	2008-12-26 16:14:13	1/1 relevant files	4	0.25		Impure Superset of the queried files found	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 728806	2008-12-22 15:11:41	1/1 relevant files	6	0.16667		Impure Superset of the queried files found	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 728197	2008-12-19 17:45:46	1/1 relevant files	5	0.2		Impure Superset of the queried files found	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 728161	2008-12-19 14:46:25	1/1 relevant files	2	0.5		Impure Superset of the queried files found	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 728081	2008-12-19 10:55:46	1/1 relevant files	11	0.09091		Impure Superset of the queried files found	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 725879	2008-12-11 18:26:39	1/1 relevant files	8	0.125		Impure Superset of the queried files found	build.xml
+× 467	2009-02-08 10:01:51	2/8 relevant files	13	0.22609		Subset of Relevants mixed with Irrelevants	LoadFileAction.java, OpenFileAction.java
 ##########################################################################################################################################################################################################################################################
-× 722528	2008-12-02 10:11:38	1/1 relevant files	2	0.5		Impure Superset of the queried files found	build.xml
+× 466	2009-01-25 02:49:00	7/8 relevant files	86	0.78488		Subset of Relevants mixed with Irrelevants	ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
+##########################################################################################################################################################################################################################################################
+× 396	2008-03-23 10:59:31	1/8 relevant files	24	0.11163		Subset of Relevants mixed with Irrelevants	SaveFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 722524	2008-12-02 10:01:02	1/1 relevant files	1	1.0		Absolutely relevant, pure set of the query	build.xml
+× 393	2008-03-20 07:38:13	7/8 relevant files	108	0.78342		Subset of Relevants mixed with Irrelevants	ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 722522	2008-12-02 09:46:14	1/1 relevant files	2	0.5		Impure Superset of the queried files found	build.xml
+× 392	2008-03-20 04:43:23	3/8 relevant files	32	0.33684		Subset of Relevants mixed with Irrelevants	OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 720694	2008-11-25 18:16:30	1/1 relevant files	2	0.5		Impure Superset of the queried files found	build.xml
+× 391	2008-03-10 00:54:22	1/8 relevant files	16	0.11189		Subset of Relevants mixed with Irrelevants	OpenFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 720267	2008-11-24 12:27:37	1/1 relevant files	5	0.2		Impure Superset of the queried files found	build.xml
+× 390	2008-02-04 23:53:33	7/8 relevant files	395	0.77931		Subset of Relevants mixed with Irrelevants	ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 717974	2008-11-15 20:41:42	1/1 relevant files	3	0.33333		Impure Superset of the queried files found	build.xml
+× 389	2008-01-04 11:22:13	4/8 relevant files	48	0.4486		Subset of Relevants mixed with Irrelevants	ExportFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 714040	2008-11-14 08:42:47	1/1 relevant files	1	1.0		Absolutely relevant, pure set of the query	build.xml
+× 387	2007-12-21 08:48:41	1/8 relevant files	94	0.11124		Subset of Relevants mixed with Irrelevants	ClearFileAction.java
+##########################################################################################################################################################################################################################################################
+× 358	2007-06-12 15:39:11	7/8 relevant files	90	0.78456		Subset of Relevants mixed with Irrelevants	ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 714036	2008-11-14 08:33:39	1/1 relevant files	3	0.33333		Impure Superset of the queried files found	build.xml
+× 352	2007-06-11 23:10:15	7/8 relevant files	94	0.78427		Subset of Relevants mixed with Irrelevants	ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 713889	2008-11-13 17:55:59	1/1 relevant files	1	1.0		Absolutely relevant, pure set of the query	build.xml
+× 351	2007-06-11 23:07:14	1/8 relevant files	4	0.11429		Subset of Relevants mixed with Irrelevants	OpenFileAction.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 713869	2008-11-13 16:54:31	1/1 relevant files	3	0.33333		Impure Superset of the queried files found	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 711985	2008-11-06 14:52:40	1/1 relevant files	1	1.0		Absolutely relevant, pure set of the query	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 711932	2008-11-06 11:25:49	1/1 relevant files	3	0.33333		Impure Superset of the queried files found	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 710199	2008-11-03 15:38:55	1/1 relevant files	22	0.04545		Impure Superset of the queried files found	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-× 708717	2008-10-28 17:12:39	1/1 relevant files	2	0.5		Impure Superset of the queried files found	build.xml
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Æ 707794	2008-10-24 18:06:20	1/1 relevant files	18	0.05556		Impure Superset of the queried files found	build.xml
+× 296	2007-01-05 09:24:03	7/8 relevant files	169	0.78137		Subset of Relevants mixed with Irrelevants	ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
+##########################################################################################################################################################################################################################################################
+Æ 272	2006-11-01 16:34:32	7/8 relevant files	1431	0.7782		Subset of Relevants mixed with Irrelevants	ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java
 ##########################################################################################################################################################################################################################################################
 
 
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| 
 
-Relevant Segment of Revision History: Revision 707794 at (2008-10-24 18:06:20) to Revision 1087090 at (2011-03-30 15:40:59) 
+Relevant Segment of Revision History: Revision 272 at (2006-11-01 16:34:32) to Revision 732 at (2011-01-22 13:26:30) 
 
-Total Number of Relevant Revisions: 57
-	 Average Number of relevant files per revision: 1
+Total Number of Relevant Revisions: 50
+	 Average Number of relevant files per revision: 4
 
-	 Number of Revisions Changing 1 of the Relevant Files: 57
-		 Number of these revisions with under 10 irrelevant extra files: 51
+	 Number of Revisions Changing 1 of the Relevant Files: 16
+		 Number of these revisions with under 10 irrelevant extra files: 8
+
+	 Number of Revisions Changing 2 of the Relevant Files: 8
+		 Number of these revisions with under 20 irrelevant extra files: 5
+
+	 Number of Revisions Changing 3 of the Relevant Files: 4
+		 Number of these revisions with under 30 irrelevant extra files: 4
+
+	 Number of Revisions Changing 4 of the Relevant Files: 3
+		 Number of these revisions with under 40 irrelevant extra files: 0
+
+	 Number of Revisions Changing 5 of the Relevant Files: 1
+		 Number of these revisions with under 50 irrelevant extra files: 1
+
+	 Number of Revisions Changing 6 of the Relevant Files: 3
+		 Number of these revisions with under 60 irrelevant extra files: 2
+
+	 Number of Revisions Changing 7 of the Relevant Files: 12
+		 Number of these revisions with under 70 irrelevant extra files: 3
+
+	 Number of Revisions Changing 8 of the Relevant Files: 3
+		 Number of these revisions with under 80 irrelevant extra files: 0
 
 
-Average Time Between Revisions: 380 hours
-	 Lowest Time Between Revisions: 2 minutes between Revisions 784856 & 784857
-	 Highest Time Between Revisions: 207 days between Revisions 912026 & 997329
+Average Time Between Revisions: 755 hours
+	 Lowest Time Between Revisions: 3 minutes between Revisions 351 & 352
+	 Highest Time Between Revisions: 307 days between Revisions 396 & 466
 
-Average Rating: 0.50502
-	 Lowest Rating: 0.04545 for Revision 710199
-	 Highest Rating: 1.0 for Revision 997331
+Average Rating: 0.36814
+	 Lowest Rating: 0.01636 for Revision 604
+	 Highest Rating: 0.80085 for Revision 551
 
-Average Number of Changed files: 4
-	 Lowest Number of Changed Files: 1 changed at Revision 997331
-	 Highest Number of Changed Files: 22 changed at Revision 710199
+Average Number of Changed files: 125
+	 Lowest Number of Changed Files: 3 changed at Revision 649
+	 Highest Number of Changed Files: 1431 changed at Revision 272
 
 File Change Groupings: 
 
-	 The group [build.xml] occurs 57 time(s). 
-		 Revisions: 1087090, 1076736, 997331, 997329, 912026, 895204, 895202, 801281, 797686, 796361, 793761, 793732, 793597, 793062, 793042, 793040, 792969, 792739, 792340, 790693, 789883, 789392, 787689, 787674, 787394, 787390, 787385, 784857, 784856, 772025, 770525, 766937, 757733, 739458, 730896, 730212, 729554, 728806, 728197, 728161, 728081, 725879, 722528, 722524, 722522, 720694, 720267, 717974, 714040, 714036, 713889, 713869, 711985, 711932, 710199, 708717, 707794
+	 The group [ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java] occurs 10 time(s). 
+		 Revisions: 596, 551, 527, 466, 393, 390, 358, 352, 296, 272
 
+	 The group [OpenFileAction.java] occurs 6 time(s). 
+		 Revisions: 649, 585, 583, 468, 391, 351
+
+	 The group [OpenFileAction.java, OpenRecentFileAction.java] occurs 4 time(s). 
+		 Revisions: 688, 611, 518, 497
+
+	 The group [OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java] occurs 3 time(s). 
+		 Revisions: 711, 597, 392
+
+	 The group [SaveFileAction.java] occurs 3 time(s). 
+		 Revisions: 714, 550, 396
+
+	 The group [ExportFileAction.java] occurs 3 time(s). 
+		 Revisions: 608, 558, 522
+
+	 The group [ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, NewFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java] occurs 3 time(s). 
+		 Revisions: 717, 604, 592
+
+	 The group [LoadFileAction.java, OpenFileAction.java] occurs 2 time(s). 
+		 Revisions: 556, 467
+
+	 The group [LoadRecentFileAction.java] occurs 2 time(s). 
+		 Revisions: 706, 682
+
+	 The group [ClearFileAction.java] occurs 1 time(s). 
+		 Revisions: 387
+
+	 The group [ExportFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java] occurs 1 time(s). 
+		 Revisions: 389
+
+	 The group [ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java] occurs 1 time(s). 
+		 Revisions: 470
+
+	 The group [ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, NewFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java] occurs 1 time(s). 
+		 Revisions: 588
+
+	 The group [ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, OpenFileAction.java, SaveFileAction.java] occurs 1 time(s). 
+		 Revisions: 589
+
+	 The group [ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, NewFileAction.java, OpenFileAction.java, SaveFileAction.java] occurs 1 time(s). 
+		 Revisions: 594
+
+	 The group [ClearFileAction.java, LoadFileAction.java, NewFileAction.java, OpenFileAction.java] occurs 1 time(s). 
+		 Revisions: 595
+
+	 The group [ClearFileAction.java, LoadRecentFileAction.java, OpenRecentFileAction.java] occurs 1 time(s). 
+		 Revisions: 609
+
+	 The group [LoadFileAction.java, SaveFileAction.java] occurs 1 time(s). 
+		 Revisions: 622
+
+	 The group [ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, NewFileAction.java, OpenRecentFileAction.java, SaveFileAction.java] occurs 1 time(s). 
+		 Revisions: 647
+
+	 The group [ExportFileAction.java, SaveFileAction.java] occurs 1 time(s). 
+		 Revisions: 695
+
+	 The group [ClearFileAction.java, ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java] occurs 1 time(s). 
+		 Revisions: 716
+
+	 The group [NewFileAction.java] occurs 1 time(s). 
+		 Revisions: 722
+
+	 The group [ExportFileAction.java, LoadFileAction.java, LoadRecentFileAction.java, OpenFileAction.java, OpenRecentFileAction.java, SaveFileAction.java] occurs 1 time(s). 
+		 Revisions: 732
+
+
+For the file ClearFileAction.java:
+	 When changed, ExportFileAction.java is changed 85% of the time.
+	 When changed, LoadFileAction.java is changed 90% of the time.
+	 When changed, LoadRecentFileAction.java is changed 80% of the time.
+	 When changed, NewFileAction.java is changed 30% of the time.
+	 When changed, OpenFileAction.java is changed 80% of the time.
+	 When changed, OpenRecentFileAction.java is changed 80% of the time.
+	 When changed, SaveFileAction.java is changed 80% of the time.
+
+For the file ExportFileAction.java:
+	 When changed, ClearFileAction.java is changed 68% of the time.
+	 When changed, LoadFileAction.java is changed 80% of the time.
+	 When changed, LoadRecentFileAction.java is changed 72% of the time.
+	 When changed, NewFileAction.java is changed 24% of the time.
+	 When changed, OpenFileAction.java is changed 76% of the time.
+	 When changed, OpenRecentFileAction.java is changed 72% of the time.
+	 When changed, SaveFileAction.java is changed 84% of the time.
+
+For the file LoadFileAction.java:
+	 When changed, ClearFileAction.java is changed 75% of the time.
+	 When changed, ExportFileAction.java is changed 83% of the time.
+	 When changed, LoadRecentFileAction.java is changed 75% of the time.
+	 When changed, NewFileAction.java is changed 29% of the time.
+	 When changed, OpenFileAction.java is changed 88% of the time.
+	 When changed, OpenRecentFileAction.java is changed 71% of the time.
+	 When changed, SaveFileAction.java is changed 83% of the time.
+
+For the file LoadRecentFileAction.java:
+	 When changed, ClearFileAction.java is changed 76% of the time.
+	 When changed, ExportFileAction.java is changed 86% of the time.
+	 When changed, LoadFileAction.java is changed 86% of the time.
+	 When changed, NewFileAction.java is changed 24% of the time.
+	 When changed, OpenFileAction.java is changed 76% of the time.
+	 When changed, OpenRecentFileAction.java is changed 81% of the time.
+	 When changed, SaveFileAction.java is changed 81% of the time.
+
+For the file NewFileAction.java:
+	 When changed, ClearFileAction.java is changed 75% of the time.
+	 When changed, ExportFileAction.java is changed 75% of the time.
+	 When changed, LoadFileAction.java is changed 88% of the time.
+	 When changed, LoadRecentFileAction.java is changed 63% of the time.
+	 When changed, OpenFileAction.java is changed 75% of the time.
+	 When changed, OpenRecentFileAction.java is changed 63% of the time.
+	 When changed, SaveFileAction.java is changed 75% of the time.
+
+For the file OpenFileAction.java:
+	 When changed, ClearFileAction.java is changed 46% of the time.
+	 When changed, ExportFileAction.java is changed 54% of the time.
+	 When changed, LoadFileAction.java is changed 60% of the time.
+	 When changed, LoadRecentFileAction.java is changed 46% of the time.
+	 When changed, NewFileAction.java is changed 17% of the time.
+	 When changed, OpenRecentFileAction.java is changed 69% of the time.
+	 When changed, SaveFileAction.java is changed 63% of the time.
+
+For the file OpenRecentFileAction.java:
+	 When changed, ClearFileAction.java is changed 62% of the time.
+	 When changed, ExportFileAction.java is changed 69% of the time.
+	 When changed, LoadFileAction.java is changed 65% of the time.
+	 When changed, LoadRecentFileAction.java is changed 65% of the time.
+	 When changed, NewFileAction.java is changed 19% of the time.
+	 When changed, OpenFileAction.java is changed 92% of the time.
+	 When changed, SaveFileAction.java is changed 81% of the time.
+
+For the file SaveFileAction.java:
+	 When changed, ClearFileAction.java is changed 57% of the time.
+	 When changed, ExportFileAction.java is changed 75% of the time.
+	 When changed, LoadFileAction.java is changed 71% of the time.
+	 When changed, LoadRecentFileAction.java is changed 61% of the time.
+	 When changed, NewFileAction.java is changed 21% of the time.
+	 When changed, OpenFileAction.java is changed 79% of the time.
+	 When changed, OpenRecentFileAction.java is changed 75% of the time.
 Revision Comments (IMPORTANT DISCLAIMER: all commas have been replaced with semi-colons to allow insertion into a csv file): 
 
-	r1087090:
- Add in ability to build with Maven  
+	r732:
+ Adds the features "Open last URI on launch and "Allow multiple views per URI". 
 
-	r1076736:
- Add missing files and license header Add NOTICE/LICENSE to all JAR files  
+	r722:
+ Adds support for the "-open" main argument to AbstractApplication. Fixes issues with actions and menus in the SVG Sample application. Fixes a NPE in JAttributeSlider. Fixes a NPE in FocusWindowAction. Fixes the missing title of the view menu in SDIApplication. 
 
-	r997331:
- Fix niggle 
+	r717:
+ Shortens the license headers. 
 
-	r997329:
- Include the suffix in the version number 
+	r716:
+ Redesigns menu creation. The code for building the menu items is now factored out into a MenuBuilder class. 
 
-	r912026:
- In some drivers; the call to setTransactionIsolation should be the very first call  
+	r714:
+ Fixes potential null dereferences discovered by FindBugs. 
 
-	r895204:
- Borrow a few things from the main Tomcat build.xml: - use general version filter - automatically set year to the current year - use patch version property without dot.   The dot is added when combining it into a version number  I don't know whether the double '@' are intended for the ant replacement markers in MANIFEST.MF (the outer ones remain after ant filtering); but that is unchanged from the previous behaviour.  
+	r711:
+ Removes instanceof checks which always evaluate to true discovered by FindBugs. 
 
-	r895202:
- Update copyright year for TC trunk.  
+	r706:
+ Fixes dead local stores discovered by FindBugs. 
 
-	r801281:
- apply patch from sebb for https://issues.apache.org/bugzilla/show_bug.cgi?id=47452   
+	r695:
+ Replaces annotation package by FindBugs annotations. Replaces package.html files by package-info.java files. Adds NonNull and Nullable annotations. Fixes correctness issues reported by FindBugs. 
 
-	r797686:
- Add missing files to distribution  
+	r688:
+ Adds method isEmpty() to the View interface. OpenFileAction and OpenRecentFileAction reuse an existing view only; if it is empty. 
 
-	r796361:
- Allow to run perf test as a one off   
+	r682:
+ Makes LoadRecentFileAction work like OpenRecentFileAction when now View is open. 
 
-	r793761:
- more javadoc and corrections  
+	r649:
+ Fixed NPE in OpenFileAction. Added missing labels for EditFindAction. 
 
-	r793732:
- Add tons of javadoc Remove the finalizers; they behave way differently in the new JDK; so let the programmer be responsible for closures   
+	r647:
+ Added @Override annotations. 
 
-	r793597:
- Create a package file for the JavaDoc main package  
+	r622:
+ - Moved ExtensionFileFilter from io package into gui.filechooser package. - Deprecated DOMStorableInputOutputFormat. 
 
-	r793062:
- correct dependency  
+	r611:
+ OpenApplicationFileAction opens file in empty view if available. 
 
-	r793042:
- remove dbcp add classpath to javadoc start documenting DataSource  
+	r609:
+ Removing DirectoryView interface. Fixed wrong names in class comments. 
 
-	r793040:
- were not using DBCP anywhere  
+	r608:
+ Fixed javadoc warnings. 
 
-	r792969:
- Add manifest to binary JAR Fix XML error in doc  
+	r604:
+ Its 2010 now. :-) 
 
-	r792739:
- Fix https://issues.apache.org/bugzilla/show_bug.cgi?id=47149 Explicitly specify encoding for the source files 
+	r597:
+ - Load and save actions print a stack trace when file saving fails. - Fixed ActionMap creation. - Fixed menu creation when a JMenu has no text. 
 
-	r792340:
- remove dependency on the modeler so that the pool can run outside of tomcat and still have jmx query notifications.   
+	r596:
+ Reworked the application framework.  - There is now a hierarchy of action maps instead of one map for the whole application.  - (File) choosers are now created by the application model instead of by the views. 
 
-	r790693:
- break out javadoc into its own target  
+	r595:
+ Application framework:  - Fixed errors in menu creation.  - Shortened names of default applications. 
 
-	r789883:
- Apply patch by sebb from https://issues.apache.org/bugzilla/show_bug.cgi?id=47458 Store db properties in build.properties using a prefix of testdb  
+	r594:
+ Fixed JavaDoc errors. 
 
-	r789392:
- Remove all usage of GPL or LGPL downloads. Use H2 for test database (EPL1.0) as it can be downloaded and easily embedded. Derby didn't work; too slow to populate test data with. Add Javadoc per Sebb's suggestion. Add EPL and CPL to LICENSE since we use it in the unit test cases.   
+	r592:
+ Application framework: Reworked application actions and generation of standard menus. 
 
-	r787689:
- Dont try to run the base test  
+	r589:
+ Moved URIChooser and JFileURIChooser out of subpackage org.jhotdraw.gui.chooser into org.jhotdraw.gui package. 
 
-	r787674:
- Make a default build target that builds automatically without need to know what.   
+	r588:
+ Enhancement to the Application framework: - The application framework works now with URI objects instead of File objects. This allows the creation of applications which are not file-based. Such as network-based applications (for example browsers); and database-oriented applications. 
 
-	r787394:
- Don't create the test table during the run  
+	r585:
+ Removed unnecessary null checks when closing a stream. 
 
-	r787390:
- Add in test runner  
+	r583:
+ DefaultOSXApplication: - The "invisible" frame which holds the screen menu bar was showing as a small white rectangle on Snow Leopard. - The menu items of the screen menu bar did not always show up on Snow Leopard.  Open Action: - We have to calculate the window position of the filechooser by ourselves on Snow Leopard.  
 
-	r787385:
- Refactor to be more independent; so that one can build from source archive without too many hooplas as suggested by sebb  
+	r558:
+ - Added AbstractPreferencesAction - Updated class comments of Application classes.  
 
-	r784857:
- Correct name  
+	r556:
+ Added constructor with Application and View to AbstractViewAction. 
 
-	r784856:
- Add in NOTICE and LICENSE file. Fix the links in the documentation.   
+	r551:
+ - Redesigned Worker class. - Fixed bugs in SVGDrawingPanel read() and write() methods.  - Added read() and write() methods to SVGDrawingPanel which take an InputFormat resp. OutputFormat as parameter. - Added SVGDrawingPanelSample to "mini" sample package.  
 
-	r772025:
- Update test cases with a dummy driver  
+	r550:
+ - Added initial pages for a tutorial to the documentation. - Improved the documentation of several classes. - Added convenience methods for reading and writing a drawing from/to files to SVGDrawingPanel. 
 
-	r770525:
- Prepare for next build  
+	r527:
+ Use svn:keywords "Id" to inject version number into class comments. 
 
-	r766937:
- Add dependency to tomcat 7 now  
+	r522:
+ - Placed the design pattern comments between <hr> tags to make them better visible. - Added missing design pattern comments and cleaned up the existing ones. 
 
-	r757733:
- force 1.5 at this time; don't inherit parent value of 1.6  
+	r518:
+ Fixed a memory leak which occured when DrawingViews; which shared a single DrawingEditor; were created and disposed. 
 
-	r739458:
- adjust for first tag  
+	r497:
+ - Added font formatting fields to SVG toolbars. - Added HSV color palette. - Fixed a number of SVG comliance bugs. 
 
-	r730896:
- update version  
+	r470:
+ - Reworked ResourceBundleUtil and all dependent .properties files and classes. 
 
-	r730212:
- Make sure that the packaged up binaries have a MD5 sum as well; to verify download size  
+	r468:
+ - Fixed broken labels. 
 
-	r729554:
- Refactor the query report for multi purpose  
+	r467:
+ - Added LoadDirectoryAction; OpenDirectoryAction; DirectoryView.  
 
-	r728806:
- Implemented a way to get a delegate using standard APIs rather than custom handling  
+	r466:
+ - Property names in resource bundles match now the corresponding JavaBeans properties. - BezierFigure now correctly returns empty bounds; if the bezier path is entirely horizontal or entirely vertical. - Added LayouterSample to the mini samples package. 
 
-	r728197:
- Removed calling to a JDK 1.6 method if its run under 1.5 and still take advantage of the JMX features  
+	r396:
+ Removed redundant documentation from the project; and replaced it by links to the online documentation pages and the JHotDraw Wiki. 
 
-	r728161:
- inc version number  
+	r393:
+ Changes: - Renamed org.jhotdraw.app.Project to View to be consistent with other application frameworks; such as JSR-296. 
 
-	r728081:
- Documented interceptors a bit better; implemented setters for interceptor properties  
+	r392:
+ Fixes: - First round of fixes for the upcoming JHotDraw 7.1 release. 
 
-	r725879:
- Implement JMX notification of query times and query failures  
+	r391:
+ Enhancements: - Extending Figure interface with isTransformable() method; and implementing support for it in the framework. (Work in progress)  Fixes: - Pasting into an SVG drawing pasted the figures twice. 
 
-	r722528:
- remove some not needed test; add compile version  
+	r390:
+ Fixed copyright disclaimer in source files. 
 
-	r722524:
- Add fairness test to build.xml  
+	r389:
+ - Fixed drawing tool activation issues which occured on Mac OS X leopard. I had to extend the interfaces of Application and Project for this; and to change actions and tools which depend on these interfaces. - Renamed constants for property names. They are now called propertyname_PROPERTY rather than PROP_propertyname. The _PROPERTY suffix is more consistent with property name constants in the JDK. - Added support for the window.documentFile property on Mac OS X as outlined in http://developer.apple.com/technotes/tn2007/tn2196.html 
 
-	r722522:
- update version to next rev  
+	r387:
+ - Fixed a major performance issue in the drawing framework which caused performance hits when loading and editing drawings. This required changes in several interfaces and classes of JHotDraw. - Added support for constrained rotation of figures (work in progress) - Added support for canvas fill color and fill opacity. - Revised the design of GroupAction/UngroupAction and CombineAction/SplitAction. - Revised a number of language keys in Label.properties. - Moved Project.clear() method from EDT to worker thread. This required changes in several interfaces and classes of JHotDraw. - Upgraded from NetBeans 5.5 to 6.0. - Upgraded to a newer version of Quaqua L&F. 
 
-	r720694:
- increment version number  
+	r358:
+ Fixing broken repository. 
 
-	r720267:
- Add doc; update version number  
+	r352:
+ Upgraded teddyapplication sample to JSR-296 appframework-0.42. 
 
-	r717974:
- Make sure it compiles with JDK1.5; this is one of the times you wish you had preprocessor statements  
+	r351:
+ Upgraded teddyapplication sample to JSR-296 appframework-0.42. 
 
-	r714040:
- fix spacing issues  
+	r296:
+ Changes for JHotDraw 7.0.8 
 
-	r714036:
- A disconnect should not throw an error  
-
-	r713889:
- increment build number and control it from build file at this point  
-
-	r713869:
- Add a change log to the module  
-
-	r711985:
- Modify build script to generate a distribution  
-
-	r711932:
- Improve documentation  
-
-	r710199:
- Setting svn:keywords (Author Date Id Revision) and svn:eol-style (native) for the jdbc-pool module.  
-
-	r708717:
- add test target  
-
-	r707794:
- move over to an independent module  
+	r272:
+ Switch to JHotDraw7 sources  
 
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| 
 
@@ -347,51 +485,51 @@ Revision Comments (IMPORTANT DISCLAIMER: all commas have been replaced with semi
 
 Rating Graph: looking for grouping
 
-(0.0, 0.1]:  |||||||  (7)
+(0.0, 0.1]:  |||  (3)
 ==========================================================================================================================================================================================================================================================
-(0.1, 0.2]:  |||||||||||  (11)
+(0.1, 0.2]:  ||||||||||||||||  (16)
 ==========================================================================================================================================================================================================================================================
-(0.2, 0.3]:  |||  (3)
+(0.2, 0.3]:  ||||||||  (8)
 ==========================================================================================================================================================================================================================================================
-(0.3, 0.4]:  |||||  (5)
+(0.3, 0.4]:  ||||  (4)
 ==========================================================================================================================================================================================================================================================
-(0.4, 0.5]:  ||||||||||||||  (14)
+(0.4, 0.5]:  |||  (3)
 ==========================================================================================================================================================================================================================================================
-(0.5, 0.6]:    (0)
+(0.5, 0.6]:  |  (1)
 ==========================================================================================================================================================================================================================================================
-(0.6, 0.7]:    (0)
+(0.6, 0.7]:  |||  (3)
 ==========================================================================================================================================================================================================================================================
-(0.7, 0.8]:    (0)
+(0.7, 0.8]:  |||||||||||  (11)
 ==========================================================================================================================================================================================================================================================
-(0.8, 0.9]:    (0)
+(0.8, 0.9]:  |  (1)
 ==========================================================================================================================================================================================================================================================
-(0.9, 1.0]:  |||||||||||||||||  (17)
+(0.9, 1.0]:    (0)
 ==========================================================================================================================================================================================================================================================
-start
 
-/tomcat/trunk/webapps/docs/changelog.xml	720
-/tomcat/tc6.0.x/trunk/webapps/docs/changelog.xml	157
-/tomcat/trunk/build.xml	147
-/tomcat/trunk/java/org/apache/catalina/core/StandardContext.java	144
-/tomcat/trunk/java/org/apache/catalina/startup/ContextConfig.java	113
-/tomcat/trunk/java/org/apache/catalina/connector/Request.java	108
-/tomcat/tc6.0.x/trunk/java/org/apache/tomcat/util/net/NioEndpoint.java	102
-/tomcat/trunk/java/org/apache/tomcat/util/net/NioEndpoint.java	101
-/tomcat/tc6.0.x/trunk/STATUS	92
-/tomcat/trunk/java/org/apache/catalina/loader/WebappClassLoader.java	90
-/tomcat/trunk/java/org/apache/coyote/http11/Http11NioProcessor.java	88
-/tomcat/trunk/build.properties.default	87
-/tomcat/trunk/java/org/apache/coyote/http11/Http11Processor.java	86
-/tomcat/trunk/java/org/apache/tomcat/util/net/AprEndpoint.java	86
-/tomcat/trunk/java/org/apache/catalina/connector/CoyoteAdapter.java	83
-/tomcat/trunk/modules/jdbc-pool/java/org/apache/tomcat/jdbc/pool/ConnectionPool.java	76
-/tomcat/trunk/java/org/apache/coyote/http11/Http11NioProtocol.java	75
-/tomcat/trunk/java/org/apache/tomcat/util/net/JIoEndpoint.java	75
-/tomcat/trunk/java/org/apache/coyote/http11/Http11AprProcessor.java	74
-/tomcat/trunk/java/org/apache/catalina/session/ManagerBase.java	69
-/tomcat/trunk/webapps/docs/config/http.xml	63
-/tomcat/trunk/webapps/docs/config/context.xml	62
-/tomcat/trunk/java/org/apache/jasper/compiler/Generator.java	58
-/tomcat/trunk/java/org/apache/coyote/http11/Http11Protocol.java	58
-/tomcat/trunk/java/org/apache/catalina/startup/HostConfig.java	58
-/tomcat/trunk/modules/jdbc-pool/build.xml	57
+Top 25 Occurring File Names:
+
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/draw/DefaultDrawingView.java	70
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/draw/action/ButtonFactory.java	55
+/trunk/jhotdraw7/nbproject/project.properties	52
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/samples/svg/io/SVGInputFormat.java	48
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/samples/svg/SVGApplicationModel.java	43
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/app/DefaultOSXApplication.java	43
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/draw/AbstractCompositeFigure.java	42
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/samples/svg/figures/SVGPathFigure.java	41
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/samples/svg/figures/SVGTextFigure.java	40
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/draw/Labels_de.properties	39
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/draw/Labels.properties	39
+/trunk/jhotdraw7/lib/quaqua.jar	39
+/trunk/jhotdraw7/build-svg.xml	38
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/draw/Figure.java	37
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/draw/BezierFigure.java	37
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/samples/svg/figures/SVGTextAreaFigure.java	37
+/trunk/jhotdraw6/src/org/jhotdraw/application/DrawApplication.java	36
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/samples/svg/io/SVGOutputFormat.java	36
+/trunk/jhotdraw6/src/org/jhotdraw/standard/StandardDrawingView.java	34
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/app/AbstractApplication.java	34
+/trunk/jhotdraw7/build-jhotdraw.xml	34
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/draw/DefaultDrawingEditor.java	33
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/draw/AttributeKeys.java	33
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/samples/svg/figures/SVGImageFigure.java	33
+/trunk/jhotdraw7/src/main/java/org/jhotdraw/samples/svg/SVGApplet.java	32

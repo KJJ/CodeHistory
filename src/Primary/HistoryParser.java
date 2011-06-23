@@ -77,7 +77,7 @@ public class HistoryParser {
 		String path = "dataRead/" + edit.replace(':', '0') + item + ".txt"; 
 		File file = new File(path);
 		
-		if (!file.exists() || !bundle.getString("storageToggle").equals("true") || masterControl[argNum]){
+		if (!file.exists() || !bundle.getString("reuseStorageToggle").equals("true") || masterControl[argNum]){
 			BufferedReader  stdInput=  new  BufferedReader(new
 	              InputStreamReader(exec.getInputStream()));
 			nodeCycleTwo(stdInput, argNum, path);
@@ -487,7 +487,7 @@ public class HistoryParser {
 		BufferedReader  stdInput;
 		String toStore = "";
 		
-		if (!file.exists() || !bundle.getString("storageToggle").equals("true")) {
+		if (!file.exists() || !bundle.getString("reuseStorageToggle").equals("true")) {
 			stdInput =  new  BufferedReader(new
 	              InputStreamReader(exec.getInputStream()));
 			
@@ -559,7 +559,7 @@ public class HistoryParser {
 		System.out.println();
 		out.println();
 		File file = new File(path);
-		if (!file.exists() || !bundle.getString("storageToggle").equals("true")) {
+		if (!file.exists() || !bundle.getString("reuseStorageToggle").equals("true")) {
 			FileWriter outFile = new FileWriter(path);
 	        PrintWriter storing = new PrintWriter(outFile);
 			Process exec = Runtime.getRuntime().exec("svn log " + p + " -q -v");
@@ -575,9 +575,9 @@ public class HistoryParser {
 					count++;
 				}
 			}
-			System.out.println("Top " + bundle.getString("occurrenceDisplayLimit") + " Occurring File Names");
-			out.println("Top " + bundle.getString("occurrenceDisplayLimit") + " Occurring File Names");
-			storing.println("Top " + bundle.getString("occurrenceDisplayLimit") + " Occurring File Names");
+			System.out.println("Top " + bundle.getString("occurrenceDisplayLimit") + " Occurring File Names:");
+			out.println("Top " + bundle.getString("occurrenceDisplayLimit") + " Occurring File Names:");
+			storing.println("Top " + bundle.getString("occurrenceDisplayLimit") + " Occurring File Names:");
 			System.out.println(counter.toString());
 			out.println(counter.toString());
 			storing.println(counter.toString());
