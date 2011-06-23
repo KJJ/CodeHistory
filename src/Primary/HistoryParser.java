@@ -16,6 +16,8 @@ public class HistoryParser {
 	
 	private int[] ceiling;
 	
+	private boolean[] masterControl; 
+	
 	private LinkedList<RevisionNode> initiallyRelevant = new LinkedList<RevisionNode>();
 	
 	/**
@@ -25,10 +27,12 @@ public class HistoryParser {
 	 */
 	public HistoryParser(String[] arg) throws Exception {
 		args = arg;  // gets the user-requested files
+		masterControl = new boolean[arg.length];
 		ceiling = new int[args.length];
 		ceiling = checkOver(args, ceiling);
 		int i; //loop counter
 		for (i = 0; i < args.length; i++) {
+			
 			if (args[i].endsWith("/")) { //removes a end slash to avoid confusion in the later statistics and output
 				args[i] = args[i].substring(0, args[i].lastIndexOf('/'));
 			}
@@ -43,6 +47,12 @@ public class HistoryParser {
 		
 		//the 2 for loops check each entry with every other in order to prevent duplicate entries from affecting the data
 		for (i=0; i < args.length; i++){
+			if (args[i].contains("(")) {
+				masterControl[i] = true;
+			}
+			else {
+				masterControl[i] = false;
+			}
 			if (args[i].contains("(")) { //implying that the user has specified a starting point before the newest revision
 				ceiling[i] = Integer.parseInt(args[i].substring(args[i].indexOf('(') + 1, args[i].indexOf(')')));
 				args[i] = args[i].substring(0, args[i].indexOf('(')); //remove the number to prevent complications later
@@ -60,18 +70,97 @@ public class HistoryParser {
 		return ceiling; //return the revision filters to be used in the creation of several processes 
 	}
 	
-	/**
-	 * nodeCycle goes through the svn log of a single file and collects the commit data by parsing the 
-	 * entries present on the log
-	 * @param exec process to be called and executed, concept based on examples from stackOverflow.com
-	 * @param argNum how many files were entered to be logged and examined
-	 * @throws Exception if the file does not exist in the repository at the current time, or specified time
-	 */
-	public void nodeCycle(Process exec, int argNum) throws Exception{
+	public void nodeCycle(Process exec, int argNum, String item) throws Exception {
 		
-		//from stackOverflow.com example
-		BufferedReader  stdInput=  new  BufferedReader(new
+		String p = bundle.getString(bundle.getString("repo")); //get the repository URL
+		String edit = p.replace('/', '0');
+		String path = "dataRead/" + edit.replace(':', '0') + item + ".txt"; 
+		File file = new File(path);
+		
+		if (!file.exists() || !bundle.getString("storageToggle").equals("true") || masterControl[argNum]){
+			BufferedReader  stdInput=  new  BufferedReader(new
 	              InputStreamReader(exec.getInputStream()));
+			nodeCycleTwo(stdInput, argNum, path);
+		}
+		
+		else {
+			BufferedReader stdInput = new BufferedReader(new FileReader(path));
+			nodeCycleThree(stdInput, argNum);
+		}
+	}
+	
+	public void nodeCycleTwo(BufferedReader stdInput, int argNum, String path) throws Exception {
+		
+		//holds the current line of input in String form
+		String s;
+		//holds the split string
+		String[] ss;
+		String userList = "";
+		//revision list
+		String rev = "thisIsNotARevision";
+		//list of revision dates
+		String date = "";
+		//counter for how many files are changed
+		int count = 0;
+		String comment = "";
+		String undesirable = bundle.getString("unwanted");
+        
+        String toStore = "";
+		
+		// while there is input to process, execute this loop
+		while  ((s=  stdInput.readLine())  !=  null)  {
+			
+			toStore += s + "\n";
+			
+			if (s.startsWith("r") && s.contains("|")) {  //a line starting with a lower case r implies that we are at a new revision
+				if (count != 0) {  // check to see whether or not this is the first iteration
+					
+					//the if below checks to see if the the current revision has been explicitly rejected by the user in the config file
+					if (!(undesirable.contains(" " + rev + " ") || undesirable.contains("<" + rev + " ") || undesirable.contains(" " + rev + ">") || undesirable.contains("<" + rev + ">"))) {
+						RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
+						thisNode.newRelevantFile(args[argNum]);
+						sortedInsert(initiallyRelevant, thisNode);
+					}
+					comment = ""; //clear the revision comment
+					count = 0;  //reset the counter
+				}
+				ss = s.split(" "); //split the string along white spaces
+				rev = ss[0].substring(1); //gets the revision number at the very beginning of s, removing the r to just get the number
+				if (ss[4].equals("|")){
+					date = ss[5] + " " + ss[6]; 
+					userList = ss[2] + ss[3];
+				}
+				else {
+					date = ss[4] + " " + ss[5];  // gets both the date and time of the revision
+					userList = ss[2];
+				}
+			}
+			//indicates that the line details a change of some sort in the file
+			else if (s.startsWith("   M") || s.startsWith("   A") || s.startsWith("   D") || s.startsWith("   R")){
+				count++; //increase the counter for files changed in a certain revision
+			}
+			else if (!s.equals("Changed paths:") && !s.contains("-------") && !s.startsWith("CVS: ")) { //filters out generally useless lines
+				comment += s + " "; //enters the comment data
+			}
+		}	
+		if (rev.equals("thisIsNotARevision")) { //implies no revisions were ever found for this file and it therefore does not exist
+			throw new Exception("User did not enter the names or starting revision properly");
+		}
+		
+		//used to get the last revision that was cut off by the for loop
+		if (!(undesirable.contains(" " + rev + " ") || undesirable.contains(":" + rev + " ") || undesirable.contains(" " + rev + "."))) {
+			RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
+			thisNode.newRelevantFile(args[argNum]);
+			sortedInsert(initiallyRelevant, thisNode);
+		}
+		
+		FileWriter outFile = new FileWriter(path);
+        PrintWriter storing = new PrintWriter(outFile);
+		storing.println(toStore);
+		storing.close();
+	}
+	
+	public void nodeCycleThree(BufferedReader stdInput, int argNum) throws Exception {
 		
 		//holds the current line of input in String form
 		String s;
@@ -237,7 +326,7 @@ public class HistoryParser {
 				}
 				exec = Runtime.getRuntime().exec("svn log -v " + n + "@" + ceiling[i]); //svn command starting at a particular revision
 			}
-			nodeCycle(exec, i); //execute the command and collect the desired data
+			nodeCycle(exec, i, args[i].replace('/', '0').substring(0, args[i].indexOf('.'))); //execute the command and collect the desired data
 		}
 		if (bundle.getString("revisionOverallToggle").equals("true")) {
 			standard = fullTimeAverage(); //gets the average time between all revisions in the chosen repository
@@ -385,6 +474,9 @@ public class HistoryParser {
 	 */
 	public long fullTimeAverage() throws IOException {
 		String p = bundle.getString(bundle.getString("repo")); //get the repository URL
+		String edit = p.replace('/', '0');
+		String path = "dataRead/" + edit.replace(':', '0') + "time" + ".txt"; 
+		File file = new File(path);
 		String s;//current input line
 		String[] ss; //breaking down the line to get the date information
 		String previous = ""; //the last line's date stamp
@@ -392,11 +484,47 @@ public class HistoryParser {
 		long totalTime = 0; //the sum of all interval times
 		int rev = 0; //how many revisions there were in total
 		Process exec = Runtime.getRuntime().exec("svn log " + p + " -q");
-		BufferedReader  stdInput =  new  BufferedReader(new
+		BufferedReader  stdInput;
+		String toStore = "";
+		
+		if (!file.exists() || !bundle.getString("storageToggle").equals("true")) {
+			stdInput =  new  BufferedReader(new
 	              InputStreamReader(exec.getInputStream()));
+			
+			while  ((s =  stdInput.readLine())  !=  null)  {
+				
+				toStore += s + "\n";
+
+				if (s.startsWith("r")) {  //a line starting with a lower case r implies that we are at a new revision
+					
+					ss = s.split(" "); //split the string along white spaces
+					if (ss[4].equals("|")){
+						current = (ss[5] + " " + ss[6]); 
+					}
+					else {
+						current = (ss[4] + " " + ss[5]);  // gets both the date and time of the revision
+					}
+					Calendar thisTime = new GregorianCalendar(Integer.parseInt(current.split(" ")[0].split("-")[0]), Integer.parseInt(current.split(" ")[0].split("-")[1])-1, Integer.parseInt(current.split(" ")[0].split("-")[2]), Integer.parseInt(current.split(" ")[1].split(":")[0]), Integer.parseInt(current.split(" ")[1].split(":")[1]), Integer.parseInt(current.split(" ")[1].split(":")[2]));
+					if (!previous.equals("")){ //implies this is not the first iteration
+						Calendar lastTime = new GregorianCalendar(Integer.parseInt(previous.split(" ")[0].split("-")[0]), Integer.parseInt(previous.split(" ")[0].split("-")[1])-1, Integer.parseInt(previous.split(" ")[0].split("-")[2]), Integer.parseInt(previous.split(" ")[1].split(":")[0]), Integer.parseInt(previous.split(" ")[1].split(":")[1]), Integer.parseInt(previous.split(" ")[1].split(":")[2]));
+						long timeDiff = lastTime.getTimeInMillis()-thisTime.getTimeInMillis();
+						rev++;
+						totalTime += timeDiff;
+					}
+					previous = current;
+				}
+			}
+			FileWriter outFile = new FileWriter(path);
+	        PrintWriter storing = new PrintWriter(outFile);
+	        storing.println(toStore);
+	        storing.close();
+		}
+		else {
+			stdInput = new BufferedReader(new FileReader(path));
+		
 		
 		while  ((s =  stdInput.readLine())  !=  null)  {
-			
+
 			if (s.startsWith("r")) {  //a line starting with a lower case r implies that we are at a new revision
 				
 				ss = s.split(" "); //split the string along white spaces
@@ -416,18 +544,20 @@ public class HistoryParser {
 				previous = current;
 			}
 		}
+		}
 		return (((totalTime / rev) / 1000) / 60) / 60;
 	}
 	
 	public void fullCount(PrintWriter out) throws IOException {
 		String p = bundle.getString(bundle.getString("repo"));
-		String path = "dataRead/" + p.replace('/', ':') + ".txt"; 
+		String edit = p.replace('/', '0');
+		String path = "dataRead/" + edit.replace(':', '0') + "occurrences" + ".txt"; 
 		String s;
 		String[] ss;
 		String current = "";
 		int count = 0;
 		File file = new File(path);
-		if (!file.exists() || bundle.getString("storageToggle") != "true") {
+		if (!file.exists() || !bundle.getString("storageToggle").equals("true")) {
 			FileWriter outFile = new FileWriter(path);
 	        PrintWriter storing = new PrintWriter(outFile);
 			Process exec = Runtime.getRuntime().exec("svn log " + p + " -q -v");
