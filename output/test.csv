@@ -1,0 +1,300 @@
+Revision Pair,Time Between Revisions,
+707794-708717,3 days & 23 hours,
+708717-710199,5 days & 23 hours,
+710199-711932,2 days & 19 hours,
+711932-711985,0 days & 3 hours,
+711985-713869,7 days & 2 hours,
+713869-713889,0 days & 1 hours,
+713889-714036,0 days & 14 hours,
+714036-714040,0 days & 0 hours,
+714040-717974,1 days & 11 hours,
+717974-720267,8 days & 15 hours,
+720267-720694,1 days & 5 hours,
+720694-722522,6 days & 15 hours,
+722522-722524,0 days & 0 hours,
+722524-722528,0 days & 0 hours,
+722528-725879,9 days & 8 hours,
+725879-728081,7 days & 16 hours,
+728081-728161,0 days & 3 hours,
+728161-728197,0 days & 2 hours,
+728197-728806,2 days & 21 hours,
+728806-729554,4 days & 1 hours,
+729554-730212,3 days & 19 hours,
+730212-730896,3 days & 8 hours,
+730896-739458,27 days & 21 hours,
+739458-757733,52 days & 11 hours,
+757733-766937,27 days & 13 hours,
+766937-770525,10 days & 2 hours,
+770525-772025,4 days & 22 hours,
+772025-784856,40 days & 14 hours,
+784856-784857,0 days & 0 hours,
+784857-787385,7 days & 3 hours,
+787385-787390,0 days & 0 hours,
+787390-787394,0 days & 0 hours,
+787394-787674,0 days & 17 hours,
+787674-787689,0 days & 0 hours,
+787689-789392,6 days & 3 hours,
+789392-789883,1 days & 1 hours,
+789883-790693,1 days & 22 hours,
+790693-792340,6 days & 4 hours,
+792340-792739,1 days & 0 hours,
+792739-792969,0 days & 16 hours,
+792969-793040,0 days & 2 hours,
+793040-793042,0 days & 0 hours,
+793042-793062,0 days & 1 hours,
+793062-793597,2 days & 20 hours,
+793597-793732,0 days & 7 hours,
+793732-793761,0 days & 1 hours,
+793761-796361,7 days & 16 hours,
+796361-797686,3 days & 6 hours,
+797686-801281,11 days & 16 hours,
+801281-895202,149 days & 22 hours,
+895202-895204,0 days & 0 hours,
+895204-912026,48 days & 7 hours,
+912026-997329,207 days & 14 hours,
+997329-997331,0 days & 0 hours,
+997331-1076736,169 days & 5 hours,
+1076736-1087090,27 days & 2 hours,
+
+Revision,Rating of Relevance,
+r707794,0.05555555555555555,
+r708717,0.5,
+r710199,0.045454545454545456,
+r711932,0.3333333333333333,
+r711985,1.0,
+r713869,0.3333333333333333,
+r713889,1.0,
+r714036,0.3333333333333333,
+r714040,1.0,
+r717974,0.3333333333333333,
+r720267,0.2,
+r720694,0.5,
+r722522,0.5,
+r722524,1.0,
+r722528,0.5,
+r725879,0.125,
+r728081,0.09090909090909091,
+r728161,0.5,
+r728197,0.2,
+r728806,0.16666666666666666,
+r729554,0.25,
+r730212,0.5,
+r730896,0.5,
+r739458,0.5,
+r757733,1.0,
+r766937,0.5,
+r770525,0.5,
+r772025,0.14285714285714285,
+r784856,0.2,
+r784857,1.0,
+r787385,0.16666666666666666,
+r787390,1.0,
+r787394,1.0,
+r787674,1.0,
+r787689,1.0,
+r789392,0.08333333333333333,
+r789883,0.5,
+r790693,1.0,
+r792340,0.1111111111111111,
+r792739,0.3333333333333333,
+r792969,0.5,
+r793040,0.5,
+r793042,0.5,
+r793062,1.0,
+r793597,0.25,
+r793732,0.05263157894736842,
+r793761,0.16666666666666666,
+r796361,1.0,
+r797686,1.0,
+r801281,1.0,
+r895202,0.0625,
+r895204,0.2,
+r912026,0.25,
+r997329,1.0,
+r997331,1.0,
+r1076736,0.2,
+r1087090,0.1,
+
+Revision,Irrelevants Present,
+r707794,17,
+r708717,1,
+r710199,21,
+r711932,2,
+r711985,0,
+r713869,2,
+r713889,0,
+r714036,2,
+r714040,0,
+r717974,2,
+r720267,4,
+r720694,1,
+r722522,1,
+r722524,0,
+r722528,1,
+r725879,7,
+r728081,10,
+r728161,1,
+r728197,4,
+r728806,5,
+r729554,3,
+r730212,1,
+r730896,1,
+r739458,1,
+r757733,0,
+r766937,1,
+r770525,1,
+r772025,6,
+r784856,4,
+r784857,0,
+r787385,5,
+r787390,0,
+r787394,0,
+r787674,0,
+r787689,0,
+r789392,11,
+r789883,1,
+r790693,0,
+r792340,8,
+r792739,2,
+r792969,1,
+r793040,1,
+r793042,1,
+r793062,0,
+r793597,3,
+r793732,18,
+r793761,5,
+r796361,0,
+r797686,0,
+r801281,0,
+r895202,15,
+r895204,4,
+r912026,3,
+r997329,0,
+r997331,0,
+r1076736,4,
+r1087090,9,
+
+Revision,Relevants Present,
+r707794,1,
+r708717,1,
+r710199,1,
+r711932,1,
+r711985,1,
+r713869,1,
+r713889,1,
+r714036,1,
+r714040,1,
+r717974,1,
+r720267,1,
+r720694,1,
+r722522,1,
+r722524,1,
+r722528,1,
+r725879,1,
+r728081,1,
+r728161,1,
+r728197,1,
+r728806,1,
+r729554,1,
+r730212,1,
+r730896,1,
+r739458,1,
+r757733,1,
+r766937,1,
+r770525,1,
+r772025,1,
+r784856,1,
+r784857,1,
+r787385,1,
+r787390,1,
+r787394,1,
+r787674,1,
+r787689,1,
+r789392,1,
+r789883,1,
+r790693,1,
+r792340,1,
+r792739,1,
+r792969,1,
+r793040,1,
+r793042,1,
+r793062,1,
+r793597,1,
+r793732,1,
+r793761,1,
+r796361,1,
+r797686,1,
+r801281,1,
+r895202,1,
+r895204,1,
+r912026,1,
+r997329,1,
+r997331,1,
+r1076736,1,
+r1087090,1,
+
+interval,commits per,
+i4,4,
+i3,6,
+i2,32,
+i1,15,
+
+,build.xml,Time elapsed since the last significant revision:,Comments:,
+r707794,1,N/A, move over to an independent module  
+r708717,1,3 days & 23 hours, add test target  
+r710199,1,5 days & 23 hours, Setting svn:keywords (Author Date Id Revision) and svn:eol-style (native) for the jdbc-pool module.  
+r711932,1,2 days & 19 hours, Improve documentation  
+r711985,1,0 days & 3 hours, Modify build script to generate a distribution  
+r713869,1,7 days & 2 hours, Add a change log to the module  
+r713889,1,0 days & 1 hours, increment build number and control it from build file at this point  
+r714036,1,0 days & 14 hours, A disconnect should not throw an error  
+r714040,1,0 days & 0 hours, fix spacing issues  
+r717974,1,1 days & 11 hours, Make sure it compiles with JDK1.5; this is one of the times you wish you had preprocessor statements  
+r720267,1,8 days & 15 hours, Add doc; update version number  
+r720694,1,1 days & 5 hours, increment version number  
+r722522,1,6 days & 15 hours, update version to next rev  
+r722524,1,0 days & 0 hours, Add fairness test to build.xml  
+r722528,1,0 days & 0 hours, remove some not needed test; add compile version  
+r725879,1,9 days & 8 hours, Implement JMX notification of query times and query failures  
+r728081,1,7 days & 16 hours, Documented interceptors a bit better; implemented setters for interceptor properties  
+r728161,1,0 days & 3 hours, inc version number  
+r728197,1,0 days & 2 hours, Removed calling to a JDK 1.6 method if its run under 1.5 and still take advantage of the JMX features  
+r728806,1,2 days & 21 hours, Implemented a way to get a delegate using standard APIs rather than custom handling  
+r729554,1,4 days & 1 hours, Refactor the query report for multi purpose  
+r730212,1,3 days & 19 hours, Make sure that the packaged up binaries have a MD5 sum as well; to verify download size  
+r730896,1,3 days & 8 hours, update version  
+r739458,1,27 days & 21 hours, adjust for first tag  
+r757733,1,52 days & 11 hours, force 1.5 at this time; don't inherit parent value of 1.6  
+r766937,1,27 days & 13 hours, Add dependency to tomcat 7 now  
+r770525,1,10 days & 2 hours, Prepare for next build  
+r772025,1,4 days & 22 hours, Update test cases with a dummy driver  
+r784856,1,40 days & 14 hours, Add in NOTICE and LICENSE file. Fix the links in the documentation.   
+r784857,1,0 days & 0 hours, Correct name  
+r787385,1,7 days & 3 hours, Refactor to be more independent; so that one can build from source archive without too many hooplas as suggested by sebb  
+r787390,1,0 days & 0 hours, Add in test runner  
+r787394,1,0 days & 0 hours, Don't create the test table during the run  
+r787674,1,0 days & 17 hours, Make a default build target that builds automatically without need to know what.   
+r787689,1,0 days & 0 hours, Dont try to run the base test  
+r789392,1,6 days & 3 hours, Remove all usage of GPL or LGPL downloads. Use H2 for test database (EPL1.0) as it can be downloaded and easily embedded. Derby didn't work; too slow to populate test data with. Add Javadoc per Sebb's suggestion. Add EPL and CPL to LICENSE since we use it in the unit test cases.   
+r789883,1,1 days & 1 hours, Apply patch by sebb from https://issues.apache.org/bugzilla/show_bug.cgi?id=47458 Store db properties in build.properties using a prefix of testdb  
+r790693,1,1 days & 22 hours, break out javadoc into its own target  
+r792340,1,6 days & 4 hours, remove dependency on the modeler so that the pool can run outside of tomcat and still have jmx query notifications.   
+r792739,1,1 days & 0 hours, Fix https://issues.apache.org/bugzilla/show_bug.cgi?id=47149 Explicitly specify encoding for the source files 
+r792969,1,0 days & 16 hours, Add manifest to binary JAR Fix XML error in doc  
+r793040,1,0 days & 2 hours, were not using DBCP anywhere  
+r793042,1,0 days & 0 hours, remove dbcp add classpath to javadoc start documenting DataSource  
+r793062,1,0 days & 1 hours, correct dependency  
+r793597,1,2 days & 20 hours, Create a package file for the JavaDoc main package  
+r793732,1,0 days & 7 hours, Add tons of javadoc Remove the finalizers; they behave way differently in the new JDK; so let the programmer be responsible for closures   
+r793761,1,0 days & 1 hours, more javadoc and corrections  
+r796361,1,7 days & 16 hours, Allow to run perf test as a one off   
+r797686,1,3 days & 6 hours, Add missing files to distribution  
+r801281,1,11 days & 16 hours, apply patch from sebb for https://issues.apache.org/bugzilla/show_bug.cgi?id=47452   
+r895202,1,149 days & 22 hours, Update copyright year for TC trunk.  
+r895204,1,0 days & 0 hours, Borrow a few things from the main Tomcat build.xml: - use general version filter - automatically set year to the current year - use patch version property without dot.   The dot is added when combining it into a version number  I don't know whether the double '@' are intended for the ant replacement markers in MANIFEST.MF (the outer ones remain after ant filtering); but that is unchanged from the previous behaviour.  
+r912026,1,48 days & 7 hours, In some drivers; the call to setTransactionIsolation should be the very first call  
+r997329,1,207 days & 14 hours, Include the suffix in the version number 
+r997331,1,0 days & 0 hours, Fix niggle 
+r1076736,1,169 days & 5 hours, Add missing files and license header Add NOTICE/LICENSE to all JAR files  
+r1087090,1,27 days & 2 hours, Add in ability to build with Maven  
+

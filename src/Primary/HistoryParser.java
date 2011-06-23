@@ -421,27 +421,47 @@ public class HistoryParser {
 	
 	public void fullCount(PrintWriter out) throws IOException {
 		String p = bundle.getString(bundle.getString("repo"));
+		String path = "dataRead/" + p.replace('/', ':') + ".txt"; 
 		String s;
 		String[] ss;
 		String current = "";
 		int count = 0;
-		Process exec = Runtime.getRuntime().exec("svn log " + p + " -q -v");
-		BufferedReader  stdInput=  new  BufferedReader(new
+		File file = new File(path);
+		if (!file.exists() || bundle.getString("storageToggle") != "true") {
+			FileWriter outFile = new FileWriter(path);
+	        PrintWriter storing = new PrintWriter(outFile);
+			Process exec = Runtime.getRuntime().exec("svn log " + p + " -q -v");
+			BufferedReader  stdInput=  new  BufferedReader(new
 	              InputStreamReader(exec.getInputStream()));
-		CounterList<String> counter = new CounterList<String>(true);
+			CounterList<String> counter = new CounterList<String>(true);
 		
-		while  ((s =  stdInput.readLine())  !=  null)  {
-			if (s.startsWith("   M") || s.startsWith("   A") || s.startsWith("   D") || s.startsWith("   R")){
-				ss = s.split(" ");
-				current = ss[4];
-				counter.newInput(current);
-				count++;
+			while  ((s =  stdInput.readLine())  !=  null)  {
+				if (s.startsWith("   M") || s.startsWith("   A") || s.startsWith("   D") || s.startsWith("   R")){
+					ss = s.split(" ");
+					current = ss[4];
+					counter.newInput(current);
+					count++;
+				}
 			}
+			System.out.println("start");
+			out.println("start");
+			storing.println("start");
+			System.out.println(counter.toString());
+			out.println(counter.toString());
+			storing.println(counter.toString());
+			storing.close();
 		}
-		System.out.println("start");
-		out.println("start");
-		System.out.println(counter.toString());
-		out.println(counter.toString());
+		
+		else {
+			
+			BufferedReader fromStorage = new BufferedReader(new FileReader(path));
+			String collect;
+			while ((collect = fromStorage.readLine()) != null) {
+				System.out.println(collect);
+				out.println(collect);
+			}
+			fromStorage.close();
+		}
 	}
 	
 	/**
