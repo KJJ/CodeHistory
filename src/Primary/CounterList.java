@@ -86,7 +86,7 @@ public class CounterList<T> {
 	 * overrides the inherited toString operation 
 	 */
 	public String toString() {
-		int j = 0;
+		int j = 1;
 		int displaySize = 1029384756;
 		if (limitation) {
 			displaySize = Integer.parseInt(bundle.getString("occurrenceDisplayLimit"));

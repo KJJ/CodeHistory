@@ -238,7 +238,7 @@ public class RevisionNode {
 			String nextFile = listIt.next();
 			nextFile = nextFile.substring(nextFile.lastIndexOf('/') + 1);
 			if (listIt.hasNext()){
-				files += nextFile+", ";
+				files += nextFile + ", ";
 			}
 			else {
 				files += nextFile;

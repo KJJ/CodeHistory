@@ -156,10 +156,10 @@ public class NodeStatistics {
 			}
 			
 			if (next.getTotalChanges()-next.getNumberOfRelevants() >= 0) {
-				irrelevants[toAnalyze.indexOf(next)]= Integer.toString(next.getTotalChanges()-next.getNumberOfRelevants());
+				irrelevants[toAnalyze.indexOf(next)] = Integer.toString(next.getTotalChanges() - next.getNumberOfRelevants());
 			}
 			else {
-				irrelevants[toAnalyze.indexOf(next)]= "0";
+				irrelevants[toAnalyze.indexOf(next)] = "0";
 			}
 			ratings[toAnalyze.indexOf(next)] = Double.toString(next.getRating());
 			
@@ -275,8 +275,9 @@ public class NodeStatistics {
 		analyze(); //see the above method
 		int i;
 		
-		if (bundle.getString("otherStatsToggle").equals("true") || bundle.getString("groupsToggle").equals("true") || bundle.getString("percentToggle").equals("true") || 
-																																		bundle.getString("diffToggle").equals("true")) {
+		if (bundle.getString("otherStatsToggle").equals("true") || bundle.getString("groupsToggle").equals("true") 
+				|| bundle.getString("percentToggle").equals("true") || bundle.getString("diffToggle").equals("true")) {
+			
 			System.out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
 			out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
 		}
@@ -295,8 +296,8 @@ public class NodeStatistics {
 				System.out.println("\t Average Number of relevant files per revision: " + Math.round(relevantAverage) + "\n");
 				out.println("\t Average Number of relevant files per revision: " + Math.round(relevantAverage) + "\n");
 				for (i = 0; i < args.length; i++) {
-					System.out.println("\t Number of Revisions Changing " + (i+1) + " of the Relevant Files: " + relevantPresent[i]);
-					out.println("\t Number of Revisions Changing " + (i+1) + " of the Relevant Files: " + relevantPresent[i]);
+					System.out.println("\t Number of Revisions Changing " + (i + 1) + " of the Relevant Files: " + relevantPresent[i]);
+					out.println("\t Number of Revisions Changing " + (i + 1) + " of the Relevant Files: " + relevantPresent[i]);
 					System.out.println("\t\t Number of these revisions with under " + (10 * (i + 1)) + " irrelevant extra files: " + irrelevantPresent[i] + "\n");
 					out.println("\t\t Number of these revisions with under " + (10 * (i + 1)) + " irrelevant extra files: " + irrelevantPresent[i] + "\n");
 				}

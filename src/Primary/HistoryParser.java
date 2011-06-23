@@ -43,7 +43,7 @@ public class HistoryParser {
 		if (args.length == 0) {
 			throw new Exception("No Files");
 		}
-		int i,j; //loops counters
+		int i, j; //loops counters
 		
 		//the 2 for loops check each entry with every other in order to prevent duplicate entries from affecting the data
 		for (i=0; i < args.length; i++){
@@ -108,7 +108,7 @@ public class HistoryParser {
         String toStore = "";
 		
 		// while there is input to process, execute this loop
-		while  ((s=  stdInput.readLine())  !=  null)  {
+		while  ((s =  stdInput.readLine())  !=  null)  {
 			
 			toStore += s + "\n";
 			
@@ -177,7 +177,7 @@ public class HistoryParser {
 		String undesirable = bundle.getString("unwanted");
 		
 		// while there is input to process, execute this loop
-		while  ((s=  stdInput.readLine())  !=  null)  {
+		while  ((s =  stdInput.readLine())  !=  null)  {
 			
 			if (s.startsWith("r") && s.contains("|")) {  //a line starting with a lower case r implies that we are at a new revision
 				if (count != 0) {  // check to see whether or not this is the first iteration
@@ -334,7 +334,7 @@ public class HistoryParser {
 			out.println("\n Average Time Period Between ALL Revisions: " + standard + " hours");
 		}
 		else {
-			standard = Long.MAX_VALUE-(long)Integer.parseInt(bundle.getString("consecutiveRange")); //else just use the percentage as a base for the time ranges
+			standard = Long.MAX_VALUE - (long)Integer.parseInt(bundle.getString("consecutiveRange")); //else just use the percentage as a base for the time ranges
 		}
 		int j; //loop counter
 		if (bundle.getString("tableToggle").equals("true")) {
@@ -370,7 +370,7 @@ public class HistoryParser {
 			RevisionNode current = history.get(i); //takes the next node to be printed
 			fillArray(statArray, current.getRating()); //takes the current rating and plots it in the table
 			double newSpace; //space between the current two observed revisions
-			if (i < history.size()-1) { //if there is a revision after the current one
+			if (i < history.size() - 1) { //if there is a revision after the current one
 				newSpace = (double)current.getTimeSpace(history.get(i + 1).getThisTime()) / 1000 / 60 / 60.0; //newSpace becomes the interval between the two
 				interval += newSpace; //increase interval time counter by the new interval
 			}
@@ -379,7 +379,7 @@ public class HistoryParser {
 				interval = Long.MAX_VALUE; //and put the interval to its maximum size
 			}
 			if (bundle.getString("revisionOverallToggle").equals("true")) {
-				if (newSpace > (double)standard + Integer.parseInt(bundle.getString("consecutiveRange")) * standard / 100 ||  newSpace < (double)standard-Integer.parseInt(bundle.getString("consecutiveRange"))*standard/100) {
+				if (newSpace > (double)standard + Integer.parseInt(bundle.getString("consecutiveRange")) * standard / 100 ||  newSpace < (double)standard - Integer.parseInt(bundle.getString("consecutiveRange")) * standard / 100) {
 					inRange = false; //if the node is outside the specified range based on the configuration file parameters
 				}
 				else {
@@ -390,10 +390,10 @@ public class HistoryParser {
 				inRange = false; //permanently set it to false due to branch conditions
 			}
 			
-			if (i+1 == history.size() && lastWas) { //indicate that there will only be one more revision so the next symbol should by a triangle
+			if (i + 1 == history.size() && lastWas) { //indicate that there will only be one more revision so the next symbol should by a triangle
 				inRange = false; //prevents a diamond from appearing
 			}
-			else if (i+1 == history.size()) { //otherwise simply remove the chance of a symbol from appearing
+			else if (i + 1 == history.size()) { //otherwise simply remove the chance of a symbol from appearing
 				inRange = false;
 				lastWas = false;
 			}
@@ -450,13 +450,13 @@ public class HistoryParser {
 			out.println("Rating Graph: looking for grouping\n");
 			for (i = 1; i <= statArray.length; i++){
 				System.out.print("(" + (double) (i-1) / 10 + ", " + (double) i / 10 + "]:  "); //current range interval
-				out.print("(" + (double) (i-1) / 10 + ", " + (double) i / 10 + "]:  ");
-				for (j = 0; j < statArray[i-1]; j++){ //loop through the entire range of rating intervals
+				out.print("(" + (double) (i - 1) / 10 + ", " + (double) i / 10 + "]:  ");
+				for (j = 0; j < statArray[i - 1]; j++){ //loop through the entire range of rating intervals
 					System.out.print("|"); // one '|' = one rating in this range
 					out.print("|");
 				}
-				System.out.print("  (" + statArray[i-1] + ")"); //print out the numerical representation of that interval for easier use
-				out.print("  (" + statArray[i-1] + ")");
+				System.out.print("  (" + statArray[i - 1] + ")"); //print out the numerical representation of that interval for easier use
+				out.print("  (" + statArray[i - 1] + ")");
 				linesAndBounds("==========", out); //indicates the end of the list of queried files
 			}
 		}
@@ -537,7 +537,7 @@ public class HistoryParser {
 				Calendar thisTime = new GregorianCalendar(Integer.parseInt(current.split(" ")[0].split("-")[0]), Integer.parseInt(current.split(" ")[0].split("-")[1])-1, Integer.parseInt(current.split(" ")[0].split("-")[2]), Integer.parseInt(current.split(" ")[1].split(":")[0]), Integer.parseInt(current.split(" ")[1].split(":")[1]), Integer.parseInt(current.split(" ")[1].split(":")[2]));
 				if (!previous.equals("")){ //implies this is not the first iteration
 					Calendar lastTime = new GregorianCalendar(Integer.parseInt(previous.split(" ")[0].split("-")[0]), Integer.parseInt(previous.split(" ")[0].split("-")[1])-1, Integer.parseInt(previous.split(" ")[0].split("-")[2]), Integer.parseInt(previous.split(" ")[1].split(":")[0]), Integer.parseInt(previous.split(" ")[1].split(":")[1]), Integer.parseInt(previous.split(" ")[1].split(":")[2]));
-					long timeDiff = lastTime.getTimeInMillis()-thisTime.getTimeInMillis();
+					long timeDiff = lastTime.getTimeInMillis() - thisTime.getTimeInMillis();
 					rev++;
 					totalTime += timeDiff;
 				}
@@ -556,6 +556,8 @@ public class HistoryParser {
 		String[] ss;
 		String current = "";
 		int count = 0;
+		System.out.println();
+		out.println();
 		File file = new File(path);
 		if (!file.exists() || !bundle.getString("storageToggle").equals("true")) {
 			FileWriter outFile = new FileWriter(path);
@@ -573,9 +575,9 @@ public class HistoryParser {
 					count++;
 				}
 			}
-			System.out.println("start");
-			out.println("start");
-			storing.println("start");
+			System.out.println("Top " + bundle.getString("occurrenceDisplayLimit") + " Occurring File Names");
+			out.println("Top " + bundle.getString("occurrenceDisplayLimit") + " Occurring File Names");
+			storing.println("Top " + bundle.getString("occurrenceDisplayLimit") + " Occurring File Names");
 			System.out.println(counter.toString());
 			out.println(counter.toString());
 			storing.println(counter.toString());
@@ -604,7 +606,7 @@ public class HistoryParser {
 		int i = 0; // loop counter
 		while (i <= array.length){ //while in the bounds of the array...
 			if (rating <= (double) i / 10){ // checks if this is the interval that the rating falls in
-				array[i-1] = array[i-1] + 1; //if so the that interval section is incremented to indicate that change of the data
+				array[i - 1] = array[i - 1] + 1; //if so the that interval section is incremented to indicate that change of the data
 				break; //end the loop since 1 rating is only in one interval
 			}
 			i++;
