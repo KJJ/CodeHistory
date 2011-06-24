@@ -1,0 +1,753 @@
+------------------------------------------------------------------------
+r1432 | jhouse | 2011-02-24 21:03:38 -0700 (Thu, 24 Feb 2011) | 1 line
+Changed paths:
+   M /trunk/quartz/src/main/java/org/quartz/CalendarIntervalScheduleBuilder.java
+   M /trunk/quartz/src/main/java/org/quartz/CronExpression.java
+   M /trunk/quartz/src/main/java/org/quartz/JobDataMap.java
+   M /trunk/quartz/src/main/java/org/quartz/SimpleScheduleBuilder.java
+   M /trunk/quartz/src/main/java/org/quartz/Trigger.java
+   M /trunk/quartz/src/main/java/org/quartz/core/JobRunShell.java
+   M /trunk/quartz/src/main/java/org/quartz/core/QuartzScheduler.java
+   M /trunk/quartz/src/main/java/org/quartz/core/QuartzSchedulerThread.java
+   M /trunk/quartz/src/main/java/org/quartz/ee/servlet/QuartzInitializerServlet.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/RemoteMBeanScheduler.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/StdSchedulerFactory.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/calendar/AnnualCalendar.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/JobStoreSupport.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/StdJDBCDelegate.java
+   M /trunk/quartz/src/main/java/org/quartz/jobs/NativeJob.java
+   M /trunk/quartz/src/main/java/org/quartz/jobs/ee/jmx/JMXInvokerJob.java
+   M /trunk/quartz/src/main/java/org/quartz/plugins/history/LoggingJobHistoryPlugin.java
+   M /trunk/quartz/src/main/java/org/quartz/plugins/history/LoggingTriggerHistoryPlugin.java
+   M /trunk/quartz/src/main/java/org/quartz/plugins/management/ShutdownHookPlugin.java
+   M /trunk/quartz/src/main/java/org/quartz/simpl/PropertySettingJobFactory.java
+   M /trunk/quartz/src/main/java/org/quartz/simpl/SimpleThreadPool.java
+   M /trunk/quartz/src/main/java/org/quartz/utils/StringKeyDirtyFlagMap.java
+   M /trunk/quartz/src/test/java/org/quartz/CronExpressionTest.java
+   M /trunk/quartz/src/test/java/org/quartz/JobDataMapTest.java
+   M /trunk/quartz/src/test/java/org/quartz/TriggerBuilderTest.java
+   M /trunk/quartz/src/test/java/org/quartz/simpl/PropertySettingJobFactoryTest.java
+
+various simple code tidying up / findbugs fixes.
+------------------------------------------------------------------------
+r1423 | jhouse | 2011-02-23 18:34:51 -0700 (Wed, 23 Feb 2011) | 1 line
+Changed paths:
+   M /trunk/quartz/src/main/java/org/quartz/CronExpression.java
+   M /trunk/quartz/src/test/java/org/quartz/CronExpressionTest.java
+
+QTZ-96, QTZ-99 : CronExpression does not work in the Thai (th_TH) locale,  Cron is try to schedule invalid cron expression "0/5 * * 32W 1 ?"
+------------------------------------------------------------------------
+r1393 | jhouse | 2011-01-30 15:48:13 -0700 (Sun, 30 Jan 2011) | 1 line
+Changed paths:
+   M /trunk/quartz/src/main/java/org/quartz/CronExpression.java
+
+QTZ-92: Document New Cron Expression feature: last day offset for Day Of Month field.
+------------------------------------------------------------------------
+r1392 | jhouse | 2011-01-30 15:45:52 -0700 (Sun, 30 Jan 2011) | 1 line
+Changed paths:
+   M /trunk/quartz/src/main/java/org/quartz/CronExpression.java
+
+QTZ-92: Document New Cron Expression feature: last day offset for Day Of Month field.
+------------------------------------------------------------------------
+r1327 | jhouse | 2010-11-03 19:45:54 -0600 (Wed, 03 Nov 2010) | 1 line
+Changed paths:
+   M /trunk/examples/src/main/java/org/quartz/examples/example1/SimpleExample.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example10/SimpleJob.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example11/LoadExample.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example11/SimpleJob.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example12/RemoteClientExample.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example12/SimpleJob.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example13/ClusterExample.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example13/SimpleRecoveryJob.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example13/SimpleRecoveryStatefulJob.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example14/PriorityExample.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example14/TriggerEchoJob.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example15/ClusterExample.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example15/SimpleRecoveryJob.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example15/SimpleRecoveryStatefulJob.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example2/SimpleJob.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example2/SimpleTriggerExample.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example3/CronTriggerExample.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example3/SimpleJob.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example4/ColorJob.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example4/JobStateExample.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example5/MisfireExample.java
+   D /trunk/examples/src/main/java/org/quartz/examples/example5/MisfireJob.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example5/StatefulDumbJob.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example6/BadJob1.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example6/BadJob2.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example6/JobExceptionExample.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example7/DumbInterruptableJob.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example7/InterruptExample.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example8/CalendarExample.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example8/SimpleJob.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example9/Job1Listener.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example9/ListenerExample.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example9/SimpleJob1.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example9/SimpleJob2.java
+   M /trunk/quartz/src/main/java/org/quartz/Calendar.java
+   A /trunk/quartz/src/main/java/org/quartz/CalendarIntervalScheduleBuilder.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/CalendarIntervalScheduleBuilder.java:1326)
+   A /trunk/quartz/src/main/java/org/quartz/CalendarIntervalTrigger.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/CalendarIntervalTrigger.java:1326)
+   D /trunk/quartz/src/main/java/org/quartz/CriticalSchedulerException.java
+   M /trunk/quartz/src/main/java/org/quartz/CronExpression.java
+   A /trunk/quartz/src/main/java/org/quartz/CronScheduleBuilder.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/CronScheduleBuilder.java:1326)
+   M /trunk/quartz/src/main/java/org/quartz/CronTrigger.java
+   A /trunk/quartz/src/main/java/org/quartz/DateBuilder.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/DateBuilder.java:1326)
+   D /trunk/quartz/src/main/java/org/quartz/DateIntervalTrigger.java
+   A /trunk/quartz/src/main/java/org/quartz/DisallowConcurrentExecution.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/DisallowConcurrentExecution.java:1326)
+   A /trunk/quartz/src/main/java/org/quartz/ExecuteInJTATransaction.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/ExecuteInJTATransaction.java:1326)
+   M /trunk/quartz/src/main/java/org/quartz/InterruptableJob.java
+   M /trunk/quartz/src/main/java/org/quartz/Job.java
+   A /trunk/quartz/src/main/java/org/quartz/JobBuilder.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/JobBuilder.java:1326)
+   M /trunk/quartz/src/main/java/org/quartz/JobDataMap.java
+   M /trunk/quartz/src/main/java/org/quartz/JobDetail.java
+   M /trunk/quartz/src/main/java/org/quartz/JobExecutionContext.java
+   M /trunk/quartz/src/main/java/org/quartz/JobExecutionException.java
+   A /trunk/quartz/src/main/java/org/quartz/JobKey.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/JobKey.java:1326)
+   M /trunk/quartz/src/main/java/org/quartz/JobListener.java
+   M /trunk/quartz/src/main/java/org/quartz/JobPersistenceException.java
+   A /trunk/quartz/src/main/java/org/quartz/Matcher.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/Matcher.java:1326)
+   M /trunk/quartz/src/main/java/org/quartz/NthIncludedDayTrigger.java
+   M /trunk/quartz/src/main/java/org/quartz/ObjectAlreadyExistsException.java
+   D /trunk/quartz/src/main/java/org/quartz/ObjectDoesNotExistException.java
+   A /trunk/quartz/src/main/java/org/quartz/PersistJobDataAfterExecution.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/PersistJobDataAfterExecution.java:1326)
+   A /trunk/quartz/src/main/java/org/quartz/ScheduleBuilder.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/ScheduleBuilder.java:1326)
+   M /trunk/quartz/src/main/java/org/quartz/Scheduler.java
+   M /trunk/quartz/src/main/java/org/quartz/SchedulerConfigException.java
+   M /trunk/quartz/src/main/java/org/quartz/SchedulerContext.java
+   M /trunk/quartz/src/main/java/org/quartz/SchedulerException.java
+   M /trunk/quartz/src/main/java/org/quartz/SchedulerFactory.java
+   M /trunk/quartz/src/main/java/org/quartz/SchedulerListener.java
+   M /trunk/quartz/src/main/java/org/quartz/SchedulerMetaData.java
+   A /trunk/quartz/src/main/java/org/quartz/SimpleScheduleBuilder.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/SimpleScheduleBuilder.java:1326)
+   M /trunk/quartz/src/main/java/org/quartz/SimpleTrigger.java
+   M /trunk/quartz/src/main/java/org/quartz/StatefulJob.java
+   M /trunk/quartz/src/main/java/org/quartz/Trigger.java
+   A /trunk/quartz/src/main/java/org/quartz/TriggerBuilder.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/TriggerBuilder.java:1326)
+   A /trunk/quartz/src/main/java/org/quartz/TriggerKey.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/TriggerKey.java:1326)
+   M /trunk/quartz/src/main/java/org/quartz/TriggerListener.java
+   M /trunk/quartz/src/main/java/org/quartz/TriggerUtils.java
+   M /trunk/quartz/src/main/java/org/quartz/UnableToInterruptJobException.java
+   M /trunk/quartz/src/main/java/org/quartz/core/JobRunShell.java
+   M /trunk/quartz/src/main/java/org/quartz/core/JobRunShellFactory.java
+   M /trunk/quartz/src/main/java/org/quartz/core/QuartzScheduler.java
+   M /trunk/quartz/src/main/java/org/quartz/core/QuartzSchedulerMBeanImpl.java
+   M /trunk/quartz/src/main/java/org/quartz/core/QuartzSchedulerThread.java
+   M /trunk/quartz/src/main/java/org/quartz/core/RemotableQuartzScheduler.java
+   M /trunk/quartz/src/main/java/org/quartz/core/SampledStatisticsImpl.java
+   M /trunk/quartz/src/main/java/org/quartz/core/jmx/JobDetailSupport.java
+   M /trunk/quartz/src/main/java/org/quartz/core/jmx/JobExecutionContextSupport.java
+   M /trunk/quartz/src/main/java/org/quartz/core/jmx/QuartzSchedulerMBean.java
+   M /trunk/quartz/src/main/java/org/quartz/core/jmx/TriggerSupport.java
+   A /trunk/quartz/src/main/java/org/quartz/ee/jta/JTAAnnotationAwareJobRunShellFactory.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/ee/jta/JTAAnnotationAwareJobRunShellFactory.java:1326)
+   M /trunk/quartz/src/main/java/org/quartz/ee/jta/JTAJobRunShell.java
+   M /trunk/quartz/src/main/java/org/quartz/ee/jta/JTAJobRunShellFactory.java
+   A /trunk/quartz/src/main/java/org/quartz/impl/JobDetailImpl.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/JobDetailImpl.java:1326)
+   A /trunk/quartz/src/main/java/org/quartz/impl/JobExecutionContextImpl.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/JobExecutionContextImpl.java:1326)
+   M /trunk/quartz/src/main/java/org/quartz/impl/RemoteMBeanScheduler.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/RemoteScheduler.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/StdJobRunShellFactory.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/StdScheduler.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/StdSchedulerFactory.java
+   A /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/CalendarIntervalTriggerPersistenceDelegate.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/jdbcjobstore/CalendarIntervalTriggerPersistenceDelegate.java:1326)
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/CloudscapeDelegate.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/Constants.java
+   A /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/CronTriggerPersistenceDelegate.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/jdbcjobstore/CronTriggerPersistenceDelegate.java:1326)
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/DB2v6Delegate.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/DB2v7Delegate.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/DB2v8Delegate.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/DriverDelegate.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/FiredTriggerRecord.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/HSQLDBDelegate.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/JobStoreSupport.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/MSSQLDelegate.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/NoSuchDelegateException.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/PointbaseDelegate.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/PostgreSQLDelegate.java
+   A /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/SimplePropertiesTriggerPersistenceDelegateSupport.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/jdbcjobstore/SimplePropertiesTriggerPersistenceDelegateSupport.java:1326)
+   A /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/SimplePropertiesTriggerProperties.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/jdbcjobstore/SimplePropertiesTriggerProperties.java:1326)
+   A /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/SimpleTriggerPersistenceDelegate.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/jdbcjobstore/SimpleTriggerPersistenceDelegate.java:1326)
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/StdJDBCConstants.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/StdJDBCDelegate.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/SybaseDelegate.java
+   A /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/TriggerPersistenceDelegate.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/jdbcjobstore/TriggerPersistenceDelegate.java:1326)
+   A /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/TriggerStatus.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/jdbcjobstore/TriggerStatus.java:1326)
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/Util.java
+   A /trunk/quartz/src/main/java/org/quartz/impl/matchers (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/matchers:1326)
+   R /trunk/quartz/src/main/java/org/quartz/impl/matchers/AndMatcher.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/matchers/AndMatcher.java:1326)
+   R /trunk/quartz/src/main/java/org/quartz/impl/matchers/EverythingMatcher.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/matchers/EverythingMatcher.java:1326)
+   R /trunk/quartz/src/main/java/org/quartz/impl/matchers/GroupMatcher.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/matchers/GroupMatcher.java:1326)
+   R /trunk/quartz/src/main/java/org/quartz/impl/matchers/KeyMatcher.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/matchers/KeyMatcher.java:1326)
+   R /trunk/quartz/src/main/java/org/quartz/impl/matchers/NameMatcher.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/matchers/NameMatcher.java:1326)
+   R /trunk/quartz/src/main/java/org/quartz/impl/matchers/NotMatcher.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/matchers/NotMatcher.java:1326)
+   R /trunk/quartz/src/main/java/org/quartz/impl/matchers/OrMatcher.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/matchers/OrMatcher.java:1326)
+   R /trunk/quartz/src/main/java/org/quartz/impl/matchers/StringMatcher.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/matchers/StringMatcher.java:1326)
+   A /trunk/quartz/src/main/java/org/quartz/impl/triggers (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/triggers:1326)
+   R /trunk/quartz/src/main/java/org/quartz/impl/triggers/AbstractTrigger.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/triggers/AbstractTrigger.java:1326)
+   R /trunk/quartz/src/main/java/org/quartz/impl/triggers/CalendarIntervalTriggerImpl.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/triggers/CalendarIntervalTriggerImpl.java:1326)
+   R /trunk/quartz/src/main/java/org/quartz/impl/triggers/CoreTrigger.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/triggers/CoreTrigger.java:1326)
+   R /trunk/quartz/src/main/java/org/quartz/impl/triggers/CronTriggerImpl.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/triggers/CronTriggerImpl.java:1326)
+   R /trunk/quartz/src/main/java/org/quartz/impl/triggers/SimpleTriggerImpl.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/triggers/SimpleTriggerImpl.java:1326)
+   R /trunk/quartz/src/main/java/org/quartz/impl/triggers/package.html (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/impl/triggers/package.html:1326)
+   M /trunk/quartz/src/main/java/org/quartz/jobs/ee/jms/JmsHelper.java
+   M /trunk/quartz/src/main/java/org/quartz/jobs/ee/jms/SendDestinationMessageJob.java
+   M /trunk/quartz/src/main/java/org/quartz/jobs/ee/jms/SendQueueMessageJob.java
+   M /trunk/quartz/src/main/java/org/quartz/jobs/ee/jms/SendTopicMessageJob.java
+   A /trunk/quartz/src/main/java/org/quartz/listeners/BroadcastJobListener.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/listeners/BroadcastJobListener.java:1326)
+   M /trunk/quartz/src/main/java/org/quartz/listeners/BroadcastSchedulerListener.java
+   A /trunk/quartz/src/main/java/org/quartz/listeners/BroadcastTriggerListener.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/listeners/BroadcastTriggerListener.java:1326)
+   D /trunk/quartz/src/main/java/org/quartz/listeners/FilterAndBroadcastJobListener.java
+   D /trunk/quartz/src/main/java/org/quartz/listeners/FilterAndBroadcastTriggerListener.java
+   M /trunk/quartz/src/main/java/org/quartz/listeners/JobChainingJobListener.java
+   M /trunk/quartz/src/main/java/org/quartz/listeners/SchedulerListenerSupport.java
+   M /trunk/quartz/src/main/java/org/quartz/plugins/history/LoggingJobHistoryPlugin.java
+   M /trunk/quartz/src/main/java/org/quartz/plugins/history/LoggingTriggerHistoryPlugin.java
+   M /trunk/quartz/src/main/java/org/quartz/plugins/xml/XMLSchedulingDataProcessorPlugin.java
+   M /trunk/quartz/src/main/java/org/quartz/simpl/RAMJobStore.java
+   M /trunk/quartz/src/main/java/org/quartz/simpl/SimpleJobFactory.java
+   M /trunk/quartz/src/main/java/org/quartz/spi/JobStore.java
+   A /trunk/quartz/src/main/java/org/quartz/spi/MutableTrigger.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/spi/MutableTrigger.java:1326)
+   A /trunk/quartz/src/main/java/org/quartz/spi/OperableTrigger.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/spi/OperableTrigger.java:1326)
+   M /trunk/quartz/src/main/java/org/quartz/spi/TriggerFiredBundle.java
+   D /trunk/quartz/src/main/java/org/quartz/triggers
+   A /trunk/quartz/src/main/java/org/quartz/utils/ClassUtils.java (from /branches/quartz-2.0-proto/quartz/src/main/java/org/quartz/utils/ClassUtils.java:1326)
+   M /trunk/quartz/src/main/java/org/quartz/utils/Key.java
+   D /trunk/quartz/src/main/java/org/quartz/utils/Pair.java
+   D /trunk/quartz/src/main/java/org/quartz/utils/TriggerStatus.java
+   M /trunk/quartz/src/main/java/org/quartz/xml/XMLSchedulingDataProcessor.java
+   M /trunk/quartz/src/main/resources/org/quartz/xml/job_scheduling_data_2_0.xsd
+   A /trunk/quartz/src/test/java/org/quartz/CalendarIntervalTriggerTest.java (from /branches/quartz-2.0-proto/quartz/src/test/java/org/quartz/CalendarIntervalTriggerTest.java:1326)
+   M /trunk/quartz/src/test/java/org/quartz/CronExpressionTest.java
+   M /trunk/quartz/src/test/java/org/quartz/CronTriggerTest.java
+   D /trunk/quartz/src/test/java/org/quartz/DateIntervalTriggerTest.java
+   A /trunk/quartz/src/test/java/org/quartz/JobBuilderTest.java (from /branches/quartz-2.0-proto/quartz/src/test/java/org/quartz/JobBuilderTest.java:1326)
+   M /trunk/quartz/src/test/java/org/quartz/JobDetailTest.java
+   M /trunk/quartz/src/test/java/org/quartz/PriorityTest.java
+   A /trunk/quartz/src/test/java/org/quartz/SchedulerTest.java (from /branches/quartz-2.0-proto/quartz/src/test/java/org/quartz/SchedulerTest.java:1326)
+   M /trunk/quartz/src/test/java/org/quartz/SerializationTestSupport.java
+   M /trunk/quartz/src/test/java/org/quartz/SimpleTriggerTest.java
+   A /trunk/quartz/src/test/java/org/quartz/TriggerBuilderTest.java (from /branches/quartz-2.0-proto/quartz/src/test/java/org/quartz/TriggerBuilderTest.java:1326)
+   M /trunk/quartz/src/test/java/org/quartz/VersionTest.java
+   M /trunk/quartz/src/test/java/org/quartz/impl/jdbcjobstore/StdJDBCDelegateTest.java
+   M /trunk/quartz/src/test/java/org/quartz/simpl/RAMJobStoreTest.java
+   D /trunk/quartz/src/test/java/org/quartz/utils/PairTest.java
+   A /trunk/quartz/src/test/resources/org/quartz/CalendarIntervalTriggerImpl-2.0.ser (from /branches/quartz-2.0-proto/quartz/src/test/resources/org/quartz/CalendarIntervalTriggerImpl-2.0.ser:1326)
+   A /trunk/quartz/src/test/resources/org/quartz/CronTriggerImpl-2.0.ser (from /branches/quartz-2.0-proto/quartz/src/test/resources/org/quartz/CronTriggerImpl-2.0.ser:1326)
+   A /trunk/quartz/src/test/resources/org/quartz/SimpleTriggerImpl-2.0.ser (from /branches/quartz-2.0-proto/quartz/src/test/resources/org/quartz/SimpleTriggerImpl-2.0.ser:1326)
+   M /trunk/quartz-oracle/src/main/java/org/quartz/impl/jdbcjobstore/oracle/OracleDelegate.java
+   M /trunk/quartz-weblogic/src/main/java/org/quartz/impl/jdbcjobstore/WebLogicDelegate.java
+   M /trunk/quartz-weblogic/src/main/java/org/quartz/impl/jdbcjobstore/oracle/weblogic/WebLogicOracleDelegate.java
+
+merging back all changes from quartz-2.0-proto branch.
+------------------------------------------------------------------------
+r1269 | jhouse | 2010-08-27 21:22:40 -0600 (Fri, 27 Aug 2010) | 1 line
+Changed paths:
+   M /trunk/quartz/src/main/java/org/quartz/CronExpression.java
+
+QTZ-64: CronExpression.getNextInvalidTimeAfter(Date) throws NullPointerException for triggers with no future fire time
+------------------------------------------------------------------------
+r1268 | jhouse | 2010-08-27 21:18:00 -0600 (Fri, 27 Aug 2010) | 1 line
+Changed paths:
+   M /trunk/quartz/src/main/java/org/quartz/CronExpression.java
+
+QTZ-66: fail-fast when expression specifies more than one nth-day of the week.
+------------------------------------------------------------------------
+r1152 | jhouse | 2010-05-28 17:38:18 -0600 (Fri, 28 May 2010) | 1 line
+Changed paths:
+   M /trunk/examples/src/main/java/org/quartz/examples/example11/LoadExample.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example13/ClusterExample.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example6/BadJob1.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example6/BadJob2.java
+   M /trunk/examples/src/main/java/org/quartz/examples/example9/ListenerExample.java
+   M /trunk/quartz/src/main/java/org/quartz/CriticalSchedulerException.java
+   M /trunk/quartz/src/main/java/org/quartz/CronExpression.java
+   M /trunk/quartz/src/main/java/org/quartz/DateIntervalTrigger.java
+   M /trunk/quartz/src/main/java/org/quartz/JobDetail.java
+   M /trunk/quartz/src/main/java/org/quartz/JobPersistenceException.java
+   A /trunk/quartz/src/main/java/org/quartz/ObjectDoesNotExistException.java
+   M /trunk/quartz/src/main/java/org/quartz/Scheduler.java
+   M /trunk/quartz/src/main/java/org/quartz/SchedulerConfigException.java
+   M /trunk/quartz/src/main/java/org/quartz/SchedulerException.java
+   M /trunk/quartz/src/main/java/org/quartz/SchedulerFactory.java
+   M /trunk/quartz/src/main/java/org/quartz/SimpleTrigger.java
+   M /trunk/quartz/src/main/java/org/quartz/Trigger.java
+   M /trunk/quartz/src/main/java/org/quartz/TriggerListener.java
+   M /trunk/quartz/src/main/java/org/quartz/TriggerUtils.java
+   M /trunk/quartz/src/main/java/org/quartz/core/JobRunShell.java
+   M /trunk/quartz/src/main/java/org/quartz/core/QuartzScheduler.java
+   M /trunk/quartz/src/main/java/org/quartz/core/QuartzSchedulerMBeanImpl.java
+   M /trunk/quartz/src/main/java/org/quartz/core/QuartzSchedulerResources.java
+   M /trunk/quartz/src/main/java/org/quartz/core/RemotableQuartzScheduler.java
+   M /trunk/quartz/src/main/java/org/quartz/core/jmx/QuartzSchedulerMBean.java
+   M /trunk/quartz/src/main/java/org/quartz/core/jmx/TriggerSupport.java
+   A /trunk/quartz/src/main/java/org/quartz/core/mbeans-descriptors.xml
+   M /trunk/quartz/src/main/java/org/quartz/ee/servlet/QuartzInitializerServlet.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/RemoteMBeanScheduler.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/RemoteScheduler.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/SchedulerRepository.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/StdScheduler.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/StdSchedulerFactory.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/calendar/AnnualCalendar.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/CloudscapeDelegate.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/Constants.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/DB2v6Delegate.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/DB2v7Delegate.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/DB2v8Delegate.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/DBSemaphore.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/DriverDelegate.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/HSQLDBDelegate.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/JobStoreCMT.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/JobStoreSupport.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/MSSQLDelegate.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/PointbaseDelegate.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/PostgreSQLDelegate.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/StdJDBCConstants.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/jdbcjobstore/StdJDBCDelegate.java
+   M /trunk/quartz/src/main/java/org/quartz/jobs/ee/jms/SendTopicMessageJob.java
+   M /trunk/quartz/src/main/java/org/quartz/listeners/BroadcastSchedulerListener.java
+   M /trunk/quartz/src/main/java/org/quartz/listeners/FilterAndBroadcastJobListener.java
+   M /trunk/quartz/src/main/java/org/quartz/listeners/FilterAndBroadcastTriggerListener.java
+   M /trunk/quartz/src/main/java/org/quartz/plugins/xml/XMLSchedulingDataProcessorPlugin.java
+   M /trunk/quartz/src/main/java/org/quartz/simpl/CascadingClassLoadHelper.java
+   M /trunk/quartz/src/main/java/org/quartz/simpl/RAMJobStore.java
+   M /trunk/quartz/src/main/java/org/quartz/simpl/SimpleThreadPool.java
+   M /trunk/quartz/src/main/java/org/quartz/spi/JobStore.java
+   M /trunk/quartz/src/main/java/org/quartz/utils/DBConnectionManager.java
+   M /trunk/quartz/src/main/java/org/quartz/xml/XMLSchedulingDataProcessor.java
+   A /trunk/quartz/src/main/resources/org/quartz/xml/job_scheduling_data_2_0.xsd (from /trunk/quartz/src/main/resources/org/quartz/xml/job_scheduling_data_1_8.xsd:1101)
+   M /trunk/quartz/src/test/java/org/quartz/CronTriggerTest.java
+   M /trunk/quartz/src/test/java/org/quartz/JobDetailTest.java
+   M /trunk/quartz/src/test/java/org/quartz/SimpleTriggerTest.java
+   M /trunk/quartz/src/test/java/org/quartz/impl/SchedulerDetailsSetterTest.java
+   M /trunk/quartz-all
+   M /trunk/quartz-oracle/src/main/java/org/quartz/impl/jdbcjobstore/oracle/OracleDelegate.java
+
+Quartz 2.0 work : API updates to use generics rather than arrays, etc.
+------------------------------------------------------------------------
+r1117 | jhouse | 2010-04-10 11:55:35 -0600 (Sat, 10 Apr 2010) | 1 line
+Changed paths:
+   M /trunk/quartz/src/main/java/org/quartz/Calendar.java
+   M /trunk/quartz/src/main/java/org/quartz/CronExpression.java
+   M /trunk/quartz/src/main/java/org/quartz/CronTrigger.java
+   M /trunk/quartz/src/main/java/org/quartz/JobExecutionException.java
+   M /trunk/quartz/src/main/java/org/quartz/JobListener.java
+   M /trunk/quartz/src/main/java/org/quartz/Scheduler.java
+   M /trunk/quartz/src/main/java/org/quartz/SchedulerContext.java
+   M /trunk/quartz/src/main/java/org/quartz/SchedulerListener.java
+   M /trunk/quartz/src/main/java/org/quartz/Trigger.java
+   M /trunk/quartz/src/main/java/org/quartz/TriggerUtils.java
+
+various fixes to typos and wording in javadocs.
+------------------------------------------------------------------------
+r1107 | jhouse | 2010-04-07 21:54:01 -0600 (Wed, 07 Apr 2010) | 1 line
+Changed paths:
+   M /trunk/quartz/src/main/java/org/quartz/CronExpression.java
+
+QTZ-27 : Bug in parsing cron pattern related to "L" in day of week field.
+------------------------------------------------------------------------
+r1033 | jhouse | 2010-01-20 19:38:45 -0700 (Wed, 20 Jan 2010) | 1 line
+Changed paths:
+   M /trunk/quartz/src/main/java/org/quartz/CronExpression.java
+   M /trunk/quartz/src/main/java/org/quartz/CronTrigger.java
+
+QUARTZ-824 : CronTrigger always throw an exception when schedule on non-gregorian calendar based locale
+------------------------------------------------------------------------
+r986 | jhouse | 2009-11-28 11:07:33 -0700 (Sat, 28 Nov 2009) | 1 line
+Changed paths:
+   M /trunk/quartz/src/main/java/org/quartz/CronExpression.java
+   M /trunk/quartz/src/main/java/org/quartz/NthIncludedDayTrigger.java
+   M /trunk/quartz/src/main/java/org/quartz/impl/calendar/BaseCalendar.java
+
+Deep-clone timezone instances.
+------------------------------------------------------------------------
+r984 | jhouse | 2009-11-25 21:52:32 -0700 (Wed, 25 Nov 2009) | 1 line
+Changed paths:
+   M /trunk/quartz/src/main/java/org/quartz/CronExpression.java
+   M /trunk/quartz/src/main/java/org/quartz/CronTrigger.java
+
+make max schedule year consistent.
+------------------------------------------------------------------------
+r941 | jvoegele | 2009-11-06 08:03:22 -0700 (Fri, 06 Nov 2009) | 4 lines
+Changed paths:
+   D /trunk/build.xml
+   A /trunk/pom.xml
+   A /trunk/quartz
+   A /trunk/quartz/pom.xml
+   A /trunk/quartz/src
+   A /trunk/quartz/src/main
+   A /trunk/quartz/src/main/java (from /trunk/src/java:940)
+   D /trunk/quartz/src/main/java/org/quartz/quartz.properties
+   D /trunk/quartz/src/main/java/org/quartz/xml/job_scheduling_data_1_5.dtd
+   D /trunk/quartz/src/main/java/org/quartz/xml/job_scheduling_data_1_5.xsd
+   A /trunk/quartz/src/main/resources
+   A /trunk/quartz/src/main/resources/org
+   A /trunk/quartz/src/main/resources/org/quartz
+   A /trunk/quartz/src/main/resources/org/quartz/quartz.properties (from /trunk/src/java/org/quartz/quartz.properties:940)
+   A /trunk/quartz/src/main/resources/org/quartz/xml
+   A /trunk/quartz/src/main/resources/org/quartz/xml/job_scheduling_data_1_5.dtd (from /trunk/src/java/org/quartz/xml/job_scheduling_data_1_5.dtd:940)
+   A /trunk/quartz/src/main/resources/org/quartz/xml/job_scheduling_data_1_5.xsd (from /trunk/src/java/org/quartz/xml/job_scheduling_data_1_5.xsd:940)
+   A /trunk/quartz/src/test (from /trunk/src/test:940)
+   D /trunk/quartz/src/test/java/org/quartz/AnnualCalendar-1.5.1.ser
+   D /trunk/quartz/src/test/java/org/quartz/CronExpression-1.5.2.ser
+   D /trunk/quartz/src/test/java/org/quartz/CronTrigger-1.5.2.ser
+   D /trunk/quartz/src/test/java/org/quartz/JobDataMap-1.4.5.ser
+   D /trunk/quartz/src/test/java/org/quartz/JobDataMap-1.5.1.ser
+   D /trunk/quartz/src/test/java/org/quartz/NthIncludedDayTrigger-1.5.2.ser
+   D /trunk/quartz/src/test/java/org/quartz/SimpleTrigger-1.5.2.ser
+   D /trunk/quartz/src/test/java/org/quartz/impl/calendar/DailyCalendar-1.5.2.ser
+   A /trunk/quartz/src/test/resources
+   A /trunk/quartz/src/test/resources/org
+   A /trunk/quartz/src/test/resources/org/quartz
+   A /trunk/quartz/src/test/resources/org/quartz/AnnualCalendar-1.5.1.ser (from /trunk/src/test/java/org/quartz/AnnualCalendar-1.5.1.ser:940)
+   A /trunk/quartz/src/test/resources/org/quartz/CronExpression-1.5.2.ser (from /trunk/src/test/java/org/quartz/CronExpression-1.5.2.ser:940)
+   A /trunk/quartz/src/test/resources/org/quartz/CronTrigger-1.5.2.ser (from /trunk/src/test/java/org/quartz/CronTrigger-1.5.2.ser:940)
+   A /trunk/quartz/src/test/resources/org/quartz/JobDataMap-1.4.5.ser (from /trunk/src/test/java/org/quartz/JobDataMap-1.4.5.ser:940)
+   A /trunk/quartz/src/test/resources/org/quartz/JobDataMap-1.5.1.ser (from /trunk/src/test/java/org/quartz/JobDataMap-1.5.1.ser:940)
+   A /trunk/quartz/src/test/resources/org/quartz/NthIncludedDayTrigger-1.5.2.ser (from /trunk/src/test/java/org/quartz/NthIncludedDayTrigger-1.5.2.ser:940)
+   A /trunk/quartz/src/test/resources/org/quartz/SimpleTrigger-1.5.2.ser (from /trunk/src/test/java/org/quartz/SimpleTrigger-1.5.2.ser:940)
+   A /trunk/quartz/src/test/resources/org/quartz/impl
+   A /trunk/quartz/src/test/resources/org/quartz/impl/calendar
+   A /trunk/quartz/src/test/resources/org/quartz/impl/calendar/DailyCalendar-1.5.2.ser (from /trunk/src/test/java/org/quartz/impl/calendar/DailyCalendar-1.5.2.ser:940)
+   D /trunk/quartz-1.6.4.pom
+   A /trunk/quartz-jboss
+   A /trunk/quartz-jboss/pom.xml
+   A /trunk/quartz-jboss/src
+   A /trunk/quartz-jboss/src/main
+   A /trunk/quartz-jboss/src/main/java (from /trunk/src/jboss:940)
+   A /trunk/quartz-oracle
+   A /trunk/quartz-oracle/pom.xml
+   A /trunk/quartz-oracle/src
+   A /trunk/quartz-oracle/src/main
+   A /trunk/quartz-oracle/src/main/java (from /trunk/src/oracle:940)
+   A /trunk/quartz-weblogic
+   A /trunk/quartz-weblogic/pom.xml
+   A /trunk/quartz-weblogic/src
+   A /trunk/quartz-weblogic/src/main
+   A /trunk/quartz-weblogic/src/main/java (from /trunk/src/weblogic:940)
+   M /trunk/readme.txt
+   D /trunk/src/java
+   D /trunk/src/jboss
+   D /trunk/src/oracle
+   D /trunk/src/test
+   D /trunk/src/weblogic
+
+Updated to use Maven as the build system, with all of the restructuring that that implies.
+
+Still to come: converting the examples to use Maven, and integrating Clover and Checkstyle into the Maven build.
+
+------------------------------------------------------------------------
+r896 | jhouse | 2008-12-02 08:42:10 -0700 (Tue, 02 Dec 2008) | 1 line
+Changed paths:
+   M /trunk/src/java/org/quartz/CronExpression.java
+   M /trunk/src/java/org/quartz/SimpleTrigger.java
+   M /trunk/src/java/org/quartz/ee/jta/UserTransactionHelper.java
+   M /trunk/src/java/org/quartz/impl/StdSchedulerFactory.java
+   M /trunk/src/java/org/quartz/impl/calendar/AnnualCalendar.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/DB2v6Delegate.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/StdJDBCDelegate.java
+   M /trunk/src/java/org/quartz/jobs/FileScanJob.java
+   M /trunk/src/java/org/quartz/jobs/ee/ejb/EJBInvokerJob.java
+   M /trunk/src/java/org/quartz/jobs/ee/jmx/JMXInvokerJob.java
+   M /trunk/src/java/org/quartz/simpl/RAMJobStore.java
+   M /trunk/src/java/org/quartz/utils/DirtyFlagMap.java
+
+misc minor code clean-up/fixes via FindBugs.
+------------------------------------------------------------------------
+r837 | jhouse | 2008-08-25 13:17:30 -0600 (Mon, 25 Aug 2008) | 1 line
+Changed paths:
+   M /trunk/src/java/org/quartz/CronExpression.java
+   M /trunk/src/test/java/org/quartz/CronExpressionTest.java
+
+fix bug in patch for QUARTZ-640.
+------------------------------------------------------------------------
+r814 | jhouse | 2008-08-02 14:40:35 -0600 (Sat, 02 Aug 2008) | 1 line
+Changed paths:
+   M /trunk/src/java/org/quartz/CronExpression.java
+
+QUARTZ-673: Update docs to reflect limits of '#' character in day-of-week field.
+------------------------------------------------------------------------
+r808 | bayard | 2008-05-08 08:59:32 -0600 (Thu, 08 May 2008) | 1 line
+Changed paths:
+   M /trunk/src/java/org/quartz/CronExpression.java
+   M /trunk/src/test/java/org/quartz/CronExpressionTest.java
+
+Adding an exception throwing when the day of week or day of month contains both an L and numbers as that is not (yet) supported. Reported in QUARTZ-640 by Rex Wong
+------------------------------------------------------------------------
+r765 | bayard | 2008-02-02 21:58:13 -0700 (Sat, 02 Feb 2008) | 1 line
+Changed paths:
+   M /trunk/src/java/org/quartz/CronExpression.java
+   A /trunk/src/test/java/org/quartz/Quartz601Test.java
+
+Applying the last patch from Kay Huber's QUARTZ-601 - enhancing CronExpression so it can handle ranges over Midnight. It appears to work nicely for simple cases, but more complicated cases start to become semantically ambigious - so javadoc to that effect has been added. 
+------------------------------------------------------------------------
+r764 | bayard | 2008-01-28 23:41:02 -0700 (Mon, 28 Jan 2008) | 1 line
+Changed paths:
+   M /trunk/src/java/org/quartz/CronExpression.java
+   M /trunk/src/test/java/org/quartz/CronExpressionTest.java
+
+Applying my second patch from QUARTZ-621 - stops it from allowing patterns with too many wildcards early on and failing later. Now, by replicating the later logic in the parsing stage, it fails earlier. 
+------------------------------------------------------------------------
+r715 | jhouse | 2007-08-21 22:50:07 -0600 (Tue, 21 Aug 2007) | 1 line
+Changed paths:
+   M /branches/quartz_1-6/src/java/org/quartz/CronExpression.java
+   M /trunk/src/java/org/quartz/CronExpression.java
+
+QUARTZ-595 - account for timezone properly, particularly when expression includes last day of month and/or weekday selections.
+------------------------------------------------------------------------
+r696 | bayard | 2007-04-18 11:55:59 -0600 (Wed, 18 Apr 2007) | 1 line
+Changed paths:
+   M /trunk/src/java/org/quartz/CronExpression.java
+   M /trunk/src/test/java/org/quartz/CronExpressionTest.java
+
+Fixing QUARTZ-574 by switching the < 0 checks on getMonthNumber to <= 0. This means that the right Exception will be thrown for a month of FOO, and an Exception will now be thrown for a range with an illegal end month, ie) JAN-FOO
+------------------------------------------------------------------------
+r692 | bayard | 2007-04-18 08:54:23 -0600 (Wed, 18 Apr 2007) | 1 line
+Changed paths:
+   M /trunk/src/java/org/quartz/CronExpression.java
+   M /trunk/src/test/java/org/quartz/CronExpressionTest.java
+
+Fixing QUARTZ-571 - cronExpression case no longer changes in serialization
+------------------------------------------------------------------------
+r658 | perfnorm | 2007-03-10 06:02:55 -0700 (Sat, 10 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/src/java/org/quartz/CronExpression.java
+   M /trunk/src/java/org/quartz/core/JobRunShell.java
+   M /trunk/src/java/org/quartz/core/QuartzScheduler.java
+   M /trunk/src/java/org/quartz/impl/StdSchedulerFactory.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/JobStoreSupport.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/StdJDBCDelegate.java
+   M /trunk/src/java/org/quartz/listeners/FilterAndBroadcastJobListener.java
+   M /trunk/src/java/org/quartz/listeners/FilterAndBroadcastTriggerListener.java
+   M /trunk/src/java/org/quartz/listeners/JobChainingJobListener.java
+   M /trunk/src/java/org/quartz/simpl/SimpleThreadPool.java
+
+Fixed checkstyle warnings
+------------------------------------------------------------------------
+r655 | jhouse | 2006-12-01 10:46:43 -0700 (Fri, 01 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/src/java/org/quartz/CronExpression.java
+
+QUARTZ-533 - bug with handling of short months with usage of "/" in the day-of-month expression.
+------------------------------------------------------------------------
+r649 | jhouse | 2006-11-06 10:14:51 -0700 (Mon, 06 Nov 2006) | 1 line
+Changed paths:
+   M /trunk/src/java/org/quartz/CronExpression.java
+
+QUARTZ-478 - prevent endless loop
+------------------------------------------------------------------------
+r578 | jrosenberg | 2006-07-07 08:23:11 -0600 (Fri, 07 Jul 2006) | 3 lines
+Changed paths:
+   M /trunk/src/java/org/quartz/CronExpression.java
+   M /trunk/src/java/org/quartz/NthIncludedDayTrigger.java
+   M /trunk/src/java/org/quartz/impl/calendar/CronCalendar.java
+
+Issue number:  Checkstyle
+Removed tabs
+
+------------------------------------------------------------------------
+r577 | eagle79 | 2006-07-05 21:25:06 -0600 (Wed, 05 Jul 2006) | 3 lines
+Changed paths:
+   M /trunk/src/java/org/quartz/CronExpression.java
+   M /trunk/src/java/org/quartz/impl/calendar/CronCalendar.java
+
+Issue number: QUARTZ-445
+corrected bug in getNextIncludedTime() which causes it to loop forever in some cases.
+
+------------------------------------------------------------------------
+r511 | jrosenberg | 2006-05-16 12:24:44 -0600 (Tue, 16 May 2006) | 4 lines
+Changed paths:
+   M /trunk/src/java/org/quartz/CronExpression.java
+
+Issue number: QUARTZ-353
+Removed reference to "C" from javadoc
+Removed parsing of "C"
+
+------------------------------------------------------------------------
+r472 | jrosenberg | 2006-04-28 06:23:49 -0600 (Fri, 28 Apr 2006) | 3 lines
+Changed paths:
+   M /trunk/src/java/org/quartz/CronExpression.java
+
+Issue number: QUARTZ-424
+Added placeholder method for getFinalFireTime(), and made clear in the javadoc that getFinalFireTime() and getTimeBefore() are not implemented.
+
+------------------------------------------------------------------------
+r461 | jrosenberg | 2006-04-21 15:11:11 -0600 (Fri, 21 Apr 2006) | 3 lines
+Changed paths:
+   M /trunk/src/java/org/quartz/CronExpression.java
+   A /trunk/src/test/java/org/quartz/CronExpressionTest.java
+
+Issue number: QUARTZ-396
+Handle no more fire times correctly in isSatisfiedBy().
+
+------------------------------------------------------------------------
+r455 | jrosenberg | 2006-04-14 10:56:13 -0600 (Fri, 14 Apr 2006) | 3 lines
+Changed paths:
+   M /trunk/src/java/org/quartz/CronExpression.java
+
+Issue number: QUARTZ-325
+Fixed javadoc comment that had been copied from CronTrigger for get/setTimeZone()
+
+------------------------------------------------------------------------
+r426 | jrosenberg | 2006-03-20 14:40:36 -0700 (Mon, 20 Mar 2006) | 3 lines
+Changed paths:
+   M /trunk/src/java/org/quartz/Calendar.java
+   M /trunk/src/java/org/quartz/CronExpression.java
+   M /trunk/src/java/org/quartz/CronTrigger.java
+   M /trunk/src/java/org/quartz/InterruptableJob.java
+   M /trunk/src/java/org/quartz/Job.java
+   M /trunk/src/java/org/quartz/JobDataMap.java
+   M /trunk/src/java/org/quartz/JobDetail.java
+   M /trunk/src/java/org/quartz/JobListener.java
+   M /trunk/src/java/org/quartz/NthIncludedDayTrigger.java
+   M /trunk/src/java/org/quartz/Scheduler.java
+   M /trunk/src/java/org/quartz/SchedulerException.java
+   M /trunk/src/java/org/quartz/SchedulerFactory.java
+   M /trunk/src/java/org/quartz/SchedulerListener.java
+   M /trunk/src/java/org/quartz/SchedulerMetaData.java
+   M /trunk/src/java/org/quartz/SimpleTrigger.java
+   M /trunk/src/java/org/quartz/Trigger.java
+   M /trunk/src/java/org/quartz/TriggerListener.java
+   M /trunk/src/java/org/quartz/TriggerListenerSupport.java
+   M /trunk/src/java/org/quartz/TriggerUtils.java
+   M /trunk/src/java/org/quartz/core/JobRunShellFactory.java
+   M /trunk/src/java/org/quartz/core/QuartzScheduler.java
+   M /trunk/src/java/org/quartz/core/QuartzSchedulerResources.java
+   M /trunk/src/java/org/quartz/core/QuartzSchedulerThread.java
+   M /trunk/src/java/org/quartz/core/RemotableQuartzScheduler.java
+   M /trunk/src/java/org/quartz/ee/jta/JTAJobRunShell.java
+   M /trunk/src/java/org/quartz/ee/jta/JTAJobRunShellFactory.java
+   M /trunk/src/java/org/quartz/ee/jta/UserTransactionHelper.java
+   M /trunk/src/java/org/quartz/ee/servlet/QuartzInitializerListener.java
+   M /trunk/src/java/org/quartz/ee/servlet/QuartzInitializerServlet.java
+   M /trunk/src/java/org/quartz/helpers/TriggerUtils.java
+   M /trunk/src/java/org/quartz/helpers/VersionPrinter.java
+   M /trunk/src/java/org/quartz/impl/DirectSchedulerFactory.java
+   M /trunk/src/java/org/quartz/impl/QuartzServer.java
+   M /trunk/src/java/org/quartz/impl/RemoteScheduler.java
+   M /trunk/src/java/org/quartz/impl/SchedulerRepository.java
+   M /trunk/src/java/org/quartz/impl/StdScheduler.java
+   M /trunk/src/java/org/quartz/impl/StdSchedulerFactory.java
+   M /trunk/src/java/org/quartz/impl/calendar/AnnualCalendar.java
+   M /trunk/src/java/org/quartz/impl/calendar/BaseCalendar.java
+   M /trunk/src/java/org/quartz/impl/calendar/CronCalendar.java
+   M /trunk/src/java/org/quartz/impl/calendar/DailyCalendar.java
+   M /trunk/src/java/org/quartz/impl/calendar/HolidayCalendar.java
+   M /trunk/src/java/org/quartz/impl/calendar/MonthlyCalendar.java
+   M /trunk/src/java/org/quartz/impl/calendar/WeeklyCalendar.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/CloudscapeDelegate.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/Constants.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/DB2v6Delegate.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/DB2v7Delegate.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/DB2v8Delegate.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/DriverDelegate.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/HSQLDBDelegate.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/JobStoreCMT.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/JobStoreSupport.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/JobStoreTX.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/MSSQLDelegate.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/PointbaseDelegate.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/PostgreSQLDelegate.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/SimpleSemaphore.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/StdJDBCConstants.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/StdJDBCDelegate.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/StdRowLockSemaphore.java
+   M /trunk/src/java/org/quartz/impl/jdbcjobstore/Util.java
+   M /trunk/src/java/org/quartz/jobs/FileScanJob.java
+   M /trunk/src/java/org/quartz/jobs/FileScanListener.java
+   M /trunk/src/java/org/quartz/jobs/NativeJob.java
+   M /trunk/src/java/org/quartz/jobs/NoOpJob.java
+   M /trunk/src/java/org/quartz/jobs/ee/ejb/EJBInvokerJob.java
+   M /trunk/src/java/org/quartz/jobs/ee/jmx/JMXInvokerJob.java
+   M /trunk/src/java/org/quartz/jobs/ee/mail/SendMailJob.java
+   M /trunk/src/java/org/quartz/plugins/SchedulerPluginWithUserTransactionSupport.java
+   M /trunk/src/java/org/quartz/plugins/history/LoggingJobHistoryPlugin.java
+   M /trunk/src/java/org/quartz/plugins/history/LoggingTriggerHistoryPlugin.java
+   M /trunk/src/java/org/quartz/plugins/management/ShutdownHookPlugin.java
+   M /trunk/src/java/org/quartz/plugins/xml/JobInitializationPlugin.java
+   M /trunk/src/java/org/quartz/simpl/CascadingClassLoadHelper.java
+   M /trunk/src/java/org/quartz/simpl/HostnameInstanceIdGenerator.java
+   M /trunk/src/java/org/quartz/simpl/PropertySettingJobFactory.java
+   M /trunk/src/java/org/quartz/simpl/RAMJobStore.java
+   M /trunk/src/java/org/quartz/simpl/SimpleInstanceIdGenerator.java
+   M /trunk/src/java/org/quartz/simpl/SimpleJobFactory.java
+   M /trunk/src/java/org/quartz/simpl/SimpleThreadPool.java
+   M /trunk/src/java/org/quartz/spi/ClassLoadHelper.java
+   M /trunk/src/java/org/quartz/spi/InstanceIdGenerator.java
+   M /trunk/src/java/org/quartz/spi/JobFactory.java
+   M /trunk/src/java/org/quartz/spi/JobStore.java
+   M /trunk/src/java/org/quartz/spi/SchedulerPlugin.java
+   M /trunk/src/java/org/quartz/spi/SchedulerSignaler.java
+   M /trunk/src/java/org/quartz/spi/ThreadPool.java
+   M /trunk/src/java/org/quartz/spi/TimeBroker.java
+   M /trunk/src/java/org/quartz/utils/ConnectionProvider.java
+   M /trunk/src/java/org/quartz/utils/DBConnectionManager.java
+   M /trunk/src/java/org/quartz/utils/DirtyFlagMap.java
+   M /trunk/src/java/org/quartz/utils/JNDIConnectionProvider.java
+   M /trunk/src/java/org/quartz/utils/PoolingConnectionProvider.java
+   M /trunk/src/java/org/quartz/utils/PropertiesParser.java
+   M /trunk/src/java/org/quartz/utils/StringKeyDirtyFlagMap.java
+   M /trunk/src/java/org/quartz/xml/JobSchedulingDataProcessor.java
+
+Issue number: QUARTZ-374
+Fixed main Quartz src to comply with checkstyle
+
+------------------------------------------------------------------------
+r339 | jrosenberg | 2006-02-24 08:50:50 -0700 (Fri, 24 Feb 2006) | 3 lines
+Changed paths:
+   M /trunk/src/java/org/quartz/CronExpression.java
+
+Issue number:  QUARTZ-325
+Removed unused method getTime()
+
+------------------------------------------------------------------------
+r328 | jhouse | 2006-02-20 19:38:54 -0700 (Mon, 20 Feb 2006) | 17 lines
+Changed paths:
+   M /trunk/src/java/org/quartz/CronExpression.java
+   M /trunk/src/java/org/quartz/CronTrigger.java
+
+fix clone()
+CVS: ----------------------------------------------------------------------
+CVS: Issue number:
+CVS:   If this change addresses one or more issues,
+CVS:   then enter the issue number(s) here.
+CVS: Obtained from:
+CVS:   If this change has been taken from another system,
+CVS:   then name the system in this line, otherwise delete it.
+CVS: Submitted by:
+CVS:   If this code has been contributed to the project by someone else; i.e.,
+CVS:   they sent us a patch or a set of diffs, then include their name/email
+CVS:   address here. If this is your work then delete this line.
+CVS: Reviewed by:
+CVS:   If we are doing pre-commit code reviews and someone else has
+CVS:   reviewed your changes, include their name(s) here.
+CVS:   If you have not had it reviewed then delete this line.
+
+------------------------------------------------------------------------
+r325 | jhouse | 2006-02-20 19:19:06 -0700 (Mon, 20 Feb 2006) | 20 lines
+Changed paths:
+   A /trunk/src/java/org/quartz/CronExpression.java
+   M /trunk/src/java/org/quartz/CronTrigger.java
+   A /trunk/src/java/org/quartz/impl/calendar/CronCalendar.java
+
+Issue number:  QUARTZ-314
+Obtained from:
+Submitted by:
+Reviewed by:
+CVS: ----------------------------------------------------------------------
+CVS: Issue number:
+CVS:   If this change addresses one or more issues,
+CVS:   then enter the issue number(s) here.
+CVS: Obtained from:
+CVS:   If this change has been taken from another system,
+CVS:   then name the system in this line, otherwise delete it.
+CVS: Submitted by:
+CVS:   If this code has been contributed to the project by someone else; i.e.,
+CVS:   they sent us a patch or a set of diffs, then include their name/email
+CVS:   address here. If this is your work then delete this line.
+CVS: Reviewed by:
+CVS:   If we are doing pre-commit code reviews and someone else has
+CVS:   reviewed your changes, include their name(s) here.
+CVS:   If you have not had it reviewed then delete this line.
+
+------------------------------------------------------------------------
+

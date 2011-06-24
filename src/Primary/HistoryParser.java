@@ -74,7 +74,7 @@ public class HistoryParser {
 		
 		String p = bundle.getString(bundle.getString("repo")); //get the repository URL
 		String edit = p.replace('/', '0');
-		String path = "dataRead/" + edit.replace(':', '0') + item + ".txt"; 
+		String path = "dataRead/subLogs/" + edit.replace(':', '0') + item + ".txt"; 
 		File file = new File(path);
 		
 		if (!file.exists() || !bundle.getString("reuseStorageToggle").equals("true") || masterControl[argNum]){
@@ -154,10 +154,12 @@ public class HistoryParser {
 			sortedInsert(initiallyRelevant, thisNode);
 		}
 		
-		FileWriter outFile = new FileWriter(path);
-        PrintWriter storing = new PrintWriter(outFile);
-		storing.println(toStore);
-		storing.close();
+		if (bundle.getString("updateToggle").equals("true")) {
+			FileWriter outFile = new FileWriter(path);
+        	PrintWriter storing = new PrintWriter(outFile);
+			storing.println(toStore);
+			storing.close();
+		}
 	}
 	
 	public void nodeCycleThree(BufferedReader stdInput, int argNum) throws Exception {
@@ -475,7 +477,7 @@ public class HistoryParser {
 	public long fullTimeAverage() throws IOException {
 		String p = bundle.getString(bundle.getString("repo")); //get the repository URL
 		String edit = p.replace('/', '0');
-		String path = "dataRead/" + edit.replace(':', '0') + "time" + ".txt"; 
+		String path = "dataRead/fullLogs/" + edit.replace(':', '0') + "time" + ".txt"; 
 		File file = new File(path);
 		String s;//current input line
 		String[] ss; //breaking down the line to get the date information
@@ -507,17 +509,21 @@ public class HistoryParser {
 					Calendar thisTime = new GregorianCalendar(Integer.parseInt(current.split(" ")[0].split("-")[0]), Integer.parseInt(current.split(" ")[0].split("-")[1])-1, Integer.parseInt(current.split(" ")[0].split("-")[2]), Integer.parseInt(current.split(" ")[1].split(":")[0]), Integer.parseInt(current.split(" ")[1].split(":")[1]), Integer.parseInt(current.split(" ")[1].split(":")[2]));
 					if (!previous.equals("")){ //implies this is not the first iteration
 						Calendar lastTime = new GregorianCalendar(Integer.parseInt(previous.split(" ")[0].split("-")[0]), Integer.parseInt(previous.split(" ")[0].split("-")[1])-1, Integer.parseInt(previous.split(" ")[0].split("-")[2]), Integer.parseInt(previous.split(" ")[1].split(":")[0]), Integer.parseInt(previous.split(" ")[1].split(":")[1]), Integer.parseInt(previous.split(" ")[1].split(":")[2]));
-						long timeDiff = lastTime.getTimeInMillis()-thisTime.getTimeInMillis();
+						long timeDiff = lastTime.getTimeInMillis() - thisTime.getTimeInMillis();
 						rev++;
 						totalTime += timeDiff;
 					}
 					previous = current;
 				}
 			}
-			FileWriter outFile = new FileWriter(path);
-	        PrintWriter storing = new PrintWriter(outFile);
-	        storing.println(toStore);
-	        storing.close();
+			
+			if (bundle.getString("updateToggle").equals("true")) {
+				FileWriter outFile = new FileWriter(path);
+				PrintWriter storing = new PrintWriter(outFile);
+	        	storing.println(toStore);
+	        	storing.close();
+			}
+			
 		}
 		else {
 			stdInput = new BufferedReader(new FileReader(path));
@@ -551,7 +557,7 @@ public class HistoryParser {
 	public void fullCount(PrintWriter out) throws IOException {
 		String p = bundle.getString(bundle.getString("repo"));
 		String edit = p.replace('/', '0');
-		String path = "dataRead/" + edit.replace(':', '0') + "occurrences" + ".txt"; 
+		String path = "dataRead/occurrences/" + edit.replace(':', '0') + "occurrences" + ".txt"; 
 		String s;
 		String[] ss;
 		String current = "";
