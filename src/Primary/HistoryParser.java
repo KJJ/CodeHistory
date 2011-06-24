@@ -67,6 +67,7 @@ public class HistoryParser {
 				}
 			}
 		}
+
 		return ceiling; //return the revision filters to be used in the creation of several processes 
 	}
 	
@@ -74,6 +75,7 @@ public class HistoryParser {
 		
 		String p = bundle.getString(bundle.getString("repo")); //get the repository URL
 		String edit = p.replace('/', '0');
+		edit = edit.replace('.', '0');
 		String path = "dataRead/subLogs/" + edit.replace(':', '0') + item + ".txt"; 
 		File file = new File(path);
 		
@@ -179,7 +181,7 @@ public class HistoryParser {
 		String undesirable = bundle.getString("unwanted");
 		
 		// while there is input to process, execute this loop
-		while  ((s =  stdInput.readLine())  !=  null)  {
+		while  ((s = stdInput.readLine())  !=  null)  {
 			
 			if (s.startsWith("r") && s.contains("|")) {  //a line starting with a lower case r implies that we are at a new revision
 				if (count != 0) {  // check to see whether or not this is the first iteration
@@ -328,7 +330,7 @@ public class HistoryParser {
 				}
 				exec = Runtime.getRuntime().exec("svn log -v " + n + "@" + ceiling[i]); //svn command starting at a particular revision
 			}
-			nodeCycle(exec, i, args[i].replace('/', '0').substring(0, args[i].indexOf('.'))); //execute the command and collect the desired data
+			nodeCycle(exec, i, args[i]); //execute the command and collect the desired data
 		}
 		if (bundle.getString("revisionOverallToggle").equals("true")) {
 			standard = fullTimeAverage(); //gets the average time between all revisions in the chosen repository
@@ -477,6 +479,7 @@ public class HistoryParser {
 	public long fullTimeAverage() throws IOException {
 		String p = bundle.getString(bundle.getString("repo")); //get the repository URL
 		String edit = p.replace('/', '0');
+		edit = edit.replace('.', '0');
 		String path = "dataRead/fullLogs/" + edit.replace(':', '0') + "time" + ".txt"; 
 		File file = new File(path);
 		String s;//current input line
@@ -557,6 +560,7 @@ public class HistoryParser {
 	public void fullCount(PrintWriter out) throws IOException {
 		String p = bundle.getString(bundle.getString("repo"));
 		String edit = p.replace('/', '0');
+		edit = edit.replace('.', '0');
 		String path = "dataRead/occurrences/" + edit.replace(':', '0') + "occurrences" + ".txt"; 
 		String s;
 		String[] ss;

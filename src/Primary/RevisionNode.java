@@ -24,7 +24,6 @@ public class RevisionNode {
 	 * Constructor. Allows the user to also enter the date and number of relevant files 
 	 * @param dat date of revision
 	 * @param rev revision number 
-	 * @param total how many changed files there are
 	 * @param query how many files were entered on the command line
 	 */
 	public RevisionNode(String dat, String rev, int query, String User, String comment) {

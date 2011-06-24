@@ -13,9 +13,15 @@ public class Main {
 		long start = System.currentTimeMillis();
 		ResourceBundle bundle = ResourceBundle.getBundle("config");
 		try {
-			//information is parsed and printed here using a HistoryParser instance
-		    HistoryParser history = new HistoryParser(args);
-		    history.printHistoryInformation();  
+			if (bundle.getString("updateMode").equals("true")) {
+				Update up = new Update();
+				up.runFullUpdate();
+			}
+			else {
+				//information is parsed and printed here using a HistoryParser instance
+				HistoryParser history = new HistoryParser(args);
+				history.printHistoryInformation();  
+			}
 		}
 		//catches any exception thrown
 		catch (Exception e) {
