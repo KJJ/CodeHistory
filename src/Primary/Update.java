@@ -95,7 +95,7 @@ public class Update {
 	
 	public void runFullUpdate() {
 		
-		int i = 1;
+		int i = 6;
 		
 		while (1 != 0) {
 			try {

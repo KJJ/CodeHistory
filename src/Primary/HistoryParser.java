@@ -76,6 +76,8 @@ public class HistoryParser {
 		String p = bundle.getString(bundle.getString("repo")); //get the repository URL
 		String edit = p.replace('/', '0');
 		edit = edit.replace('.', '0');
+		item = item.replace('.', '0');
+		item = item.replace('/', '0');
 		String path = "dataRead/subLogs/" + edit.replace(':', '0') + item + ".txt"; 
 		File file = new File(path);
 		
