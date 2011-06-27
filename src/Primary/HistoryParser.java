@@ -45,7 +45,7 @@ public class HistoryParser {
 		}
 		
 		else {
-			lowerBound = Integer.MIN_VALUE;
+			lowerBound = -1;
 		}
 		
 		if (!bundle.getString("logUpperLimit").equals("N/A")) {
@@ -99,7 +99,7 @@ public class HistoryParser {
 		String path = "dataRead/subLogs/" + edit.replace(':', '0') + item + ".txt"; 
 		File file = new File(path);
 		
-		if (!file.exists() || !bundle.getString("reuseStorageToggle").equals("true") || masterControl[argNum]){
+		if (!file.exists() || !bundle.getString("reuseSubLogToggle").equals("true") || masterControl[argNum]){
 			BufferedReader  stdInput=  new  BufferedReader(new
 	              InputStreamReader(exec.getInputStream()));
 			nodeCycleTwo(stdInput, argNum, path);
@@ -119,7 +119,7 @@ public class HistoryParser {
 		String[] ss;
 		String userList = "";
 		//revision list
-		String rev = "-1";
+		String rev = "-2";
 		//list of revision dates
 		String date = "";
 		//counter for how many files are changed
@@ -165,10 +165,7 @@ public class HistoryParser {
 				comment += s + " "; //enters the comment data
 			}
 		}
-		if (rev.equals("thisIsNotARevision")) { //implies no revisions were ever found for this file and it therefore does not exist
-			throw new Exception("User did not enter the names or starting revision properly");
-		}
-		
+
 		//used to get the last revision that was cut off by the for loop
 		if (!(undesirable.contains(" " + rev + " ") || undesirable.contains("<" + rev + " ") || undesirable.contains(" " + rev + ">") || undesirable.contains("<" + rev + ">")) && Integer.parseInt(rev) >= lowerBound && Integer.parseInt(rev) <= upperBound) {
 			RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
@@ -192,7 +189,7 @@ public class HistoryParser {
 		String[] ss;
 		String userList = "";
 		//revision list
-		String rev = "thisIsNotARevision";
+		String rev = "-2";
 		//list of revision dates
 		String date = "";
 		//counter for how many files are changed
@@ -234,10 +231,7 @@ public class HistoryParser {
 				comment += s + " "; //enters the comment data
 			}
 		}	
-		if (rev.equals("thisIsNotARevision")) { //implies no revisions were ever found for this file and it therefore does not exist
-			throw new Exception("User did not enter the names or starting revision properly");
-		}
-		
+
 		//used to get the last revision that was cut off by the for loop
 		if (!(undesirable.contains(" " + rev + " ") || undesirable.contains("<" + rev + " ") || undesirable.contains(" " + rev + ">") || undesirable.contains("<" + rev + ">")) && Integer.parseInt(rev) >= lowerBound && Integer.parseInt(rev) <= upperBound) {
 			RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
@@ -512,7 +506,7 @@ public class HistoryParser {
 		BufferedReader  stdInput;
 		String toStore = "";
 		
-		if (!file.exists() || !bundle.getString("reuseStorageToggle").equals("true")) {
+		if (!file.exists() || !bundle.getString("reuseFullLogToggle").equals("true")) {
 			stdInput =  new  BufferedReader(new
 	              InputStreamReader(exec.getInputStream()));
 			
@@ -589,7 +583,7 @@ public class HistoryParser {
 		System.out.println();
 		out.println();
 		File file = new File(path);
-		if (!file.exists() || !bundle.getString("reuseStorageToggle").equals("true")) {
+		if (!file.exists() || !bundle.getString("reuseOccurrencesToggle").equals("true")) {
 			FileWriter outFile = new FileWriter(path);
 	        PrintWriter storing = new PrintWriter(outFile);
 			Process exec = Runtime.getRuntime().exec("svn log " + p + " -q -v");
