@@ -16,7 +16,9 @@ public class HistoryParser {
 	
 	private int[] ceiling;
 	
-	private boolean[] masterControl; 
+	private boolean[] masterControl;  
+	
+	private int lowerBound, upperBound;
 	
 	private LinkedList<RevisionNode> initiallyRelevant = new LinkedList<RevisionNode>();
 	
@@ -37,6 +39,22 @@ public class HistoryParser {
 				args[i] = args[i].substring(0, args[i].lastIndexOf('/'));
 			}
 		}
+		
+		if (!bundle.getString("logLowerLimit").equals("N/A")) {
+			lowerBound = Integer.parseInt(bundle.getString("logLowerLimit"));
+		}
+		
+		else {
+			lowerBound = Integer.MIN_VALUE;
+		}
+		
+		if (!bundle.getString("logUpperLimit").equals("N/A")) {
+			upperBound = Integer.parseInt(bundle.getString("logUpperLimit"));
+		}
+		
+		else {
+			upperBound = Integer.MAX_VALUE;
+		}
 	}
 	
 	public int[] checkOver(String[] args, int[] ceiling) throws Exception {
@@ -46,7 +64,7 @@ public class HistoryParser {
 		int i, j; //loops counters
 		
 		//the 2 for loops check each entry with every other in order to prevent duplicate entries from affecting the data
-		for (i=0; i < args.length; i++){
+		for (i = 0; i < args.length; i++){
 			if (args[i].contains("(")) {
 				masterControl[i] = true;
 			}
@@ -101,7 +119,7 @@ public class HistoryParser {
 		String[] ss;
 		String userList = "";
 		//revision list
-		String rev = "thisIsNotARevision";
+		String rev = "-1";
 		//list of revision dates
 		String date = "";
 		//counter for how many files are changed
@@ -120,7 +138,7 @@ public class HistoryParser {
 				if (count != 0) {  // check to see whether or not this is the first iteration
 					
 					//the if below checks to see if the the current revision has been explicitly rejected by the user in the config file
-					if (!(undesirable.contains(" " + rev + " ") || undesirable.contains("<" + rev + " ") || undesirable.contains(" " + rev + ">") || undesirable.contains("<" + rev + ">"))) {
+					if (!(undesirable.contains(" " + rev + " ") || undesirable.contains("<" + rev + " ") || undesirable.contains(" " + rev + ">") || undesirable.contains("<" + rev + ">")) && Integer.parseInt(rev) >= lowerBound && Integer.parseInt(rev) <= upperBound) {
 						RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
 						thisNode.newRelevantFile(args[argNum]);
 						sortedInsert(initiallyRelevant, thisNode);
@@ -146,13 +164,13 @@ public class HistoryParser {
 			else if (!s.equals("Changed paths:") && !s.contains("-------") && !s.startsWith("CVS: ")) { //filters out generally useless lines
 				comment += s + " "; //enters the comment data
 			}
-		}	
+		}
 		if (rev.equals("thisIsNotARevision")) { //implies no revisions were ever found for this file and it therefore does not exist
 			throw new Exception("User did not enter the names or starting revision properly");
 		}
 		
 		//used to get the last revision that was cut off by the for loop
-		if (!(undesirable.contains(" " + rev + " ") || undesirable.contains(":" + rev + " ") || undesirable.contains(" " + rev + "."))) {
+		if (!(undesirable.contains(" " + rev + " ") || undesirable.contains("<" + rev + " ") || undesirable.contains(" " + rev + ">") || undesirable.contains("<" + rev + ">")) && Integer.parseInt(rev) >= lowerBound && Integer.parseInt(rev) <= upperBound) {
 			RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
 			thisNode.newRelevantFile(args[argNum]);
 			sortedInsert(initiallyRelevant, thisNode);
@@ -189,7 +207,7 @@ public class HistoryParser {
 				if (count != 0) {  // check to see whether or not this is the first iteration
 					
 					//the if below checks to see if the the current revision has been explicitly rejected by the user in the config file
-					if (!(undesirable.contains(" " + rev + " ") || undesirable.contains("<" + rev + " ") || undesirable.contains(" " + rev + ">") || undesirable.contains("<" + rev + ">"))) {
+					if (!(undesirable.contains(" " + rev + " ") || undesirable.contains("<" + rev + " ") || undesirable.contains(" " + rev + ">") || undesirable.contains("<" + rev + ">")) && Integer.parseInt(rev) >= lowerBound && Integer.parseInt(rev) <= upperBound) {
 						RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
 						thisNode.newRelevantFile(args[argNum]);
 						sortedInsert(initiallyRelevant, thisNode);
@@ -221,7 +239,7 @@ public class HistoryParser {
 		}
 		
 		//used to get the last revision that was cut off by the for loop
-		if (!(undesirable.contains(" " + rev + " ") || undesirable.contains(":" + rev + " ") || undesirable.contains(" " + rev + "."))) {
+		if (!(undesirable.contains(" " + rev + " ") || undesirable.contains("<" + rev + " ") || undesirable.contains(" " + rev + ">") || undesirable.contains("<" + rev + ">")) && Integer.parseInt(rev) >= lowerBound && Integer.parseInt(rev) <= upperBound) {
 			RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
 			thisNode.newRelevantFile(args[argNum]);
 			sortedInsert(initiallyRelevant, thisNode);
@@ -455,7 +473,7 @@ public class HistoryParser {
 			System.out.println("Rating Graph: looking for grouping\n"); //title of the graph
 			out.println("Rating Graph: looking for grouping\n");
 			for (i = 1; i <= statArray.length; i++){
-				System.out.print("(" + (double) (i-1) / 10 + ", " + (double) i / 10 + "]:  "); //current range interval
+				System.out.print("(" + (double) (i - 1) / 10 + ", " + (double) i / 10 + "]:  "); //current range interval
 				out.print("(" + (double) (i - 1) / 10 + ", " + (double) i / 10 + "]:  ");
 				for (j = 0; j < statArray[i - 1]; j++){ //loop through the entire range of rating intervals
 					System.out.print("|"); // one '|' = one rating in this range
@@ -513,7 +531,7 @@ public class HistoryParser {
 					}
 					Calendar thisTime = new GregorianCalendar(Integer.parseInt(current.split(" ")[0].split("-")[0]), Integer.parseInt(current.split(" ")[0].split("-")[1])-1, Integer.parseInt(current.split(" ")[0].split("-")[2]), Integer.parseInt(current.split(" ")[1].split(":")[0]), Integer.parseInt(current.split(" ")[1].split(":")[1]), Integer.parseInt(current.split(" ")[1].split(":")[2]));
 					if (!previous.equals("")){ //implies this is not the first iteration
-						Calendar lastTime = new GregorianCalendar(Integer.parseInt(previous.split(" ")[0].split("-")[0]), Integer.parseInt(previous.split(" ")[0].split("-")[1])-1, Integer.parseInt(previous.split(" ")[0].split("-")[2]), Integer.parseInt(previous.split(" ")[1].split(":")[0]), Integer.parseInt(previous.split(" ")[1].split(":")[1]), Integer.parseInt(previous.split(" ")[1].split(":")[2]));
+						Calendar lastTime = new GregorianCalendar(Integer.parseInt(previous.split(" ")[0].split("-")[0]), Integer.parseInt(previous.split(" ")[0].split("-")[1]) - 1, Integer.parseInt(previous.split(" ")[0].split("-")[2]), Integer.parseInt(previous.split(" ")[1].split(":")[0]), Integer.parseInt(previous.split(" ")[1].split(":")[1]), Integer.parseInt(previous.split(" ")[1].split(":")[2]));
 						long timeDiff = lastTime.getTimeInMillis() - thisTime.getTimeInMillis();
 						rev++;
 						totalTime += timeDiff;
@@ -547,7 +565,7 @@ public class HistoryParser {
 				}
 				Calendar thisTime = new GregorianCalendar(Integer.parseInt(current.split(" ")[0].split("-")[0]), Integer.parseInt(current.split(" ")[0].split("-")[1])-1, Integer.parseInt(current.split(" ")[0].split("-")[2]), Integer.parseInt(current.split(" ")[1].split(":")[0]), Integer.parseInt(current.split(" ")[1].split(":")[1]), Integer.parseInt(current.split(" ")[1].split(":")[2]));
 				if (!previous.equals("")){ //implies this is not the first iteration
-					Calendar lastTime = new GregorianCalendar(Integer.parseInt(previous.split(" ")[0].split("-")[0]), Integer.parseInt(previous.split(" ")[0].split("-")[1])-1, Integer.parseInt(previous.split(" ")[0].split("-")[2]), Integer.parseInt(previous.split(" ")[1].split(":")[0]), Integer.parseInt(previous.split(" ")[1].split(":")[1]), Integer.parseInt(previous.split(" ")[1].split(":")[2]));
+					Calendar lastTime = new GregorianCalendar(Integer.parseInt(previous.split(" ")[0].split("-")[0]), Integer.parseInt(previous.split(" ")[0].split("-")[1]) - 1, Integer.parseInt(previous.split(" ")[0].split("-")[2]), Integer.parseInt(previous.split(" ")[1].split(":")[0]), Integer.parseInt(previous.split(" ")[1].split(":")[1]), Integer.parseInt(previous.split(" ")[1].split(":")[2]));
 					long timeDiff = lastTime.getTimeInMillis() - thisTime.getTimeInMillis();
 					rev++;
 					totalTime += timeDiff;

@@ -2,7 +2,6 @@ package primary;
 
 import java.util.ResourceBundle;
 
-
 public class Main {
 	
 	/**
