@@ -41,19 +41,38 @@ public class HistoryParser {
 		}
 		
 		if (!bundle.getString("logLowerLimit").equals("N/A")) {
-			lowerBound = Integer.parseInt(bundle.getString("logLowerLimit"));
+			
+			try {
+				lowerBound = Integer.parseInt(bundle.getString("logLowerLimit"));
+				System.out.print("Lower Revision Bound: " + lowerBound + "\t");
+			}
+
+			catch (Exception e) {
+				lowerBound = -1;
+				System.out.print("No Lower Revision Bound \t");
+			}
 		}
 		
 		else {
 			lowerBound = -1;
+			System.out.print("No Lower Revision Bound \t");
 		}
 		
 		if (!bundle.getString("logUpperLimit").equals("N/A")) {
-			upperBound = Integer.parseInt(bundle.getString("logUpperLimit"));
+			try {
+				upperBound = Integer.parseInt(bundle.getString("logUpperLimit"));
+				System.out.println("Upper Revision Bound: " + upperBound + "\n");
+			}
+			
+			catch (Exception e) {
+				upperBound = Integer.MAX_VALUE;
+				System.out.println("No Upper Revision Bound \n");
+			}
 		}
 		
 		else {
 			upperBound = Integer.MAX_VALUE;
+			System.out.println("No Upper Revision Bound \n");
 		}
 	}
 	
