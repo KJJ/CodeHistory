@@ -479,22 +479,22 @@ public class HistoryParser {
 		out.println("\n");
 		NodeStatistics stats = new NodeStatistics(history, args, allN); // prepares to process data held in the RevisionNode list
 		stats.statsOut(out); //output the statistics to the screen
-		
-		System.out.println("\n");
-		out.println("\n");
+
 		if (bundle.getString("ratingsToggle").equals("true")) {
-			System.out.println("Rating Graph: looking for grouping\n"); //title of the graph
-			out.println("Rating Graph: looking for grouping\n");
+			linesAndBounds("======", out);
+			System.out.print("Rating Graph: looking for grouping"); //title of the graph
+			out.print("Rating Graph: looking for grouping");
+			linesAndBounds("======", out);
 			for (i = 1; i <= statArray.length; i++){
 				System.out.print("(" + (double) (i - 1) / 10 + ", " + (double) i / 10 + "]:  "); //current range interval
 				out.print("(" + (double) (i - 1) / 10 + ", " + (double) i / 10 + "]:  ");
+				System.out.print("  (" + statArray[i - 1] + ")\t"); //print out the numerical representation of that interval for easier use
+				out.print("  (" + statArray[i - 1] + ")\t");
 				for (j = 0; j < statArray[i - 1]; j++){ //loop through the entire range of rating intervals
 					System.out.print("|"); // one '|' = one rating in this range
 					out.print("|");
 				}
-				System.out.print("  (" + statArray[i - 1] + ")"); //print out the numerical representation of that interval for easier use
-				out.print("  (" + statArray[i - 1] + ")");
-				linesAndBounds("==========", out); //indicates the end of the list of queried files
+				linesAndBounds("======", out); //indicates the end of the list of queried files
 			}
 		}
 
@@ -602,6 +602,10 @@ public class HistoryParser {
 		System.out.println();
 		out.println();
 		File file = new File(path);
+		
+		System.out.print("\n");
+		out.print("\n");
+		
 		if (!file.exists() || !bundle.getString("reuseOccurrencesToggle").equals("true")) {
 			FileWriter outFile = new FileWriter(path);
 	        PrintWriter storing = new PrintWriter(outFile);

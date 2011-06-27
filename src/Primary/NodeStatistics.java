@@ -388,7 +388,7 @@ public class NodeStatistics {
 			}
 			
 			if (bundle.getString("commentToggle").equals("true")) {
-				System.out.println("Revision Comments (IMPORTANT DISCLAIMER: all commas have been replaced with semi-colons to allow insertion into a csv file): \n");
+				System.out.println("\nRevision Comments (IMPORTANT DISCLAIMER: all commas have been replaced with semi-colons to allow insertion into a csv file): \n");
 				out.println("Revision Comments (IMPORTANT DISCLAIMER: all commas have been replaced with semi-colons to allow insertion into a csv file): \n");
 				for (i = 0; i < commenting.size(); i++) {
 					System.out.println("\t" + revisions[i] + ":");
