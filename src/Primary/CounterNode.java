@@ -10,6 +10,7 @@ public class CounterNode<T> {
 	 * @param obj the new object that has occurred
 	 */
 	public CounterNode(T obj) {
+		
 		objectOfInterest = obj; //sets the object of interest
 		countOfInterest = 1; //shows that it has already occurred once
 	}
@@ -18,6 +19,7 @@ public class CounterNode<T> {
 	 * used to represent finding another one of the current object
 	 */
 	public void anotherOne(){
+		
 		countOfInterest++; //increase the counter
 	}
 	
@@ -26,6 +28,7 @@ public class CounterNode<T> {
 	 * @return the object being tracked
 	 */
 	public T whatsTheItem(){
+		
 		return objectOfInterest;
 	}
 	
@@ -34,6 +37,7 @@ public class CounterNode<T> {
 	 * @return how many occurrences of this object have been tracked
 	 */
 	public int howManyAppearences() {
+		
 		return countOfInterest;
 	}
 	
@@ -43,6 +47,7 @@ public class CounterNode<T> {
 	 * @return true if equal, false otherwise
 	 */
 	public boolean compare(T otherObj) {
+		
 		return this.whatsTheItem().toString().equals(otherObj.toString());
 	}
 	
@@ -52,12 +57,15 @@ public class CounterNode<T> {
 	 * @return numerical representation of the comparison
 	 */
 	public int compareOccurrence(CounterNode<T> node) {
+		
 		if (node.countOfInterest == this.countOfInterest) {
 			return 0;  //if the occurrences are equal
 		}
+		
 		else if (node.countOfInterest > this.countOfInterest) {
 			return -1; //if this node has less occurrences than the other
 		}
+		
 		else {
 			return 1;  //if this node has more occurrences than the other
 		}
@@ -69,6 +77,7 @@ public class CounterNode<T> {
 	 * overrides the inherited toString operation 
 	 */
 	public String toString() {
+		
 		return whatsTheItem() + "\t" + howManyAppearences(); //only returns the string, it does not print it out
 	}
 

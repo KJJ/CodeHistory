@@ -27,6 +27,7 @@ public class RevisionNode {
 	 * @param query how many files were entered on the command line
 	 */
 	public RevisionNode(String dat, String rev, int query, String User, String comment) {
+		
 		comments = commaRemove(comment);
 		date = dat;
 		revision = rev;
@@ -41,6 +42,7 @@ public class RevisionNode {
 	}
 	
 	public RevisionNode(String dat, String rev, int query, String User, int changes, String comment) {
+		
 		comments = commaRemove(comment);
 		date = dat;
 		revision = rev;
@@ -55,6 +57,7 @@ public class RevisionNode {
 	}
 	
 	public String commaRemove(String commaFilled){
+		
 		String commaless = commaFilled;
 		commaless = commaless.replace(',', ';');
 		return commaless;
@@ -62,6 +65,7 @@ public class RevisionNode {
 	
 	
 	public void setTimeSpace(Calendar previousTime) {
+		
 		timeRelativeTo = thisTime.getTimeInMillis() - previousTime.getTimeInMillis();
 	}
 	
@@ -71,6 +75,7 @@ public class RevisionNode {
 	 * @return the amount of time between the 2 dates as a long value
 	 */
 	public long getTimeSpace(Calendar previousTime) {
+		
 		setTimeSpace(previousTime);
 		return timeRelativeTo;
 	}
@@ -80,6 +85,7 @@ public class RevisionNode {
 	 * @return revision time
 	 */
 	public Calendar getThisTime() {
+		
 		return thisTime;
 	}
 	
@@ -88,6 +94,7 @@ public class RevisionNode {
 	 * @return revision comments
 	 */
 	public String getComments() {
+		
 		return comments;
 	}
 
@@ -99,15 +106,19 @@ public class RevisionNode {
 	 * @param amountOfRelevantFiles maximum possible value for relevant
 	 */
 	private void setRatingComment(int relevant, int irrelevant, int totalChanged, int amountOfRelevantFiles) {
+		
 		if (relevant == 0) {
 			ratingComment = "Indeterminate, cannot find clear data here";
 		}
+		
 		else if (relevant == totalChanged && relevant == amountOfRelevantFiles){
 			ratingComment = "Absolutely relevant, pure set of the query";
 		}
+		
 		else if (relevant == totalChanged && relevant < amountOfRelevantFiles) {
 			ratingComment = "A Pure Subset of some of the queried files";
 		}
+		
 		else if (relevant == amountOfRelevantFiles && relevant != totalChanged){
 			ratingComment = "Impure Superset of the queried files found";
 		}
@@ -116,6 +127,7 @@ public class RevisionNode {
 	}
 	
 	public void setNumberOfRelevants(int rel){
+		
 		numberOfRelevants = rel; 
 	}
 
@@ -124,6 +136,7 @@ public class RevisionNode {
 	 * @param totalChanges the total number of changed files
 	 */
 	public void setTotalChanges(int totalChanges) {
+		
 		this.totalChanges = totalChanges;
 	}
 	
@@ -132,6 +145,7 @@ public class RevisionNode {
 	 * @param Date the new date
 	 */
 	public void setDate(String Date) {
+		
 		date = Date;
 	}
 
@@ -141,13 +155,17 @@ public class RevisionNode {
 	 */
 	public void setRating() {
 		int i = totalChanges-numberOfRelevants;
+		
 		if (i < 0){
 			i = 0;
 		}
+		
 		rating = calculateRating(numberOfRelevants,i,totalChanges,totalQuery);
+		
 		if (rating > 1) {
 			rating = 1;
 		}
+		
 		setRatingComment(numberOfRelevants,i,totalChanges,totalQuery);
 	}
 	
@@ -156,6 +174,7 @@ public class RevisionNode {
 	 * @return the relevance rating of this revision
 	 */
 	public double getRating() {
+		
 		setRating();
 		return rating;
 	}
@@ -165,6 +184,7 @@ public class RevisionNode {
 	 * @return the list of relevant files
 	 */
 	public LinkedList<String> getRelevantFiles() {
+		
 		return relevantFiles;
 	}
 
@@ -173,6 +193,7 @@ public class RevisionNode {
 	 * @return number of files that the user entered on the command line
 	 */
 	public int getTotalQuery() {
+		
 		return totalQuery;
 	}
 	
@@ -181,6 +202,7 @@ public class RevisionNode {
 	 * @return the revision this node represents
 	 */
 	public String getRevision() {
+		
 		return revision;
 	}
 	
@@ -189,6 +211,7 @@ public class RevisionNode {
 	 * @return the user
 	 */
 	public String getUser() {
+		
 		return user;
 	}
 	
@@ -198,6 +221,7 @@ public class RevisionNode {
 	 * @return the rating comment of this revision
 	 */
 	public String getRatingComment() {
+		
 		return ratingComment;
 	}
 
@@ -206,6 +230,7 @@ public class RevisionNode {
 	 * @return total number of changed files
 	 */
 	public int getTotalChanges() {
+		
 		return totalChanges;
 	}
 
@@ -214,6 +239,7 @@ public class RevisionNode {
 	 * @return the date the revision was one to the repository 
 	 */
 	public String getDate() {
+		
 		return date;
 	}
 
@@ -222,6 +248,7 @@ public class RevisionNode {
 	 * @return the number of contained relevant files
 	 */
 	public int getNumberOfRelevants() {
+		
 		return numberOfRelevants;
 	}
 
@@ -230,29 +257,38 @@ public class RevisionNode {
 	 * @return all data in String form
 	 */
 	public String toString(){
+		
 		String out = "";
 		String files = "";
 		Iterator<String> listIt = this.getRelevantFiles().iterator();
+		
 		while(listIt.hasNext()){
+			
 			String nextFile = listIt.next();
 			nextFile = nextFile.substring(nextFile.lastIndexOf('/') + 1);
+			
 			if (listIt.hasNext()){
 				files += nextFile + ", ";
 			}
+			
 			else {
 				files += nextFile;
 			}
 		}
+		
 		String use = user;
+		
 		if (use.length() < 8){
 			use += "\t";
 		}
+		
 		//information for this rounding found on http://www.java-forums.org/advanced-java/4130-rounding-double-two-decimal-places.html
 		double rat = this.getRating() * 100000;
 		rat = Math.round(rat);
 		rat /= 100000;
-		out = revision + "\t" + date + "\t" + Integer.toString(numberOfRelevants) + "/" + Integer.toString(totalQuery) + " relevant files\t" + Integer.toString(totalChanges)
-																																			+ "\t" + rat + "\t\t" + ratingComment + "\t" + files;
+		out = revision + "\t" + date + "\t" + Integer.toString(numberOfRelevants) 
+			+ "/" + Integer.toString(totalQuery) + " relevant files\t" + Integer.toString(totalChanges)+ "\t" 
+				+ rat + "\t\t" + ratingComment + "\t" + files;
 		
 		return out;
 	}
@@ -265,20 +301,25 @@ public class RevisionNode {
 	 * @param amountOfRelevantFiles maximum possible value for relevant
 	 */
 	private double calculateRating(int relevant, int irrelevant, int totalChanged, int amountOfRelevantFiles) {
+		
 		if (relevant == 0) {
 			return 0;
 		}
 		else if (relevant == totalChanged && relevant == amountOfRelevantFiles){
 			return 1;
 		}
+		
 		else if (relevant == totalChanged && relevant < amountOfRelevantFiles) {
 			return ((double) totalChanged / amountOfRelevantFiles);
 		}
+		
 		else if (relevant == amountOfRelevantFiles && relevant != totalChanged){
 			return ((double) relevant / totalChanged);
 		}
 		
-		else return (double) relevant / (amountOfRelevantFiles + (double) irrelevant / totalChanged);
+		else {
+			return (double) relevant / (amountOfRelevantFiles + (double) irrelevant / totalChanged);
+		}
 	}
 	
 	/**
@@ -286,18 +327,25 @@ public class RevisionNode {
 	 * @param file the queried file found to be in this revision
 	 */
 	public void newRelevantFile(String file){
+		
 		Iterator<String> listCheck = relevantFiles.iterator();
 		int n = 1;
+		
 		while (listCheck.hasNext()) {
+			
 			String current = listCheck.next();
+			
 			if (!current.split(" ")[0].equals((file.split(" ")[0]))) {
 				n = 1;
 			}
+			
 			else {
 				n = 0;
 				break;
 			}
+			
 		}
+		
 		if (n == 1){
 			relevantFiles.addLast(file);
 			numberOfRelevants++;
@@ -310,12 +358,15 @@ public class RevisionNode {
 	 * 0 is returned if o1 and o2 are the same revision.
 	 */
 	public int compare(RevisionNode o2) {
+		
 		if (Integer.parseInt(this.getRevision()) == Integer.parseInt(o2.getRevision())) {
 			return 0; //it is the same revision
 		}
+		
 		else if (Integer.parseInt(this.getRevision()) > Integer.parseInt(o2.getRevision()) || o2 == null) {
 			return 1; //o1 is a later revision revision than o2
 		}
+		
 		else {
 			return -1; //o1 is an earlier revision than o2
 		}

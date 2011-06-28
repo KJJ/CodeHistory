@@ -24,16 +24,18 @@ public class DiffParser {
 	 * @throws IOException input exception from data coming from the console
 	 */
 	public void diffData(Process exec) throws IOException{
+		
 		//reads the data coming in, refer to previous comments about sources 
-		BufferedReader  stdInput=  new  BufferedReader(new
-	              InputStreamReader(exec.getInputStream()));
+		BufferedReader stdInput = new BufferedReader(new InputStreamReader(exec.getInputStream()));
 		
 		String s; //input line
 		
-		while  ((s =  stdInput.readLine())  !=  null)  {
+		while ((s = stdInput.readLine()) != null)  {
+			
 			if (s.startsWith("+") && !s.startsWith("++")) { //desired lines only start with 1 '+' sign
 				ins++; //count the addition
 			}
+			
 			else if (s.startsWith("-") && !s.startsWith("--")) { //desired lines only start with 1 '+' sign
 				del++; //count the deletion
 			}
@@ -47,6 +49,7 @@ public class DiffParser {
 	 * @throws IOException if the input or output is incorrect
 	 */
 	public void diffOut(Process exec, PrintWriter out) throws IOException {
+		
 		diffData(exec); //gets the data
 		System.out.print("Deleted: " + del + "\t Added: " + ins + " \t| "); //prints that data out
 		out.print("Deleted: " + del + "\t Added: " + ins + " \t| ");

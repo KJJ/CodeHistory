@@ -58,10 +58,10 @@ public class Update {
 		BufferedReader  stdInput;
 		String toStore = "";
 		
-			stdInput =  new  BufferedReader(new
+			stdInput = new BufferedReader(new
 	              InputStreamReader(exec.getInputStream()));
 			
-			while  ((s =  stdInput.readLine())  !=  null)  {
+			while ((s = stdInput.readLine()) !=   null)  {
 				
 				toStore += s + "\n";
 
