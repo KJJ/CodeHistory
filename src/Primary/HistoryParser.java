@@ -529,7 +529,7 @@ public class HistoryParser {
 			stdInput =  new  BufferedReader(new
 	              InputStreamReader(exec.getInputStream()));
 			
-			while  ((s =  stdInput.readLine())  !=  null)  {
+			while  ((s = stdInput.readLine()) != null)  {
 				
 				toStore += s + "\n";
 

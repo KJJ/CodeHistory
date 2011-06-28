@@ -304,56 +304,10 @@ public class NodeStatistics {
 		
 				System.out.println();
 				out.println();
-				if (timeDiffAverage / 1000 / 60 < 1){
-					System.out.println("Average Time Between Revisions: " + timeDiffAverage / 1000 + " seconds");
-					out.println("Average Time Between Revisions: " + timeDiffAverage / 1000 + " seconds");
-				}
-				else if (timeDiffAverage / 1000 / 60 / 60 < 1){
-					System.out.println("Average Time Between Revisions: " + timeDiffAverage / 1000 / 60 + " minutes");
-					out.println("Average Time Between Revisions: " + timeDiffAverage / 1000 / 60 + " minutes");
-				}
-				else if (timeDiffAverage / 1000 / 60 / 60 < 1000) {
-					System.out.println("Average Time Between Revisions: " + timeDiffAverage / 1000 / 60 / 60 + " hours");
-					out.println("Average Time Between Revisions: " + timeDiffAverage / 1000 / 60 / 60 + " hours");
-				}
-				else {
-					System.out.println("Average Time Between Revisions: " + timeDiffAverage / 1000 / 60 / 60 / 24 + " days");
-					out.println("Average Time Between Revisions: " + timeDiffAverage / 1000 / 60 / 60 / 24 + " days");
-				}
 				
-				if (timeDiffLow / 1000 / 60 < 1){
-					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow / 1000 + " seconds between Revisions "+revisionReference[5]);
-					out.println("\t Lowest Time Between Revisions: " + timeDiffLow / 1000 + " seconds between Revisions "+revisionReference[5]);
-				}
-				else if (timeDiffLow / 1000 / 60 / 60 < 1){
-					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow / 1000 / 60 + " minutes between Revisions "+revisionReference[5]);
-					out.println("\t Lowest Time Between Revisions: " + timeDiffLow / 1000 / 60 + " minutes between Revisions "+revisionReference[5]);
-				}
-				else if (timeDiffLow / 1000 / 60 / 60 < 1000) {
-					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow / 1000 / 60 / 60 + " hours between Revisions "+revisionReference[5]);
-					out.println("\t Lowest Time Between Revisions: " + timeDiffLow / 1000 / 60 / 60 + " hours between Revisions "+revisionReference[5]);
-				}
-				else {
-					System.out.println("\t Lowest Time Between Revisions: " + timeDiffLow / 1000 / 60 / 60 / 24 + " days between Revisions "+revisionReference[5]);
-					out.println("\t Lowest Time Between Revisions: " + timeDiffLow / 1000 / 60 / 60 / 24 + " days between Revisions "+revisionReference[5]);
-				}
-				
-				if (timeDiffHigh / 1000 / 60 < 1){
-					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh / 1000 +" seconds between Revisions "+revisionReference[4]);
-					out.println("\t Highest Time Between Revisions: " + timeDiffHigh / 1000 +" seconds between Revisions "+revisionReference[4]);
-				}
-				else if (timeDiffHigh/1000 / 60 / 60 < 1){
-					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh / 1000 / 60 +" minutes between Revisions "+revisionReference[4]);
-					out.println("\t Highest Time Between Revisions: " + timeDiffHigh / 1000 / 60 +" minutes between Revisions "+revisionReference[4]);
-				}
-				else if (timeDiffHigh / 1000 / 60 / 60 < 1000) {
-					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh / 1000 / 60 / 60 +" hours between Revisions "+revisionReference[4]);
-					out.println("\t Highest Time Between Revisions: " + timeDiffHigh / 1000 / 60 / 60 +" hours between Revisions "+revisionReference[4]);
-				}
-				else {
-					System.out.println("\t Highest Time Between Revisions: " + timeDiffHigh / 1000 / 60 / 60 / 24 + " days between Revisions "+revisionReference[4]);
-					out.println("\t Highest Time Between Revisions: " + timeDiffHigh / 1000 / 60 / 60 / 24 + " days between Revisions "+revisionReference[4]);
-				}
+				timeStats("Average", timeDiffAverage, "", out);
+				timeStats("\t Lowest", timeDiffLow, revisionReference[5], out);
+				timeStats("\t Highest", timeDiffHigh, revisionReference[4], out);
 				
 				System.out.println("\nAverage Rating: " + ratingAverage);
 				out.println("\nAverage Rating: " + ratingAverage);
@@ -409,6 +363,26 @@ public class NodeStatistics {
 			out.println("|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| \n");
 		}
 
+	}
+	
+	public void timeStats(String identity, long time, String revisionRef, PrintWriter out) {
+		
+		if (timeDiffHigh / 1000 / 60 < 1){
+			System.out.println(identity + " Time Between Revisions: " + time / 1000 + " seconds between Revisions " + revisionRef);
+			out.println(identity + " Time Between Revisions: " + time / 1000 + " seconds between Revisions " + revisionRef);
+		}
+		else if (timeDiffHigh/1000 / 60 / 60 < 1){
+			System.out.println(identity + " Time Between Revisions: " + time / 1000 / 60 + " minutes between Revisions " + revisionRef);
+			out.println(identity + " Time Between Revisions: " + time / 1000 / 60 + " minutes between Revisions " + revisionRef);
+		}
+		else if (timeDiffHigh / 1000 / 60 / 60 < 1000) {
+			System.out.println(identity + " Time Between Revisions: " + time / 1000 / 60 / 60 + " hours between Revisions " + revisionRef);
+			out.println(identity + " Time Between Revisions: " + time / 1000 / 60 / 60 + " hours between Revisions " + revisionRef);
+		}
+		else {
+			System.out.println(identity + " Time Between Revisions: " + time/ 1000 / 60 / 60 / 24 + " days between Revisions " + revisionRef);
+			out.println(identity + " Time Between Revisions: " + time / 1000 / 60 / 60 / 24 + " days between Revisions " + revisionRef);
+		}
 	}
 	
 	public void csv() throws IOException {
