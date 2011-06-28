@@ -14,54 +14,79 @@ public class NodeStatistics {
 	
 	//toAnalyze is the linked list holding the raw revision data
 	private LinkedList<RevisionNode> toAnalyze;
+	
 	//Total number of revisions being analyzed
 	private int revisionTotal;
+	
 	//values used to reference the rating statistics
 	private double ratingAverage, highestRating, lowestRating;
+	
 	//values for file statistics
 	private int nFilesAverage, highestFileNumber, lowestFileNumber;
+	
 	//holds the information for the first and last revisions of the list to put the information in a time-based context
 	private String then, now;
+	
 	//holds the names of the queried files that helped create the list being analyzed
 	private String[] args;
+	
 	//how many relevant files are present at any one time
 	private int[] relevantPresent;
+	
 	//how many files are not relevant based on filtering
 	private int[] irrelevantPresent;
+	
 	//holds the revision numbers for the bounds in the numerical statistics sections
 	private String[] revisionReference = new String[6];
+	
 	//the list of file groupings found in this instance of the Subversion log
 	private GroupingList grouping = new GroupingList(); 
+	
 	//average number of relevant files per revision
 	private double relevantAverage;
+	
 	//average time difference between 2 relevant revisions
 	private long timeDiffAverage;
+	
 	//longest period of time between 2 relevant revisions
 	private long timeDiffHigh;
+	
 	//shortest period of time between 2 relevant revisions
 	private long timeDiffLow;
+	
 	//stores the various time intervals for later
 	private String[] flowOfTime;
+	
 	//holds the various relevant revision number pairs in string format
 	private String[] revisionsToo;
+	
 	//config file commands
 	private ResourceBundle bundle = ResourceBundle.getBundle("config");
+	
 	//revision numbers in string format
 	private String revisions[];
+	
 	//how many irrelevant files there are to each revision
 	private String irrelevants[];
+	
 	//how many relevant files there are to each revision
 	private String relevants[];
+	
 	//the rating for each revision are held here
 	private String ratings[];
+	
 	//the number of commits per interval
 	private String[] commits;
+	
 	//indicates which internal is being displayed, format; i + number
 	private String[] intervals;
+	
 	//the date of the previous revision
 	private Calendar lastTime;
+	
 	//holds data on where and when each file was present ( 1 = present, 0 = not present)
 	private int[][] existsHere;
+	
 	//holds the comments for each revision
 	private LinkedList<String> commenting;
 
@@ -140,7 +165,7 @@ public class NodeStatistics {
 		//loop counter
 		int j;
 		
-		while (runThrough.hasNext()){ 
+		while (runThrough.hasNext()){ //takes the revisions and organizes the data for output
 			
 			next = runThrough.next(); //the next revision's data node
 			
@@ -163,6 +188,7 @@ public class NodeStatistics {
 			else {
 				irrelevants[toAnalyze.indexOf(next)] = "0";
 			}
+			
 			ratings[toAnalyze.indexOf(next)] = Double.toString(next.getRating());
 			
 			Calendar thisTime = new GregorianCalendar(Integer.parseInt(next.getDate().split(" ")[0].split("-")[0]), Integer.parseInt(next.getDate().split(" ")[0].split("-")[1]) - 1,
@@ -236,6 +262,7 @@ public class NodeStatistics {
 				highestRating /= 100000;
 				revisionReference[0] = next.getRevision();
 			}
+			
 			if (next.getRating() < lowestRating){
 				//information for this rounding found on http://www.java-forums.org/advanced-java/4130-rounding-double-two-decimal-places.html
 				lowestRating = next.getRating() * 100000;
@@ -384,6 +411,13 @@ public class NodeStatistics {
 
 	}
 	
+	/**
+	 * outputs the various time statistics
+	 * @param identity indicate whether it is the lowest/highest/average time
+	 * @param time the time in milliseconds
+	 * @param revisionRef the information from the revisionReference array
+	 * @param out the write stream to the output text file
+	 */
 	public void timeStats(String identity, long time, String revisionRef, PrintWriter out) {
 		
 		if (timeDiffHigh / 1000 / 60 < 1){
@@ -407,10 +441,23 @@ public class NodeStatistics {
 		}
 	}
 	
+	/**
+	 * this function creates the csv file with some of the statistics stored in several separate tables
+	 * @throws IOException in the event of a writing issue
+	 */
 	public void csv() throws IOException {
 		
-		System.out.println(); //spacing
-		FileWriter f = new FileWriter(bundle.getString("csvName"));
+		System.out.println(); //spacing\
+		FileWriter f;
+		
+		if (bundle.getString("csvName").endsWith(".csv")) {
+			f = new FileWriter(bundle.getString("csvName"));
+		}
+		
+		else {
+			f = new FileWriter(bundle.getString("csvName") + ".csv");
+		}
+		
 		PrintWriter p = new PrintWriter(f);
 		Object[][] input = {revisionsToo, flowOfTime};
 		CSVWork(input, p, f);
@@ -428,7 +475,7 @@ public class NodeStatistics {
 		nextInput[1] = commits;
 		CSVWork(nextInput, p, f);
 		
-		specialCSV(existsHere, p, f);
+		specialCSV(existsHere, p);
 		
 		p.flush();
 		p.close();
@@ -449,9 +496,15 @@ public class NodeStatistics {
 		}
 		p.println();
 	}
-	
-	//IO code from http://javacodeonline.blogspot.com/2009/09/java-code-to-write-to-csv-file.html
-	public void specialCSV(int[][] arrayIn, PrintWriter p, FileWriter f) throws IOException {
+
+	/**
+	 * csv work for the special table that shows file scattering among the revisions
+	 * IO code from http://javacodeonline.blogspot.com/2009/09/java-code-to-write-to-csv-file.html
+	 * @param arrayIn
+	 * @param p the print writer for the output
+	 * @throws IOException in the event of a write error
+	 */
+	public void specialCSV(int[][] arrayIn, PrintWriter p) throws IOException {
 		
 		int i, j;
 		p.print(",");
@@ -471,11 +524,11 @@ public class NodeStatistics {
 			for (j = 0; j < arrayIn[i].length; j++) {
 				
 				if (arrayIn[i][j] == 1) {
-					p.print("1,");
+					p.print("1,"); //indicates that the file was affected here
 				}
 				
 				else {
-					p.print(",");
+					p.print(","); //blank instead of 0 to remove clutter and focus attention on releent areas
 				}
 			}
 			
@@ -498,7 +551,7 @@ public class NodeStatistics {
 		
 		int j, i;
 		String pathFull = "";
-		DiffParser dp = new DiffParser();
+		DiffParser dp = new DiffParser(); //instantiate an object of the DiffParser class
 		String path = bundle.getString(bundle.getString("repo"));
 		System.out.print("\t");
 		
@@ -510,7 +563,7 @@ public class NodeStatistics {
 		System.out.println("\n");
 		out.println("\n");
 		
-			for (i = 0; i < revisionsToo.length-1; i++) {
+			for (i = 0; i < revisionsToo.length - 1; i++) {
 				System.out.print("Revisions " + revisionsToo[i] + ":\t");
 				out.print("Revisions " + revisionsToo[i] + ":\t");
 				
@@ -520,7 +573,7 @@ public class NodeStatistics {
 					dp.diffOut(exec, out);
 				}
 				
-				System.out.println("\n");
+				System.out.println("\n"); //spacing
 				out.println("\n");
 			}
 	}

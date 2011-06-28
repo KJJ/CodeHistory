@@ -287,7 +287,7 @@ public class RevisionNode {
 		rat = Math.round(rat);
 		rat /= 100000;
 		out = revision + "\t" + date + "\t" + Integer.toString(numberOfRelevants) 
-			+ "/" + Integer.toString(totalQuery) + " relevant files\t" + Integer.toString(totalChanges)+ "\t" 
+			+ "/" + Integer.toString(totalQuery) + " relevant files\t" + Integer.toString(totalChanges) + "\t" 
 				+ rat + "\t\t" + ratingComment + "\t" + files;
 		
 		return out;

@@ -14,12 +14,18 @@ public class HistoryParser {
 	// args holds the string array of passed parameters from the command line
 	private String[] args;
 	
+	//array that holds the initial starting point of a files log history
+	//file path must match that of the file at that revision
 	private int[] ceiling;
 	
+	//direct override to the reuse mechanism. partial logs are not stored or accessed from the storage system and
+	//must be ran from the console
 	private boolean[] masterControl;  
 	
+	//the bounds on which revisions are taken from the log history
 	private int lowerBound, upperBound;
 	
+	//the linked list that holds all gathered RevisionNodes gleaned from the log (as per the user configurations)
 	private LinkedList<RevisionNode> initiallyRelevant = new LinkedList<RevisionNode>();
 	
 	/**
@@ -43,11 +49,18 @@ public class HistoryParser {
 			
 		}
 		
+		// if the user has tried to enter a lower boundary 
 		if (!bundle.getString("logLowerLimit").equals("N/A")) {
 			
-			try {
+			try { //the try-catch is here in the event a non-integer entry
+				
 				lowerBound = Integer.parseInt(bundle.getString("logLowerLimit"));
-				System.out.print("Lower Revision Bound: " + lowerBound + "\t");
+				
+				if (lowerBound < 0) { //present in order to avoid a negative boundary that would interfere with later code
+					throw new Exception(); 
+				}
+				
+				System.out.print("Lower Revision Bound: " + lowerBound + "\t"); //prints out the lower bound to the screen
 			}
 
 			catch (Exception e) {
@@ -217,7 +230,7 @@ public class HistoryParser {
 			sortedInsert(initiallyRelevant, thisNode);
 		}
 		
-		if (bundle.getString("updateToggle").equals("true")) {
+		if (bundle.getString("updateToggle").equals("true") && !masterControl[argNum]) { //partial logs are not saved
 			FileWriter outFile = new FileWriter(path);
         	PrintWriter storing = new PrintWriter(outFile);
 			storing.println(toStore);
@@ -249,47 +262,68 @@ public class HistoryParser {
 				if (count != 0) {  // check to see whether or not this is the first iteration
 					
 					//the if below checks to see if the the current revision has been explicitly rejected by the user in the config file
-					if (!(undesirable.contains(" " + rev + " ") || undesirable.contains("<" + rev + " ") || undesirable.contains(" " + rev + ">") || undesirable.contains("<" + rev + ">")) && Integer.parseInt(rev) >= lowerBound && Integer.parseInt(rev) <= upperBound) {
+					if (!(undesirable.contains(" " + rev + " ") || undesirable.contains("<" + rev + " ") || 
+							undesirable.contains(" " + rev + ">") || undesirable.contains("<" + rev + ">")) && 
+								Integer.parseInt(rev) >= lowerBound && Integer.parseInt(rev) <= upperBound) {
+						
 						RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
 						thisNode.newRelevantFile(args[argNum]);
 						sortedInsert(initiallyRelevant, thisNode);
+						
 					}
 					
 					comment = ""; //clear the revision comment
 					count = 0;  //reset the counter
+					
 				}
+				
 				ss = s.split(" "); //split the string along white spaces
 				rev = ss[0].substring(1); //gets the revision number at the very beginning of s, removing the r to just get the number
 				
 				if (ss[4].equals("|")){
+					
 					date = ss[5] + " " + ss[6]; 
 					userList = ss[2] + ss[3];
+					
 				}
 				
 				else {
+					
 					date = ss[4] + " " + ss[5];  // gets both the date and time of the revision
 					userList = ss[2];
+					
 				}
 				
 			}
 			
 			//indicates that the line details a change of some sort in the file
 			else if (s.startsWith("   M") || s.startsWith("   A") || s.startsWith("   D") || s.startsWith("   R")){
+				
 				count++; //increase the counter for files changed in a certain revision
+			
 			}
 			
 			else if (!s.equals("Changed paths:") && !s.contains("-------") && !s.startsWith("CVS: ")) { //filters out generally useless lines
+				
 				comment += s + " "; //enters the comment data
+			
 			}
+			
 		}	
 
 		//used to get the last revision that was cut off by the for loop
-		if (!(undesirable.contains(" " + rev + " ") || undesirable.contains("<" + rev + " ") || undesirable.contains(" " + rev + ">") || undesirable.contains("<" + rev + ">")) && Integer.parseInt(rev) >= lowerBound && Integer.parseInt(rev) <= upperBound) {
+		if (!(undesirable.contains(" " + rev + " ") || undesirable.contains("<" + rev + " ") ||
+				undesirable.contains(" " + rev + ">") || undesirable.contains("<" + rev + ">")) && 
+					Integer.parseInt(rev) >= lowerBound && Integer.parseInt(rev) <= upperBound) {
+			
 			RevisionNode thisNode = new RevisionNode(date, rev, args.length, userList, count, comment);
 			thisNode.newRelevantFile(args[argNum]);
 			sortedInsert(initiallyRelevant, thisNode);
+			
 		}
+		
 	}
+	
 	
 	/**
 	 * sortedInsert takes a RevisionNode and places it into the chosen RevisionNode linked list in such a way that
@@ -302,7 +336,9 @@ public class HistoryParser {
 		int i; //loop counter
 		
 		if (list.peek() == null){ //checks if the list is empty
+			
 			list.addFirst(node); //if the list is empty then simply place the node at the head
+			
 		}
 		
 		else { //otherwise the node must be compared to the node currently present in the list
@@ -316,10 +352,13 @@ public class HistoryParser {
 				 * then it implies that node's revision is to small to be placed in front of this currently present node
 				 */
 				if (list.get(i).compare(node) > 0) { 
+					
 					i++; //if this is the case, then prepare to check the next node in the list
+					
 				}
 				
 				else if (list.get(i).compare(node) == 0){  //if the node is equal to the other
+					
 					RevisionNode thatNode = list.remove(i); //remove the node from its current place
 					int j; //loop counter
 					
@@ -328,16 +367,20 @@ public class HistoryParser {
 						String file = node.getRelevantFiles().get(j);
 						
 						if (node.getRelevantFiles().contains(file)) {
+							
 							thatNode.newRelevantFile(file); //uses the functions built-in conflict checking to avoid putting in the same file twice
+					
 						}
 						
 					}
 					
 					list.add(i, thatNode); // return the node to its original location
 					return; //end the function call
+			
 				}
 				
 				else {
+					
 					break; //if the nodes revision is greater, then it should be placed at index i, so the loop ends early
 				}
 				
@@ -345,8 +388,11 @@ public class HistoryParser {
 			
 			list.add(i, node); //place the node in it proper place
 			//if the loop fully completes then it implies that node's revision number is the smallest and so it is placed at the end
+	
 		}
+	
 	}
+	
 	
 	/**
 	 * prints out the boundary lines at regular lengths when needed for the output
@@ -357,14 +403,17 @@ public class HistoryParser {
 		int j; //loop counter
 		System.out.print("\n"); //spacing to avoid conflict with valuable data
 		out.print("\n");
+		
 		for (j = 0; j < Integer.parseInt(bundle.getString("lineLengths")); j++) { //create a line break to separate the query print out from the data table
 			
 			System.out.print(line); //indicates the end of the list of queried files
 			out.print(line);
+			
 		}
 		
 		System.out.print("\n"); //provide spacing between output
 		out.print("\n");
+		
 	}
 
 	/**
@@ -379,9 +428,17 @@ public class HistoryParser {
 		long standard;					//holds the average time between every single revision in the repository
 		boolean inRange;				//records whether the current time interval is within the chosen range
 		boolean lastWas = false;		//Records whether the last time interval was within range of the configuration bound
+		FileWriter outFile;
 		
 		//based on example at http://www.abbeyworkshop.com/howto/java/writeText/index.html
-		FileWriter outFile = new FileWriter(bundle.getString("textFile"));
+		if (bundle.getString("textFile").endsWith(".txt")) {
+			outFile = new FileWriter(bundle.getString("textFile"));
+		}
+		
+		else {
+			outFile = new FileWriter(bundle.getString("textFile") + ".txt");
+		}
+		
         PrintWriter out = new PrintWriter(outFile);
         
 		if (bundle.getString("queryToggle").equals("true")) {
@@ -410,14 +467,14 @@ public class HistoryParser {
 				exec = Runtime.getRuntime().exec("svn log -v " + n); //uses the svn's log command to get the history of the queried file
 			}
 			
-			else {
+			else { //implies that the log must start at a particular revision number
 				
 				if (bundle.getString("queryToggle").equals("true")) {
 					System.out.println("\n" + args[i] + "\t (starting at revision " + ceiling[i] + ")"); //prints the file name and the most recent selected revision
 					out.println("\n" + args[i] + "\t (starting at revision " + ceiling[i] + ")");
 				}
 				
-				exec = Runtime.getRuntime().exec("svn log -v " + n + "@" + ceiling[i]); //svn command starting at a particular revision
+				exec = Runtime.getRuntime().exec("svn log -v " + n + "@" + ceiling[i]); //svn log command starting at a particular revision
 			}
 			
 			nodeCycle(exec, i, args[i]); //execute the command and collect the desired data
@@ -476,18 +533,25 @@ public class HistoryParser {
 			}
 			
 			else {
+				
 				newSpace = 0; //null the space
 				interval = Long.MAX_VALUE; //and put the interval to its maximum size
+			
 			}
 			
 			if (bundle.getString("revisionOverallToggle").equals("true")) {
 				
-				if (newSpace > (double)standard + Integer.parseInt(bundle.getString("consecutiveRange")) * standard / 100 ||  newSpace < (double)standard - Integer.parseInt(bundle.getString("consecutiveRange")) * standard / 100) {
+				if (newSpace > (double)standard + Integer.parseInt(bundle.getString("consecutiveRange")) * standard / 100 
+						||  newSpace < (double)standard - Integer.parseInt(bundle.getString("consecutiveRange")) * standard / 100) {
+					
 					inRange = false; //if the node is outside the specified range based on the configuration file parameters
+				
 				}
 				
 				else {
+					
 					inRange = true; //if it is within range
+				
 				}
 				
 			}
@@ -561,10 +625,10 @@ public class HistoryParser {
 		stats.statsOut(out); //output the statistics to the screen
 
 		if (bundle.getString("ratingsToggle").equals("true")) {
-			linesAndBounds("======", out);
-			System.out.print("Rating Graph: looking for grouping"); //title of the graph
+			linesAndBounds("==========", out);
+			System.out.print("\tRating Graph: looking for grouping"); //title of the graph
 			out.print("Rating Graph: looking for grouping");
-			linesAndBounds("======", out);
+			linesAndBounds("==========", out);
 			
 			for (i = 1; i <= statArray.length; i++){
 				
@@ -579,7 +643,7 @@ public class HistoryParser {
 					out.print("|");
 				}
 				
-				linesAndBounds("======", out); //indicates the end of the list of queried files
+				linesAndBounds("==========", out); //indicates the end of the list of queried files
 			}
 		}
 
@@ -629,11 +693,19 @@ public class HistoryParser {
 					else {
 						current = (ss[4] + " " + ss[5]);  // gets both the date and time of the revision
 					}
-					Calendar thisTime = new GregorianCalendar(Integer.parseInt(current.split(" ")[0].split("-")[0]), Integer.parseInt(current.split(" ")[0].split("-")[1])-1, Integer.parseInt(current.split(" ")[0].split("-")[2]), Integer.parseInt(current.split(" ")[1].split(":")[0]), Integer.parseInt(current.split(" ")[1].split(":")[1]), Integer.parseInt(current.split(" ")[1].split(":")[2]));
 					
+					Calendar thisTime = new GregorianCalendar(Integer.parseInt(current.split(" ")[0].split("-")[0]), 
+						Integer.parseInt(current.split(" ")[0].split("-")[1])-1, Integer.parseInt(current.split(" ")[0].split("-")[2]), 
+							Integer.parseInt(current.split(" ")[1].split(":")[0]), Integer.parseInt(current.split(" ")[1].split(":")[1]), 
+								Integer.parseInt(current.split(" ")[1].split(":")[2]));
+				
 					if (!previous.equals("")){ //implies this is not the first iteration
 					
-						Calendar lastTime = new GregorianCalendar(Integer.parseInt(previous.split(" ")[0].split("-")[0]), Integer.parseInt(previous.split(" ")[0].split("-")[1]) - 1, Integer.parseInt(previous.split(" ")[0].split("-")[2]), Integer.parseInt(previous.split(" ")[1].split(":")[0]), Integer.parseInt(previous.split(" ")[1].split(":")[1]), Integer.parseInt(previous.split(" ")[1].split(":")[2]));
+						Calendar lastTime = new GregorianCalendar(Integer.parseInt(previous.split(" ")[0].split("-")[0]),
+							Integer.parseInt(previous.split(" ")[0].split("-")[1]) - 1, Integer.parseInt(previous.split(" ")[0].split("-")[2]), 
+								Integer.parseInt(previous.split(" ")[1].split(":")[0]), Integer.parseInt(previous.split(" ")[1].split(":")[1]), 
+									Integer.parseInt(previous.split(" ")[1].split(":")[2]));
+						
 						long timeDiff = lastTime.getTimeInMillis() - thisTime.getTimeInMillis();
 						rev++;
 						totalTime += timeDiff;
@@ -669,17 +741,26 @@ public class HistoryParser {
 					current = (ss[4] + " " + ss[5]);  // gets both the date and time of the revision
 				}
 				
-				Calendar thisTime = new GregorianCalendar(Integer.parseInt(current.split(" ")[0].split("-")[0]), Integer.parseInt(current.split(" ")[0].split("-")[1])-1, Integer.parseInt(current.split(" ")[0].split("-")[2]), Integer.parseInt(current.split(" ")[1].split(":")[0]), Integer.parseInt(current.split(" ")[1].split(":")[1]), Integer.parseInt(current.split(" ")[1].split(":")[2]));
+				Calendar thisTime = new GregorianCalendar(Integer.parseInt(current.split(" ")[0].split("-")[0]), 
+					Integer.parseInt(current.split(" ")[0].split("-")[1])-1, Integer.parseInt(current.split(" ")[0].split("-")[2]), 
+						Integer.parseInt(current.split(" ")[1].split(":")[0]), Integer.parseInt(current.split(" ")[1].split(":")[1]), 
+							Integer.parseInt(current.split(" ")[1].split(":")[2]));
 				
 				if (!previous.equals("")){ //implies this is not the first iteration
 					
-					Calendar lastTime = new GregorianCalendar(Integer.parseInt(previous.split(" ")[0].split("-")[0]), Integer.parseInt(previous.split(" ")[0].split("-")[1]) - 1, Integer.parseInt(previous.split(" ")[0].split("-")[2]), Integer.parseInt(previous.split(" ")[1].split(":")[0]), Integer.parseInt(previous.split(" ")[1].split(":")[1]), Integer.parseInt(previous.split(" ")[1].split(":")[2]));
+					Calendar lastTime = new GregorianCalendar(Integer.parseInt(previous.split(" ")[0].split("-")[0]), 
+						Integer.parseInt(previous.split(" ")[0].split("-")[1]) - 1, Integer.parseInt(previous.split(" ")[0].split("-")[2]),
+							Integer.parseInt(previous.split(" ")[1].split(":")[0]), Integer.parseInt(previous.split(" ")[1].split(":")[1]),
+								Integer.parseInt(previous.split(" ")[1].split(":")[2]));
+					
 					long timeDiff = lastTime.getTimeInMillis() - thisTime.getTimeInMillis();
 					rev++;
 					totalTime += timeDiff;
+					
 				}
 				
 				previous = current;
+				
 			}
 			
 		}
